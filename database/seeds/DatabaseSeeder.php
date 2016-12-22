@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             // Runs only if we are in test environment
             $this->call(ClubsTableSeeder::class);
             $this->call(UuidCardsTableSeeder::class);
+            $this->call(ParticipantsTableSeeder::class);
         }
     }
 }
