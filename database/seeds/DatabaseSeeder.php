@@ -13,10 +13,10 @@ class DatabaseSeeder extends Seeder
     {
         // $this->call(UsersTableSeeder::class);
 
-        $this->call(ClubDistrictsSeeder::class);
+        $this->call(ClubDistrictsTableSeeder::class);
         if (App::environment('local')) {
             // Runs only if we are in test environment
-            $this->call(ClubsSeeder::class);
+            $this->call(ClubsTableSeeder::class);
         }
     }
 }

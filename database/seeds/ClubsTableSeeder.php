@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class ClubsSeeder extends Seeder
+class ClubsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
