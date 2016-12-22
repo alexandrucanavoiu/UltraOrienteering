@@ -1,0 +1,59 @@
+
+@extends('layouts/template')
+@section('title')
+    Management - Ultra Orienteering Software - Open Source Software
+@endsection
+
+@section('body')
+    <div class="container-fluid">
+        <div class="row">
+
+
+@foreach($stages as $stage )
+                <form method="post" action="/participants/manage/update">
+
+                    <div class="col-lg-4">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                Stage {{ $stage->stage_name  }}
+                            </div>
+                            <input class="hidden-val" name="participant_id" value="{{ $participants->participant_id }}" type="hidden">
+                            <input class="hidden-val" name="uuidcards_id" value="{{ $participants->uuidcards_id }}" type="hidden">
+                            <input class="hidden-val" name="stage_name" value="{{ $stage->id }}" type="hidden">
+                            <div class="panel-body">
+                                <div>
+                                <label>Category</label>
+                                <select class="form-control" name="participant_category">
+                                    @foreach($category as $item)
+                                        <option value="{{$item->id}}">{{$item->category_name}}</option>
+                                    @endforeach
+                                </select>
+                                </div>
+                                <br />
+                                <div>
+                                <label>UUID Card: </label>
+                                {{ $participants->uuidcards_uuidcard_name }}
+                                </div>
+
+
+                            </div>
+                            <div class="panel-footer">
+                                {{ csrf_field() }}
+                                <button type="submit" class="btn btn-primary">Submit</button>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+            @endforeach
+
+
+
+        </div>
+
+
+
+@endsection

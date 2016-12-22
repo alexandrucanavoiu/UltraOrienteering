@@ -1,0 +1,621 @@
+
+@extends('layouts/template')
+@section('scripts-header')
+    <script src="/vendor/jquery/jquery-ui-timepicker-addon.js"></script>
+    <script type="text/javascript" src="/vendor/jquery/jquery.timepicker.js"></script>
+    <link rel="stylesheet" type="text/css" href="/vendor/jquery/jquery.timepicker.css" />
+    <script type="text/javascript" src="/vendor/jquery/bootstrap-datepicker.js"></script>
+    <link rel="stylesheet" type="text/css" href="/vendor/jquery/bootstrap-datepicker.css" />
+@endsection
+@section('title')
+    Categories Administration - Ultra Orienteering Software - Open Source Software
+@endsection
+
+@section('body')
+    <div class="container-fluid">
+        <div class="row">
+
+
+            <div class="col-lg-12">
+                <br />
+                @if(Session::has('message'))
+
+                    {!!   Session::get('message') !!}
+                @endif
+
+                @if (count($errors) > 0 )
+
+                    @foreach($errors->all() as $error)
+                        <div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> {{ $error }}  </div>
+                    @endforeach
+
+                @endif
+
+                <h1 class="page-header">Stages Administration</h1>
+            </div>
+
+            <form method="post" action="/stages/create">
+
+            <div class="col-xs-12 col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        List Stages
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <div class="table-responsive">
+
+
+                            <div id="stage" class="js--stage stage-1" style="display: none;">
+                                <div class="y">
+
+                                    <div class="stage_name div-left-input">
+                                        <div class="stage_number"><strong>1</strong></div>
+
+                                    </div>
+
+                                    <div class="stage_name div-left-input">
+
+                                        <div><strong>Stage Name</strong></div>
+                                        <input name="stage1_name" id="stage_name" type="text">
+
+                                    </div>
+
+                                    <div class="stage1_data div-left-input">
+                                        <div><strong>Date</strong></div>
+                                        <input type="text" class="js--stage-data" id="stage_data" name="stage1_data">
+
+                                    </div>
+                                    <div class="stage1_time div-left-input">
+                                        <div><strong>Start Time</strong></div>
+                                        <input id="stage_time" class="js--stage-time time ui-timepicker-input" autocomplete="off" name="stage1_time" type="text">
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div id="stage" class="js--stage stage-2" style="display: none;">
+                                <div class="y">
+
+                                    <div class="stage_name div-left-input">
+                                        <div class="stage_number"><strong>2</strong></div>
+
+                                    </div>
+
+                                    <div class="stage_name div-left-input">
+                                        <div><strong>Stage Name</strong></div>
+                                        <input name="stage2_name" id="stage_name" type="text">
+
+                                    </div>
+
+                                    <div class="stage1_data div-left-input">
+                                        <div><strong>Date</strong></div>
+                                        <input type="text" class="js--stage-data" id="stage_data" name="stage2_data">
+
+                                    </div>
+                                    <div class="stage1_time div-left-input">
+                                        <div><strong>Start Time</strong></div>
+                                        <input id="stage_time" class="js--stage-time time ui-timepicker-input" autocomplete="off" name="stage2_time" type="text">
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div id="stage" class="js--stage stage-3" style="display: none;">
+                                <div class="y">
+
+                                    <div class="stage_name div-left-input">
+                                        <div class="stage_number"><strong>3</strong></div>
+
+                                    </div>
+
+                                    <div class="stage_name div-left-input">
+                                        <div><strong>Stage Name</strong></div>
+                                        <input name="stage3_name" id="stage_name" type="text">
+
+                                    </div>
+
+                                    <div class="stage1_data div-left-input">
+                                        <div><strong>Date</strong></div>
+                                        <input type="text" class="js--stage-data" id="stage_data" name="stage3_data">
+
+                                    </div>
+                                    <div class="stage1_time div-left-input">
+                                        <div><strong>Start Time</strong></div>
+                                        <input id="stage_time" class="js--stage-time time ui-timepicker-input" autocomplete="off" name="stage3_time" type="text">
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div id="stage" class="js--stage stage-4" style="display: none;">
+                                <div class="y">
+
+                                    <div class="stage_name div-left-input">
+                                        <div class="stage_number"><strong>4</strong></div>
+
+                                    </div>
+
+                                    <div class="stage_name div-left-input">
+                                        <div><strong>Stage Name</strong></div>
+                                        <input name="stage4_name" id="stage_name" type="text">
+
+                                    </div>
+
+                                    <div class="stage1_data div-left-input">
+                                        <div><strong>Date</strong></div>
+                                        <input type="text" class="js--stage-data" id="stage_data" name="stage4_data">
+
+                                    </div>
+                                    <div class="stage1_time div-left-input">
+                                        <div><strong>Start Time</strong></div>
+                                        <input id="stage_time" class="js--stage-time time ui-timepicker-input" autocomplete="off" name="stage4_time" type="text">
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div id="stage" class="js--stage stage-5" style="display: none;">
+                                <div class="y">
+
+                                    <div class="stage_name div-left-input">
+                                        <div class="stage_number"><strong>5</strong></div>
+
+                                    </div>
+
+                                    <div class="stage_name div-left-input">
+                                        <div><strong>Stage Name</strong></div>
+                                        <input name="stage5_name" id="stage_name" type="text">
+
+                                    </div>
+
+                                    <div class="stage1_data div-left-input">
+                                        <div><strong>Date</strong></div>
+                                        <input type="text" class="js--stage-data" id="stage_data" name="stage5_data">
+
+                                    </div>
+                                    <div class="stage1_time div-left-input">
+                                        <div><strong>Start Time</strong></div>
+                                        <input id="stage_time" class="js--stage-time time ui-timepicker-input" autocomplete="off" name="stage5_time" type="text">
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div id="stage" class="js--stage stage-6" style="display: none;">
+                                <div class="y">
+
+                                    <div class="stage_name div-left-input">
+                                        <div class="stage_number"><strong>6</strong></div>
+
+                                    </div>
+
+                                    <div class="stage_name div-left-input">
+                                        <div><strong>Stage Name</strong></div>
+                                        <input name="stage6_name" id="stage_name" type="text">
+
+                                    </div>
+
+                                    <div class="stage1_data div-left-input">
+                                        <div><strong>Date</strong></div>
+                                        <input type="text" class="js--stage-data" id="stage_data" name="stage6_data">
+
+                                    </div>
+                                    <div class="stage1_time div-left-input">
+                                        <div><strong>Start Time</strong></div>
+                                        <input id="stage_time" class="js--stage-time time ui-timepicker-input" autocomplete="off" name="stage6_time" type="text">
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div id="stage" class="js--stage stage-7" style="display: none;">
+                                <div class="y">
+
+                                    <div class="stage_name div-left-input">
+                                        <div class="stage_number"><strong>7</strong></div>
+
+                                    </div>
+
+                                    <div class="stage_name div-left-input">
+                                        <div><strong>Stage Name</strong></div>
+                                        <input name="stage7_name" id="stage_name" type="text">
+
+                                    </div>
+
+                                    <div class="stage1_data div-left-input">
+                                        <div><strong>Date</strong></div>
+                                        <input type="text" class="js--stage-data" id="stage_data" name="stage7_data">
+
+                                    </div>
+                                    <div class="stage1_time div-left-input">
+                                        <div><strong>Start Time</strong></div>
+                                        <input id="stage_time" class="js--stage-time time ui-timepicker-input" autocomplete="off" name="stage7_time" type="text">
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div id="stage" class="js--stage stage-8" style="display: none;">
+                                <div class="y">
+
+                                    <div class="stage_name div-left-input">
+                                        <div class="stage_number"><strong>8</strong></div>
+
+                                    </div>
+
+                                    <div class="stage_name div-left-input">
+                                        <div><strong>Stage Name</strong></div>
+                                        <input name="stage8_name" id="stage_name" type="text">
+
+                                    </div>
+
+                                    <div class="stage1_data div-left-input">
+                                        <div><strong>Date</strong></div>
+                                        <input type="text" class="js--stage-data" id="stage_data" name="stage8_data">
+
+                                    </div>
+                                    <div class="stage1_time div-left-input">
+                                        <div><strong>Start Time</strong></div>
+                                        <input id="stage_time" class="js--stage-time time ui-timepicker-input" autocomplete="off" name="stage8_time" type="text">
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div id="stage" class="js--stage stage-9" style="display: none;">
+                                <div class="y">
+
+                                    <div class="stage_name div-left-input">
+                                        <div class="stage_number"><strong>9</strong></div>
+
+                                    </div>
+
+                                    <div class="stage_name div-left-input">
+                                        <div><strong>Stage Name</strong></div>
+                                        <input name="stage9_name" id="stage_name" type="text">
+
+                                    </div>
+
+                                    <div class="stage1_data div-left-input">
+                                        <div><strong>Date</strong></div>
+                                        <input type="text" class="js--stage-data" id="stage_data" name="stage9_data">
+
+                                    </div>
+                                    <div class="stage1_time div-left-input">
+                                        <div><strong>Start Time</strong></div>
+                                        <input id="stage_time" class="js--stage-time time ui-timepicker-input" autocomplete="off" name="stage9_time" type="text">
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div id="stage" class="js--stage stage-10" style="display: none;">
+                                <div class="y">
+
+                                    <div class="stage_name div-left-input">
+                                        <div class="stage_number"><strong>10</strong></div>
+
+                                    </div>
+
+                                    <div class="stage_name div-left-input">
+
+                                        <div><strong>Stage Name</strong></div>
+                                        <input name="stage10_name" id="stage_name" type="text">
+
+                                    </div>
+
+                                    <div class="stage1_data div-left-input">
+                                        <div><strong>Date</strong></div>
+                                        <input type="text" class="js--stage-data" id="stage_data" name="stage10_data">
+
+                                    </div>
+                                    <div class="stage1_time div-left-input">
+                                        <div><strong>Start Time</strong></div>
+                                        <input id="stage_time" class="js--stage-time time ui-timepicker-input" autocomplete="off" name="stage10_time" type="text">
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <!-- /.table-responsive -->
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+
+
+            <div class="col-xs-6 col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Number of Stages
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <div class="table-responsive">
+
+                                <div class="form-group">
+                                    <label>Selects</label>
+                                    <select name="stages" id="stages" class="form-control">
+                                        <option value="0" selected>-- select ---</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+
+                                    </select>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary btn-sm btn-block">Submit</button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+                {{ csrf_field() }}
+            </form>
+
+            <div class="col-xs-6 col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Drop all categories from database
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <form method="post" action="">
+                                {{ csrf_field() }}
+                                <button type="submit" class="btn btn-block btn-danger">REMOVE ALL UUID CARDS</button>
+                            </form>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="col-xs-6 col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Drop all stages from database
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <form method="post" action="/stages/trucate">
+                                {{ csrf_field() }}
+                                <button type="submit" class="btn btn-block btn-danger">REMOVE ALL STAGES</button>
+                            </form>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+
+        </div>
+        <!-- /.row -->
+    </div>
+
+    <script>
+
+
+        $(function() {
+
+            $('.js--stage-time').each(function () {
+
+
+
+                $(this).timepicker({ 'step': 1 });
+
+                $(this).timepicker({ 'step': 1 });
+                $(this).timepicker({
+                    'timeFormat': 'H:i:s',
+                    'step': function(i) {
+                        return (i%2) ? 1 : 1;
+                    }
+                });
+
+
+            });
+
+
+            $('.js--stage-data').each(function () {
+
+
+
+                $(this).datepicker({
+                            dateFormat: "dd-mm-yy",
+                        }
+
+                );
+                $.datepicker.setDefaults({minDate: new Date()});
+                $(this).datepicker({onSelect: function(selectedDate) {
+                    var date = $(this).datepicker('getDate');
+                    if (date) {
+                        date.setDate(date.getDate() + 1);
+                    }
+
+                }});
+
+            });
+
+        });
+
+
+        $('#stages').on('change',function(){
+
+            if( $(this).val()==="0"){
+                $(".stage-1").hide();
+                $(".stage-2").hide();
+                $(".stage-3").hide();
+                $(".stage-4").hide();
+                $(".stage-5").hide();
+                $(".stage-6").hide();
+                $(".stage-7").hide();
+                $(".stage-8").hide();
+                $(".stage-9").hide();
+                $(".stage-10").hide();
+            }
+
+
+            if( $(this).val()==="1"){
+                $(".stage-1").show();
+                $(".stage-2").hide();
+                $(".stage-3").hide();
+                $(".stage-4").hide();
+                $(".stage-5").hide();
+                $(".stage-6").hide();
+                $(".stage-7").hide();
+                $(".stage-8").hide();
+                $(".stage-9").hide();
+                $(".stage-10").hide();
+            }
+
+
+            if( $(this).val()==="2"){
+                $(".stage-1").show();
+                $(".stage-2").show();
+                $(".stage-3").hide();
+                $(".stage-4").hide();
+                $(".stage-5").hide();
+                $(".stage-6").hide();
+                $(".stage-7").hide();
+                $(".stage-8").hide();
+                $(".stage-9").hide();
+                $(".stage-10").hide();
+            }
+
+            if( $(this).val()==="3"){
+                $(".stage-1").show();
+                $(".stage-2").show();
+                $(".stage-3").show();
+                $(".stage-4").hide();
+                $(".stage-5").hide();
+                $(".stage-6").hide();
+                $(".stage-7").hide();
+                $(".stage-8").hide();
+                $(".stage-9").hide();
+                $(".stage-10").hide();
+            }
+
+            if( $(this).val()==="4"){
+                $(".stage-1").show();
+                $(".stage-2").show();
+                $(".stage-3").show();
+                $(".stage-4").show();
+                $(".stage-5").hide();
+                $(".stage-6").hide();
+                $(".stage-7").hide();
+                $(".stage-8").hide();
+                $(".stage-9").hide();
+                $(".stage-10").hide();
+            }
+
+            if( $(this).val()==="5"){
+                $(".stage-1").show();
+                $(".stage-2").show();
+                $(".stage-3").show();
+                $(".stage-4").show();
+                $(".stage-5").show();
+                $(".stage-6").hide();
+                $(".stage-7").hide();
+                $(".stage-8").hide();
+                $(".stage-9").hide();
+                $(".stage-10").hide();
+            }
+
+            if( $(this).val()==="6"){
+                $(".stage-1").show();
+                $(".stage-2").show();
+                $(".stage-3").show();
+                $(".stage-4").show();
+                $(".stage-5").show();
+                $(".stage-6").show();
+                $(".stage-7").hide();
+                $(".stage-8").hide();
+                $(".stage-9").hide();
+                $(".stage-10").hide();
+            }
+
+            if( $(this).val()==="7"){
+                $(".stage-1").show();
+                $(".stage-2").show();
+                $(".stage-3").show();
+                $(".stage-4").show();
+                $(".stage-5").show();
+                $(".stage-6").show();
+                $(".stage-7").show();
+                $(".stage-8").hide();
+                $(".stage-9").hide();
+                $(".stage-10").hide();
+            }
+
+            if( $(this).val()==="8"){
+                $(".stage-1").show();
+                $(".stage-2").show();
+                $(".stage-3").show();
+                $(".stage-4").show();
+                $(".stage-5").show();
+                $(".stage-6").show();
+                $(".stage-7").show();
+                $(".stage-8").show();
+                $(".stage-9").hide();
+                $(".stage-10").hide();
+            }
+
+            if( $(this).val()==="9"){
+                $(".stage-1").show();
+                $(".stage-2").show();
+                $(".stage-3").show();
+                $(".stage-4").show();
+                $(".stage-5").show();
+                $(".stage-6").show();
+                $(".stage-7").show();
+                $(".stage-8").show();
+                $(".stage-9").show();
+                $(".stage-10").hide();
+            }
+
+            if( $(this).val()==="10"){
+                $(".stage-1").show();
+                $(".stage-2").show();
+                $(".stage-3").show();
+                $(".stage-4").show();
+                $(".stage-5").show();
+                $(".stage-6").show();
+                $(".stage-7").show();
+                $(".stage-8").show();
+                $(".stage-9").show();
+                $(".stage-10").show();
+            }
+
+        });
+
+
+    </script>
+
+@endsection
