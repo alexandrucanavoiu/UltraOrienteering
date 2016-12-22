@@ -19,8 +19,8 @@ class CreateParticipantManagersTable extends Migration
             $table->foreign('participant_id')->references('id')->on('participants');
             $table->unsignedInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories');
-            $table->unsignedInteger('uuidcard_id');
-            $table->foreign('uuidcard_id')->references('id')->on('uuidcards');
+            $table->unsignedInteger('uuid_card_id');
+            $table->foreign('uuid_card_id')->references('id')->on('uuid_cards');
             $table->unsignedInteger('stage_id');
             $table->foreign('stage_id')->references('id')->on('stages');
 

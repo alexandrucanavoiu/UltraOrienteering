@@ -17,8 +17,8 @@ class CreateParticipantsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('club_id');
             $table->foreign('club_id')->references('id')->on('clubs');
-            $table->unsignedInteger('uuidcard_id');
-            $table->foreign('uuidcard_id')->references('id')->on('uuidcards');
+            $table->unsignedInteger('uuid_card_id');
+            $table->foreign('uuid_card_id')->references('id')->on('uuid_cards');
 
             $table->string('name');
             $table->timestamps();
