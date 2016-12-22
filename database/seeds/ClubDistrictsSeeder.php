@@ -56,6 +56,13 @@ class ClubDistrictsSeeder extends Seeder
             ['name' => 'Vrancea',],
         ];
 
+        $now = date('Y-m-d H:i:s');
+
+        foreach ($records as $key => $record) {
+            $records[$key]['created_at'] = $now;
+            $records[$key]['updated_at'] = $now;
+        }
+
         DB::table('club_districts')->insert($records);
     }
 }

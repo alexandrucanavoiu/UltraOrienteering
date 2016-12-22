@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ClubDistrictsSeeder::class);
         if (App::environment('local')) {
             // Runs only if we are in test environment
+            $this->call(ClubsSeeder::class);
         }
     }
 }
