@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         if (App::environment('local')) {
             // Runs only if we are in test environment
             $this->call(ClubsTableSeeder::class);
+            $this->call(UuidCardsTableSeeder::class);
         }
     }
 }
