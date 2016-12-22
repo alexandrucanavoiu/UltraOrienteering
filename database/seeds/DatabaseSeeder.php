@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             $this->call(UuidCardsTableSeeder::class);
             $this->call(ParticipantsTableSeeder::class);
             $this->call(StagesTableSeeder::class);
+            $this->call(RoutesTableSeeder::class);
         }
     }
 }
