@@ -21,7 +21,7 @@ class ParticipantManager extends \Eloquent
     protected $fillable = [
         'participant_id',
         'category_id',
-        'uuidcard_id',
+        'uuid_card_id',
         'stage_id',
         'post_start',
         'post_1',

@@ -19,7 +19,7 @@ class Participant extends \Eloquent
      */
     protected $fillable = [
         'club_id',
-        'uuidcard_id',
+        'uuid_card_id',
         'name',
     ];
 
