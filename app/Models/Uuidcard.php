@@ -1,5 +1,6 @@
 <?php
-namespace App;
+
+namespace App\Models;
 
 class Uuidcard extends \Eloquent
 {
