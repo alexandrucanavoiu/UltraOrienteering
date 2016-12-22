@@ -15,13 +15,14 @@ class DatabaseSeeder extends Seeder
 
         $this->call(ClubDistrictsTableSeeder::class);
         if (App::environment('local')) {
-            // Runs only if we are in test environment
+            // Runs only if we are in development environment
             $this->call(ClubsTableSeeder::class);
             $this->call(UuidCardsTableSeeder::class);
             $this->call(ParticipantsTableSeeder::class);
             $this->call(StagesTableSeeder::class);
             $this->call(RoutesTableSeeder::class);
             $this->call(CategoriesTableSeeder::class);
+            $this->call(ParticipantManagersTableSeeder::class);
         }
     }
 }
