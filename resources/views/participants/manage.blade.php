@@ -121,10 +121,13 @@
                 @empty
                     <div class="col-md-12 center">Currently there are no stages!</div>
                 @endforelse
-                <div class="clear"></div>
 
-                {{ csrf_field() }}
-                <button type="submit" class="btn btn-primary ">Submit</button>
+                @if($participant->participantManagers->count())
+                    <div class="clear"></div>
+
+                    {{ csrf_field() }}
+                    <button type="submit" class="btn btn-primary ">Submit</button>
+                @endif
             </form>
         </div>
     </div>
