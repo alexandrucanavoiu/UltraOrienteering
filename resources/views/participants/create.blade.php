@@ -28,6 +28,7 @@
                 <div class="uuid_participants div-left-input">
                     <div><strong>UUID Card</strong></div>
                     <select class="form-control" name="uuid_card_id">
+                        <option value selected>Please select</option>
                         @foreach($uuidList as $uuidCard)
                             <option value="{{ $uuidCard->id }}">NR #{{ $uuidCard->id }} - {{ $uuidCard->uuidcard }}</option>
                         @endforeach
@@ -37,6 +38,7 @@
                 <div class="club_participants div-left-input">
                     <div><strong>Club</strong></div>
                     <select class="form-control" name="club_id">
+                        <option value selected>Please select</option>
                         @foreach($clubs as $club)
                             <option value="{{ $club->id }}">{{ $club->name }}</option>
                         @endforeach

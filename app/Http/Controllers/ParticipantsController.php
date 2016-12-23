@@ -43,46 +43,33 @@ class ParticipantsController extends Controller
         return redirect('/participants')->with('success', $participant->name . ' has been stored!');
     }
 
+    public function edit($id)
+    {
+        $participant = Participant::with('uuidCard', 'club')->findOrFail($id);
 
-    public function edit($id){
-        $participants = DB::table('participants')
-            ->select(
-                'participants.id as participant_id',
-                'participants.uuidcard_id as participant_uuidcard_id',
-                'participants.clubs_name as participant_club_name',
-                'participants.participants_name as participant_name',
-                'uuidcards.id as uuidcards_id',
-                'uuidcards.uuidcard as uuidcards_uuidcard_name',
-                'clubs.id as clubs_id',
-                'clubs.club_name as club_name'
-            )
-            ->leftJoin('uuidcards', 'uuidcards.id', '=', 'participants.uuidcard_id')
-            ->leftJoin('clubs', 'clubs.id', '=', 'participants.clubs_name')
-            ->where('participants.id', '=', $id)
-            ->first();
+        $clubs = Club::all();
+        $uuidList = UuidCard::all();
 
-        $clubs = DB::table('clubs')->get();
-        $category = DB::table('categories')->get();
-        $uuidlist = DB::table('uuidcards')->get();
-
-        return view('participants.edit', ['category' => $category, 'participants' => $participants, 'uuidlist' => $uuidlist, 'clubs' => $clubs]);
-
+        return view('participants.edit', compact('participant', 'clubs', 'uuidList'));
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
+        $this->validate($request, [
+            'club_id' => 'required|integer|exists:clubs,id',
+            'uuid_card_id' => 'required|integer|exists:uuid_cards,id',
+            'name' => 'required',
+        ]);
 
+        $participant = Participant::findOrFail($id);
 
-        $participants_name = $request->input('participants_name');
-        $uuidcard_id = $request->input('uuidcard_id');
-        $clubs_id = $request->input('clubs_id');
+        $participant->update([
+            'club_id' => $request->input('club_id'),
+            'uuid_card_id' => $request->input('uuid_card_id'),
+            'name' => $request->input('name'),
+        ]);
 
-
-        DB::table('participants')
-            ->where('participants.id', '=', $id)
-            ->update(['participants_name' => $participants_name, 'uuidcard_id' => $uuidcard_id, 'clubs_name' => $clubs_id]);
-
-        $result = "<div class=\"alert alert-success alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>The participant with #ID " . $id .  " have been added updated.</div>";
-        return redirect('/participants')->with('message', $result);
+        return redirect('/participants')->with('success', $participant->name . ' has been updated!');
 
     }
 

@@ -6,31 +6,31 @@
 
 @section('body')
 
-    <form method="post" action="/participants/update/{{ $participants->participant_id }}">
+    <form method="post" action="/participants/update/{{ $participant->id }}">
         {{ method_field("put") }}
 
         <div id="stage" class="js--stage stage-1">
             <div class="y">
-                <h1>Add a new participants</h1>
+                <h1>Edit participant {{ $participant->name }}</h1>
                 <div class="fullname_part div-left-input">
                     <div><strong>Full Name</strong></div>
-                    <input class="form-control" name="participants_name" id="participants_name" type="text" value="{{ $participants->participant_name }}">
+                    <input class="form-control" name="name" id="participants_name" type="text" value="{{ $participant->name }}">
                 </div>
 
                 <div class="uuid_participants div-left-input">
                     <div><strong>UUID Card</strong></div>
-                    <select class="form-control" name="uuidcard_id">
-                        @foreach($uuidlist as $item)
-                            <option @if($item->id == $participants->uuidcards_id) selected  @endif value="{{$item->id}}">NR #{{$item->id}} - {{$item->uuidcard}}</option>
+                    <select class="form-control" name="uuid_card_id">
+                        @foreach($uuidList as $uuidCard)
+                            <option value="{{ $uuidCard->id }}" {{ $uuidCard->id === $participant->uuidCard->id ? 'selected' : '' }}>NR #{{ $uuidCard->id }} - {{ $uuidCard->uuidcard }}</option>
                         @endforeach
                     </select>
                 </div>
 
                 <div class="club_participants div-left-input">
                     <div><strong>Club</strong></div>
-                    <select class="form-control" name="clubs_id">
-                        @foreach($clubs as $item)
-                            <option @if($item->id == $participants->clubs_id) selected  @endif value="{{$item->id}}">{{$item->club_name}}</option>
+                    <select class="form-control" name="club_id">
+                        @foreach($clubs as $club)
+                            <option value="{{ $club->id }}" {{ $club->id === $participant->club->id ? 'selected' : '' }}>{{ $club->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -38,7 +38,10 @@
             </div>
         </div>
         {{ csrf_field() }}
-        <div class="center margin-top-30" ><button type="submit" class="btn btn-primary">Submit</button> <a href="/participants" class="btn btn-success">Back</a></div>
+        <div class="center margin-top-30" >
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a href="/participants" class="btn btn-success">Back</a>
+        </div>
 
 
     </form>
