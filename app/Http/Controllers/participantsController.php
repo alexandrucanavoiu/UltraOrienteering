@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Participant;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Validation\Validator;
 use DB;
@@ -126,58 +128,14 @@ class participantsController extends Controller
 
     }
 
-
-
     public function manage($id){
-        $participants = DB::table('participants')
-            ->select(
-                'participants.id as participant_id',
-                'participants.uuidcard_id as participant_uuidcard_id',
-                'participants.clubs_name as participant_club_name',
-                'participants.participants_name as participant_name',
-                'uuidcards.id as uuidcards_id',
-                'uuidcards.uuidcard as uuidcards_uuidcard_name',
-                'clubs.id as clubs_id',
-                'clubs.club_name as club_name'
+        $participant = Participant::with(['uuidCard', 'participantManagers' => function ($query) {
+            $query->with('stage', 'category.route', 'uuidCard');
+        }])->findOrFail($id);
 
-            )
-            ->leftJoin('uuidcards', 'uuidcards.id', '=', 'participants.uuidcard_id')
-            ->leftJoin('clubs', 'clubs.id', '=', 'participants.clubs_name')
+        $categories = Category::all();
 
-            ->where('participants.id', '=', $id)
-            ->first();
-
-
-        $manage_id = $id;
-        $stages = DB::table('stages')->get();
-        $category = DB::table('categories')->get();
-        $routes = DB::table('routes')->get();
-        $participants_manage = DB::table('participants_manage')
-            ->select(
-                'id',
-                'participants_id',
-                'categories_id',
-                'stages_name',
-                'post_s',
-                'post_1',
-                'post_2',
-                'post_3',
-                'post_4',
-                'post_5',
-                'post_6',
-                'post_7',
-                'post_8',
-                'post_9',
-                'post_10',
-                'post_11',
-                'post_12',
-                'post_f'
-            )
-            ->where('participants_id', '=', $id)->get();
-
-
-        return view('participants.manage', ['routes' => $routes, 'participants_manage' => $participants_manage, 'stages' => $stages, 'category' => $category, 'manage_id' => $manage_id, 'participants' => $participants]);
-
+        return view('participants.manage', compact('participant', 'categories'));
     }
 
     public function manageupdate(Request $request)

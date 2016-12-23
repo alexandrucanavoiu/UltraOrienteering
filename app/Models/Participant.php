@@ -28,9 +28,9 @@ class Participant extends \Eloquent
         return $this->belongsTo(Club::class);
     }
 
-    public function uuidcard()
+    public function uuidCard()
     {
-        return $this->belongsTo(UuidCard::class);
+        return $this->belongsTo(UuidCard::class, 'uuid_card_id');
     }
 
     public function participantManagers()

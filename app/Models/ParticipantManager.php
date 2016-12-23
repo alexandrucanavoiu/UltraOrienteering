@@ -51,7 +51,7 @@ class ParticipantManager extends \Eloquent
 
     public function uuidCard()
     {
-        return $this->belongsTo(Participant::class);
+        return $this->belongsTo(UuidCard::class, 'uuid_card_id');
     }
 
     public function stage()
