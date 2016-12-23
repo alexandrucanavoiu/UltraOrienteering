@@ -40,8 +40,7 @@ class ParticipantsController extends Controller
             'name' => $request->input('name'),
         ]);
 
-        return redirect('/participants')->with('message', '{$participant->name} has been stored!');
-
+        return redirect('/participants')->with('success', $participant->name . ' has been stored!');
     }
 
 

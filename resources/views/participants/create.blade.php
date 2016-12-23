@@ -2,7 +2,20 @@
 
 @section('title') Add a new participants - Ultra Orienteering Software - Open Source Software @endsection
 
-@section('body')
+@section('body')<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div style="margin-top: 10px; margin-bottom: -10px">
+                @include('partials.form-flash-message')
+            </div>
+            <h1 class="page-header">
+                Participants
+                <span class="pull-right">
+                        <a href="{{ url('/participants/add') }}" class="btn btn-primary pull-left">Add a new Participant</a>
+                    </span>
+            </h1>
+        </div>
+    </div>
     <form method="post" action="/participants/create">
         <div id="stage" class="js--stage stage-1">
             <div class="y">
