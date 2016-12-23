@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Club;
 use App\Models\Participant;
+use App\Models\UuidCard;
 use Illuminate\Http\Request;
 use DB;
 
-class participantsController extends Controller
+class ParticipantsController extends Controller
 {
     public function index()
     {
@@ -16,53 +18,30 @@ class participantsController extends Controller
         return view('participants.index', compact('participants'));
     }
 
-
-    public function viewcreate(){
-
-        $uuidlist = DB::table('uuidcards')->select('uuidcards.id as uuidcards_id', 'uuidcards.uuidcard as uuidcards_uuidcard')->get();
-        $clubs = DB::table('clubs')->select('clubs.id as clubs_id', 'clubs.club_name')->get();
-
-
-        return view('participants.create', ['uuidlist' => $uuidlist, 'clubs' => $clubs]);
-
-
-    }
-
-
-    public function create(Request $request)
+    public function create()
     {
-        $participants_name = $request->input('participants_name');
-        $uuidcard_id = $request->input('uuidcard_id');
-        $clubs_id = $request->input('clubs_id');
+        $uuidList = UuidCard::all();
+        $clubs = Club::all();
 
-
-        DB::table('participants')->insertGetId(
-            [
-                'participants_name' => $participants_name,
-                'uuidcard_id' => $uuidcard_id,
-                'clubs_name' => $clubs_id
-            ]
-        );
-
-        return redirect('/participants')->with('message', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>A new participant has been added in the database.</div>');
-
+        return view('participants.create', compact('uuidList', 'clubs'));
     }
 
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            'club_id' => 'required|integer|exists:clubs,id',
+            'uuid_card_id' => 'required|integer|exists:uuid_cards,id',
+            'name' => 'required',
+        ]);
 
-    public function remove($id) {
+        $participant = Participant::create([
+            'club_id' => $request->input('club_id'),
+            'uuid_card_id' => $request->input('uuid_card_id'),
+            'name' => $request->input('name'),
+        ]);
 
-        DB::table('participants')->where('id', $id)->delete();
+        return redirect('/participants')->with('message', '{$participant->name} has been stored!');
 
-        $data = '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> The participant with <strong>ID ' . $id . '</strong> has been removed from the database.</div>';
-        return redirect('/participants')->with('message', $data);
-    }
-
-
-    public function truncate() {
-
-        DB::table('participants')->truncate();
-
-        return redirect('/participants')->with('message', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>All participants has been removed from the database.</div>');
     }
 
 
@@ -248,6 +227,23 @@ class participantsController extends Controller
 
         return redirect(route('post.manageupdate', array('id' => $check_id)))->with('message', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>All records has been added in the database.</div>');
 
+    }
+
+
+    public function remove($id) {
+
+        DB::table('participants')->where('id', $id)->delete();
+
+        $data = '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> The participant with <strong>ID ' . $id . '</strong> has been removed from the database.</div>';
+        return redirect('/participants')->with('message', $data);
+    }
+
+
+    public function truncate() {
+
+        DB::table('participants')->truncate();
+
+        return redirect('/participants')->with('message', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>All participants has been removed from the database.</div>');
     }
 
 

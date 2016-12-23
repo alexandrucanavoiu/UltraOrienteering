@@ -53,12 +53,12 @@ Route::get('/clubs/edit/{id}', 'clubsController@edit');
 Route::put('/clubs/update/{id}', 'clubsController@update');
 
 
-Route::get('/participants', 'participantsController@index');
-Route::get('/participants/add', 'participantsController@viewcreate');
-Route::post('/participants/create', 'participantsController@create');
-Route::get('/participants/edit/{id}', 'participantsController@edit');
-Route::put('/participants/update/{id}', 'participantsController@update');
-Route::get('/participants/remove/{id}', 'participantsController@remove');
-Route::get('/participants/truncate', 'participantsController@truncate');
-Route::get('/participants/manage/{id}', 'participantsController@manage')->name('post.manageupdate');
-Route::post('/participants/manage/update', 'participantsController@manageupdate');
+Route::get('/participants', 'ParticipantsController@index');
+Route::get('/participants/add', 'ParticipantsController@create');
+Route::post('/participants/create', 'ParticipantsController@store');
+Route::get('/participants/edit/{id}', 'ParticipantsController@edit');
+Route::put('/participants/update/{id}', 'ParticipantsController@update');
+Route::get('/participants/remove/{id}', 'ParticipantsController@remove');
+Route::get('/participants/truncate', 'ParticipantsController@truncate');
+Route::get('/participants/manage/{id}', 'ParticipantsController@manage')->name('post.manageupdate');
+Route::post('/participants/manage/update', 'ParticipantsController@manageupdate');
