@@ -5,35 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Participant;
 use Illuminate\Http\Request;
-use Illuminate\Contracts\Validation\Validator;
 use DB;
-use Session;
-use Input;
 
 class participantsController extends Controller
 {
-    public function index(){
+    public function index()
+    {
+        $participants = Participant::with('uuidCard', 'club')->paginate(100);
 
-
-        $participants = DB::table('participants')
-            ->select(
-                'participants.id as participant_id',
-                'participants.uuidcard_id as participant_uuidcard_id',
-                'participants.clubs_name as participant_club_name',
-                'participants.participants_name as participant_name',
-                'uuidcards.id as uuidcards_id',
-                'uuidcards.uuidcard as uuidcards_uuidcard_name',
-                'clubs.id as clubs_id',
-                'clubs.club_name as club_name'
-            )
-            ->leftJoin('uuidcards', 'uuidcards.id', '=', 'participants.uuidcard_id')
-            ->leftJoin('clubs', 'clubs.id', '=', 'participants.clubs_name')
-
-            ->paginate(100);
-
-
-        return view('participants.participants', ['participants' => $participants]);
-
+        return view('participants.index', compact('participants'));
     }
 
 

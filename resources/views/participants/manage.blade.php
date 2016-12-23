@@ -21,7 +21,7 @@
                 <h1 class="page-header">Stages Administration for {{ $participant->name }}</h1>
             </div>
             <form method="post" action="/participants/manage/update">
-                @foreach($participant->participantManagers as $manager )
+                @forelse($participant->participantManagers as $manager )
                     <div class="col-lg-4">
                         <div class="panel panel-primary">
                             <div class="panel-heading">
@@ -44,7 +44,6 @@
                                     <label>UUID Card: </label>
                                     {{ $manager->uuidCard->uuidcard }}
                                 </div>
-
 
                                 <div class="posts">
                                     <span>Start</span>
@@ -119,7 +118,9 @@
                             <div class="panel-footer"></div>
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <div class="col-md-12 center">Currently there are no stages!</div>
+                @endforelse
                 <div class="clear"></div>
 
                 {{ csrf_field() }}

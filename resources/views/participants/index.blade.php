@@ -1,27 +1,19 @@
-
 @extends('layouts/template')
-@section('title')
-    Clubs Administration - Ultra Orienteering Software - Open Source Software
-@endsection
+
+@section('title') Clubs Administration - Ultra Orienteering Software - Open Source Software @endsection
 
 @section('body')
     <div class="container-fluid">
         <div class="row">
-
-
             <div class="col-lg-12">
-                <br />
                 @if(Session::has('message'))
-
-                    {!!   Session::get('message') !!}
+                    <p>{!!   Session::get('message') !!}</p>
                 @endif
 
                 @if (count($errors) > 0 )
-
                     @foreach($errors->all() as $error)
                         <div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> {{ $error }}  </div>
                     @endforeach
-
                 @endif
 
                 <h1 class="page-header">Participants</h1>
@@ -38,7 +30,6 @@
                         <div class="panel-body">
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover">
-                                    @if (count($participants) > 0 )
                                         <thead>
                                         <tr>
                                             <th class="center">ID</th>
@@ -51,23 +42,22 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-
-                                        @foreach($participants as $participant)
-                                            <tr>
-                                                <td class="center">{{ $participant->participant_id }}</td>
-                                                <td class="center">{{ $participant->club_name }}</td>
-                                                <td class="center">{{ $participant->participant_name }}</td>
-                                                <td class="center">NR #{{ $participant->uuidcards_id }} - {{ $participant->uuidcards_uuidcard_name }}</td>
-                                                <td class="center"><a href="{{ URL::to('/participants/manage') }}/{{ $participant->participant_id }}"><button type="button"  class="btn btn-success">Manage</button></a></td>
-                                                <td class="center"><a href="{{ URL::to('/participants/edit/') }}/{{ $participant->participant_id }}"><span class="fa fa-edit fa-fw"></span></a></td>
-                                                <td class="center"><a href="{{ URL::to('/participants/remove/') }}/{{ $participant->participant_id}}"><span class="glyphicon glyphicon-remove"></span></a></td>
-                                            </tr>
-                                        @endforeach
+                                            @forelse($participants as $participant)
+                                                <tr>
+                                                    <td class="center">{{ $participant->id }}</td>
+                                                    <td class="center">{{ $participant->club->name }}</td>
+                                                    <td class="center">{{ $participant->name }}</td>
+                                                    <td class="center">NR #{{ $participant->uuid_card_id }} - {{ $participant->uuidCard->uuidcard }}</td>
+                                                    <td class="center"><a href="{{ URL::to('/participants/manage') }}/{{ $participant->id }}"><button type="button"  class="btn btn-success">Manage</button></a></td>
+                                                    <td class="center"><a href="{{ URL::to('/participants/edit/') }}/{{ $participant->id }}"><span class="fa fa-edit fa-fw"></span></a></td>
+                                                    <td class="center"><a href="{{ URL::to('/participants/remove/') }}/{{ $participant->id}}"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                                </tr>
+                                            @empty
+                                                <tr>
+                                                    <td colspan="7"><div class="center">No participants in database, please add</div></td>
+                                                </tr>
+                                            @endforelse
                                         </tbody>
-
-                                    @else
-                                        <div class="center">No participants in database, please add</div>
-                                    @endif
                                 </table>
                                 <div  class="center"> {{ $participants->links() }}</div>
 
