@@ -73,9 +73,10 @@ class ParticipantsController extends Controller
 
     }
 
-    public function manage($id){
-        $participant = Participant::with(['uuidCard', 'participantManagers' => function ($query) {
-            $query->with('stage', 'category.route', 'uuidCard');
+    public function manage($id)
+    {
+        $participant = Participant::with(['participantManagers' => function ($query) {
+            $query->with('stage', 'uuidCard');
         }])->findOrFail($id);
 
         $categories = Category::all();
