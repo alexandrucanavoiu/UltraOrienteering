@@ -1,25 +1,30 @@
-
 @extends('layouts/template')
-@section('title')
-    Add a new participants - Ultra Orienteering Software - Open Source Software
-@endsection
+
+@section('title') Edit participant {{ $participant->name }} - Ultra Orienteering Software - Open Source Software @endsection
 
 @section('body')
+    <div class="row">
+        <div class="col-lg-12">
+            <div style="margin-top: 10px; margin-bottom: -10px">
+                @include('partials.form-flash-message')
+            </div>
+        </div>
+    </div>
 
-    <form method="post" action="/participants/update/{{ $participant->id }}">
+    <form method="post" action="{{ route('participants.update', ['participant' => $participant->id]) }}">
         {{ method_field("put") }}
 
         <div id="stage" class="js--stage stage-1">
             <div class="y">
                 <h1>Edit participant {{ $participant->name }}</h1>
                 <div class="fullname_part div-left-input">
-                    <div><strong>Full Name</strong></div>
+                    <label for="participants_name">Full Name</label>
                     <input class="form-control" name="name" id="participants_name" type="text" value="{{ $participant->name }}">
                 </div>
 
                 <div class="uuid_participants div-left-input">
-                    <div><strong>UUID Card</strong></div>
-                    <select class="form-control" name="uuid_card_id">
+                    <label for="uuid_card_id">UUID Card</label>
+                    <select class="form-control" id="uuid_card_id" name="uuid_card_id">
                         @foreach($uuidList as $uuidCard)
                             <option value="{{ $uuidCard->id }}" {{ $uuidCard->id === $participant->uuidCard->id ? 'selected' : '' }}>NR #{{ $uuidCard->id }} - {{ $uuidCard->uuidcard }}</option>
                         @endforeach
@@ -27,23 +32,20 @@
                 </div>
 
                 <div class="club_participants div-left-input">
-                    <div><strong>Club</strong></div>
-                    <select class="form-control" name="club_id">
+                    <label for="club_id">Club</label>
+                    <select class="form-control" id="club_id" name="club_id">
                         @foreach($clubs as $club)
                             <option value="{{ $club->id }}" {{ $club->id === $participant->club->id ? 'selected' : '' }}>{{ $club->name }}</option>
                         @endforeach
                     </select>
                 </div>
-
             </div>
         </div>
-        {{ csrf_field() }}
+
         <div class="center margin-top-30" >
+            {{ csrf_field() }}
             <button type="submit" class="btn btn-primary">Submit</button>
-            <a href="/participants" class="btn btn-success">Back</a>
+            <a href="{{ route('participants.index') }}" class="btn btn-danger">Cancel</a>
         </div>
-
-
     </form>
-
 @endsection

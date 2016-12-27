@@ -12,7 +12,7 @@
                 <h1 class="page-header">
                     Participants
                     <span class="pull-right">
-                        <a href="{{ url('/participants/add') }}" class="btn btn-primary pull-left">Add a new Participant</a>
+                        <a href="{{ route('participants.create') }}" class="btn btn-primary pull-left">Add a new Participant</a>
                     </span>
                 </h1>
             </div>
@@ -44,9 +44,21 @@
                                             <td class="center">{{ $participant->club->name }}</td>
                                             <td class="center">{{ $participant->name }}</td>
                                             <td class="center">NR #{{ $participant->uuid_card_id }} - {{ $participant->uuidCard->uuidcard }}</td>
-                                            <td class="center"><a href="{{ URL::to('/participants/manage') }}/{{ $participant->id }}"><button type="button"  class="btn btn-success">Manage</button></a></td>
-                                            <td class="center"><a href="{{ URL::to('/participants/edit/') }}/{{ $participant->id }}"><span class="fa fa-edit fa-fw"></span></a></td>
-                                            <td class="center"><a href="{{ URL::to('/participants/remove/') }}/{{ $participant->id}}"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                            <td class="center">
+                                                <a href="{{ route('participants.manage', ['participant' => $participant->id]) }}" class="btn btn-success">Manage</a>
+                                            </td>
+                                            <td class="center">
+                                                <a href="{{ route('participants.edit', ['participant' => $participant->id]) }}" class="btn btn-link">
+                                                    <span class="fa fa-edit fa-fw"></span>
+                                                </a>
+                                            </td>
+                                            <td class="center">
+                                                <form action="{{ route('participants.destroy', ['participant' => $participant->id]) }}" method="POST">
+                                                    {{ method_field('DELETE') }}
+                                                    {{ csrf_field() }}
+                                                    <button type="submit" class="btn btn-link"><i class="fa fa-trash fa-fw"></i></button>
+                                                </form>
+                                            </td>
                                         </tr>
                                     @empty
                                         <tr>

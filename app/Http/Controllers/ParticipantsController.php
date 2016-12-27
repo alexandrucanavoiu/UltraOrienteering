@@ -83,7 +83,7 @@ class ParticipantsController extends Controller
         return view('participants.manage', compact('participant', 'categories'));
     }
 
-    public function manageupdate(Request $request)
+    public function updateManage(Request $request, $id)
     {
         $participant_id = $request->input('participant_id');
         $uuidcards_id = $request->input('uuidcards_id');
@@ -216,12 +216,12 @@ class ParticipantsController extends Controller
     }
 
 
-    public function remove($id) {
+    public function destroy($id)
+    {
+        $participant = Participant::findOrFail($id);
+        $participant->delete();
 
-        DB::table('participants')->where('id', $id)->delete();
-
-        $data = '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> The participant with <strong>ID ' . $id . '</strong> has been removed from the database.</div>';
-        return redirect('/participants')->with('message', $data);
+        return redirect('/participants')->with('message', $participant->name . ' has been deleted!');
     }
 
 
