@@ -25,9 +25,9 @@ class stagesController extends Controller
     public function create(Request $request){
 
 
-            $stage_name = $_POST['stage_name'];
-            $stage_date = $_POST['stage_date'];
-            $stage_time = $_POST['stage_time'];
+            $stage_name = $request->input('stage_name');
+            $stage_date = $request->input('stage_date');
+            $stage_time = $request->input('stage_time');
 
 
         foreach($stage_name as $key => $value) {

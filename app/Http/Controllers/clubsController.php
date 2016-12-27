@@ -7,18 +7,16 @@ use Illuminate\Contracts\Validation\Validator;
 use DB;
 use Session;
 use Input;
+use App\Models\Club;
+use App\Models\ClubDistrict;
 
 class clubsController extends Controller
 {
     public function index(){
 
-        $clubs = DB::table('clubs')
-            ->select('clubs.id as club_id', 'clubs.club_name', 'clubs.club_city', 'clubs.club_district', 'district.id as district_id', 'district.district_name')
-            ->leftJoin('district', 'district.id', '=', 'clubs.club_district')
-            ->paginate(15);
+        $clubs = Club::with('ClubDistrict')->paginate(15);
 
-        $districtlist = DB::table('district')->get();
-
+        $districtlist = ClubDistrict::All();
 
         return view('clubs', ['clubs' => $clubs, 'districtlist' => $districtlist]);
 
@@ -29,12 +27,9 @@ class clubsController extends Controller
 
     public function create(Request $request){
 
-        $cname = $_POST['name'];
-        $ccity = $_POST['city'];
-        $cdistrict = $_POST['district'];
-
-
-       // $this->validate($request, ['name' => 'required|filled|min:2|max:255|unique:clubs,name']);
+        $cname = $request->input('name');
+        $ccity = $request->input('city');
+        $cdistrict = $request->input('district');
 
         foreach($cname as $key => $value) {
 
@@ -43,57 +38,38 @@ class clubsController extends Controller
             $clubdistrict = $cdistrict[$key];
 
 
-
-            DB::table('clubs')->insertGetId(
-                [
-                    'club_name' => $clubname, 'club_city' => $clubcity, 'club_district' => $clubdistrict
-                ]
-            );
-
-
+            $clubs = Club::create([
+                'name' => $clubname,
+                'city' => $clubcity,
+                'club_district_id' => $clubdistrict
+            ]);
         }
 
         $count =  count($cname);
 
-
         if ($count > 1 ) {
-            return redirect('/clubs')->with('message', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>All clubs have been added to the database.</div>');
+            return redirect('/clubs')->with('success', 'All clubs have been added to the database.');
         } else {
-            return redirect('/clubs')->with('message', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>One club has been added to the database.</div>');
+            return redirect('/clubs')->with('success', 'Club ' . $club->name . ' has been added to the database.');
         }
-
     }
 
 
     public function remove($id) {
 
-        DB::table('clubs')->where('id', $id)->delete();
+        $club = Club::findOrFail($id);
+        $club->delete();
 
-        $data = '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> Club with <strong>ID ' . $id . '</strong> has been removed from the database.</div>';
-        return redirect('/clubs')->with('message', $data);
-    }
-
-
-    public function truncate() {
-
-        DB::table('clubs')->truncate();
-
-        return redirect('/clubs')->with('message', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>All Clubs has been removed from the database.</div>');
+        return redirect('/clubs')->with('success', $club->name . ' has been removed from the database');
     }
 
 
     public function edit($id){
 
-        $clubs = DB::table('clubs')
-            ->select('clubs.id as club_id', 'clubs.club_name', 'clubs.club_city', 'clubs.club_district', 'district.id as district_id', 'district.district_name')
-            ->leftJoin('district', 'district.id', '=', 'clubs.club_district')
-            ->where('clubs.id', '=', $id)
-            ->first();
+        $club = Club::with('ClubDistrict')->findOrFail($id);
+        $districtlist = ClubDistrict::All();
 
-        $districtlist = DB::table('district')->get();
-
-
-        return view('clubs.edit', ['clubs' => $clubs, 'districtlist' => $districtlist]);
+        return view('clubs.edit', ['club' => $club, 'districtlist' => $districtlist]);
 
 
     }
@@ -102,18 +78,22 @@ class clubsController extends Controller
 
     public function update(Request $request, $id){
 
+        $club = Club::findOrFail($id);
 
-        $name = $request->input('name');
-        $city = $request->input('city');
-        $district = $request->input('district');
+        $this->validate($request, [
+            'name' => 'required|max:255|min:2',
+            'city' => 'required|min:2',
+            'district' => 'required|integer',
+        ]);
 
+        $club->update([
+            'name' => $request->input('name'),
+            'club_district_id' => $request->input('district'),
+            'city' => $request->input('city')
 
-        DB::table('clubs')
-            ->where('clubs.id', '=', $id)
-            ->update(['club_name' => $name, 'club_city' => $city, 'club_district' => $district]);
+        ]);
 
-            $result = "<div class=\"alert alert-success alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>Club with #ID " . $id .  " have been added updated.</div>";
-            return redirect('/clubs')->with('message', $result);
+            return redirect('/clubs')->with('success', $club->name . ' have been added updated.');
 
     }
 
