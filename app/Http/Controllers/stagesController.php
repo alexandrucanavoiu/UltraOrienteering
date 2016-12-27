@@ -59,7 +59,9 @@ class stagesController extends Controller
 
     public function remove($id) {
 
-        $stage =  Stage::findOrFail($id);
+        $stage =  Stage::find($id);
+        if (!$stage) {  return redirect('/stages')->with('error', 'You cannot remove the stage with id ' . $id . ' becouse not exist! '); }
+
         $stage->delete();
 
         return redirect('/stages')->with('success', $stage->name . ' has been removed!');
@@ -69,7 +71,9 @@ class stagesController extends Controller
 
     public function edit($id){
 
-        $stage =  Stage::findOrFail($id);
+        $stage =  Stage::find($id);
+
+        if (!$stage) {  return redirect('/stages')->with('error', 'You cannot edit the stage with id ' . $id . ' becouse not exist! '); }
 
         return view('stages.edit', ['stage' => $stage]);
 
@@ -82,7 +86,10 @@ class stagesController extends Controller
             'stage_name' => 'required',
         ]);
 
-        $stage = Stage::findOrFail($id);
+        $stage = Stage::find($id);
+
+        if (!$stage) {  return redirect('/stages')->with('error', 'You cannot update the stage with id ' . $id . ' becouse not exist! '); }
+
         $stage->update([
             'name' => $request->input('stage_name'),
             'start_time' => $request->input('stage_date'),

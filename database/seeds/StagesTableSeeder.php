@@ -14,22 +14,22 @@ class StagesTableSeeder extends Seeder
         $records = [
             [
                 'name' => 'Ziua 1',
-                'start_time' => \Carbon\Carbon::parse('12/28/2016 2:00pm'),
+                'start_time' => \Carbon\Carbon::parse('12/28/2016'),
                 'duration' => '00:03:00',
             ],
             [
                 'name' => 'Ziua 2',
-                'start_time' => \Carbon\Carbon::parse('12/31/2016 7:00pm'),
+                'start_time' => \Carbon\Carbon::parse('12/31/2016'),
                 'duration' => '00:03:00',
             ],
             [
                 'name' => 'Ziua 3',
-                'start_time' => \Carbon\Carbon::parse('12/13/2016 4:00pm'),
+                'start_time' => \Carbon\Carbon::parse('12/13/2016'),
                 'duration' => '00:03:00',
             ],
             [
                 'name' => 'Ziua 4x',
-                'start_time' => \Carbon\Carbon::parse('12/13/2016 10:00am'),
+                'start_time' => \Carbon\Carbon::parse('12/13/2016'),
                 'duration' => '00:05:00',
             ],
         ];

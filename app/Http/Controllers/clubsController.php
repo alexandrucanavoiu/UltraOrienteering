@@ -38,7 +38,7 @@ class clubsController extends Controller
             $clubdistrict = $cdistrict[$key];
 
 
-            $clubs = Club::create([
+            $club = Club::create([
                 'name' => $clubname,
                 'city' => $clubcity,
                 'club_district_id' => $clubdistrict

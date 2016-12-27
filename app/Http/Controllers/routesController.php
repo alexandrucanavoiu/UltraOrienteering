@@ -64,7 +64,10 @@ class routesController extends Controller
 
 
     public function remove($id) {
-        $route = Route::findOrFail($id);
+        $route = Route::find($id);
+
+        if (!$route) {  return redirect('/routes')->with('error', 'You cannot remove the route with id ' . $id . ' becouse not exist! '); }
+
         $route->delete();
 
         return redirect('/routes')->with('success', $route->name . ' has been removed from database.');
@@ -74,7 +77,9 @@ class routesController extends Controller
 
     public function edit($id){
 
-        $route = Route::findOrFail($id);
+        $route = Route::find($id);
+
+        if (!$route) {  return redirect('/routes')->with('error', 'You cannot edit the route with id ' . $id . ' becouse not exist! '); }
 
         return view('routes.edit', ['route' => $route]);
 
@@ -82,7 +87,9 @@ class routesController extends Controller
 
     public function update(Request $request, $id){
 
-        $route = Route::findOrFail($id);
+        $route = Route::find($id);
+
+        if (!$route) {  return redirect('/routes')->with('error', 'You cannot update the route with id ' . $id . ' becouse not exist! '); }
 
         $this->validate($request, [
             'name' => 'required',

@@ -7,23 +7,23 @@ use Illuminate\Contracts\Validation\Validator;
 use DB;
 use Session;
 use Input;
-use App\Models\UuidCard;
+use App\Uuidcard;
 use Excel;
 
 class uuidcardsController extends Controller
 {
     public function index(){
 
-        $uuidcardslist = UuidCard::paginate(15);
+        $uuidcardslist = DB::table('uuid_cards')->paginate(15);
 
-       return view('uuid-cards', ['uuidcardslist' => $uuidcardslist]);
+        return view('uuid-cards', ['uuidcardslist' => $uuidcardslist]);
 
 
     }
 
     public function remove($id) {
 
-        UuidCard::where('id', $id)->delete();
+        DB::table('uuid_cards')->where('id', $id)->delete();
 
         $data = '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> UUID Card with <strong>number ' . $id . '</strong> has removed from database.</div>';
         return redirect('/uuid-cards')->with('message', $data);
@@ -33,7 +33,9 @@ class uuidcardsController extends Controller
     public function trucate() {
 
 
-        UuidCard::truncate();
+
+        DB::table('uuid_cards')->truncate();
+
 
         return redirect('/uuid-cards')->with('message', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>All information from database for UUID Cards removed</div>');
     }
@@ -46,14 +48,14 @@ class uuidcardsController extends Controller
 
             'import_file' => 'required'
 
-            ]);
+        ]);
 
     }
 
 
     public function importExport()
 
-            {
+    {
 
         return view('importExport');
 
@@ -63,7 +65,7 @@ class uuidcardsController extends Controller
 
     {
 
-        $data = UuidCard::get()->toArray();
+        $data = Uuidcard::get()->toArray();
 
         return Excel::create('ultra_orienteering', function($excel) use ($data) {
 
@@ -82,48 +84,48 @@ class uuidcardsController extends Controller
     public function importExcel()
 
     {
-            if (Input::hasFile('import_file')) {
+        if (Input::hasFile('import_file')) {
 
-                $path = Input::file('import_file')->getRealPath();
+            $path = Input::file('import_file')->getRealPath();
 
-                $data = Excel::load($path, function ($reader) {
+            $data = Excel::load($path, function ($reader) {
 
-                })->get();
+            })->get();
 
-                if (!empty($data) && $data->count()) {
+            if (!empty($data) && $data->count()) {
 
-                    foreach ($data as $key => $value) {
+                foreach ($data as $key => $value) {
 
-                        if (is_null($value->uuidcard) || is_null($value->id)) {
+                    if (is_null($value->uuidcard) || is_null($value->id)) {
 
-                            return redirect('/uuid-cards')->with('message', '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>Error Import File, please read the documentation about import uuid cards in database</div>');
-
-                        }
-
-                        if (Uuidcard::where('id', $value->id)->exists()) {
-                            return redirect('/uuid-cards')->with('message', '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>Please verify the ID from UUID Cards List with the File Imported, same to be duplicate.</div>');
-                        }
-
-                        if (Uuidcard::where('uuidcard', $value->uuidcard)->exists()) {
-                            return redirect('/uuid-cards')->with('message', '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>Please verify the UUIDCARD from UUID Cards List with the File Imported, same to be duplicate.</div>');
-                        }
-
-
-                        $insert[] = ['id' => $value->id, 'uuidcard' => $value->uuidcard];
+                        return redirect('/uuid-cards')->with('message', '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>Error Import File, please read the documentation about import uuid cards in database</div>');
 
                     }
 
-                    if (!empty($insert)) {
-
-                        DB::table('uuidcards')->insert($insert);
-
-                        return redirect('/uuid-cards')->with('message', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>UUID Cards from file has imported successed.</div>');
-
+                    if (Uuidcard::where('id', $value->id)->exists()) {
+                        return redirect('/uuid-cards')->with('message', '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>Please verify the ID from UUID Cards List with the File Imported, same to be duplicate.</div>');
                     }
+
+                    if (Uuidcard::where('uuidcard', $value->uuidcard)->exists()) {
+                        return redirect('/uuid-cards')->with('message', '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>Please verify the UUIDCARD from UUID Cards List with the File Imported, same to be duplicate.</div>');
+                    }
+
+
+                    $insert[] = ['id' => $value->id, 'uuidcard' => $value->uuidcard];
+
+                }
+
+                if (!empty($insert)) {
+
+                    DB::table('uuid_cards')->insert($insert);
+
+                    return redirect('/uuid-cards')->with('message', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>UUID Cards from file has imported successed.</div>');
 
                 }
 
             }
+
+        }
 
 
         return back();

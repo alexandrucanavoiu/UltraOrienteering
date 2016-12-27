@@ -29,7 +29,7 @@
                                 <thead>
                                     <tr>
                                         <th class="center">ID</th>
-                                        <th class="stage_name center">Club Name</th>
+                                        <th class="club_name center">Club Name</th>
                                         <th class="stage_datet center">Participant Name</th>
                                         <th class="stage_datet center">UUID Card</th>
                                         <th class="center"></th>

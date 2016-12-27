@@ -1,7 +1,7 @@
 @extends('layouts/template')
 
 @section('title')
-UUID Cards Administration - Ultra Orienteering Software - Open Source Software
+    UUID Cards Administration - Ultra Orienteering Software - Open Source Software
 @endsection
 
 @section('body')
@@ -10,19 +10,19 @@ UUID Cards Administration - Ultra Orienteering Software - Open Source Software
 
 
             <div class="col-lg-12">
-            <br />
+                <br />
                 @if(Session::has('message'))
 
-                        {!!   Session::get('message') !!}
+                    {!!   Session::get('message') !!}
                 @endif
 
                 @if (count($errors) > 0 )
 
                     @foreach($errors->all() as $error)
                         <div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> {{ $error }}  </div>
-                        @endforeach
+                    @endforeach
 
-                    @endif
+                @endif
 
                 <h1 class="page-header">UUID Cards Administration</h1>
             </div>
@@ -38,31 +38,31 @@ UUID Cards Administration - Ultra Orienteering Software - Open Source Software
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover">
                                 @if (count($uuidcardslist) > 0 )
-                                <thead>
-                                <tr>
-                                    <th class="center">Nr. #</th>
-                                    <th class="center">UUID Card</th>
-                                    <th class="center"></th>
-                                    <th class="center"></th>
-                                </tr>
-                                </thead>
-                                <tbody>
+                                    <thead>
+                                    <tr>
+                                        <th class="center">Nr. #</th>
+                                        <th class="center">UUID Card</th>
+                                        <th class="center"></th>
+                                        <th class="center"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
 
-                        @foreach($uuidcardslist as $uuidcard)
-                                <tr>
-                                    <td class="center">{{ $uuidcard->id }}</td>
-                                    <td class="center">{{ $uuidcard->uuidcard }}</td>
-                                    <td class="center"><button type="button" class="btn btn-warning disabled">Edit</button></td>
-                                    <td class="center"><a href="{{ URL::to('/uuid-cards/remove/') }}/{{ $uuidcard->id }}"><button type="button" class="btn btn-danger">Remove</button></a></td>
-                                </tr>
-                            @endforeach
-                                </tbody>
+                                    @foreach($uuidcardslist as $uuidcard)
+                                        <tr>
+                                            <td class="center">{{ $uuidcard->id }}</td>
+                                            <td class="center">{{ $uuidcard->uuidcard }}</td>
+                                            <td class="center"><button type="button" class="btn btn-warning disabled">Edit</button></td>
+                                            <td class="center"><a href="{{ URL::to('/uuid-cards/remove/') }}/{{ $uuidcard->id }}"><button type="button" class="btn btn-danger">Remove</button></a></td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
 
-                              @else
+                                @else
                                     <div class="center">No UUID Cards in database, please import</div>
                                 @endif
                             </table>
-                          <div  class="center"> {{ $uuidcardslist->links() }}</div>
+                            <div  class="center"> {{ $uuidcardslist->links() }}</div>
 
                         </div>
                         <!-- /.table-responsive -->
@@ -82,7 +82,7 @@ UUID Cards Administration - Ultra Orienteering Software - Open Source Software
                         <div class="table-responsive">
                             <form action="{{ URL::to('/uuid-cards/importExcel') }}" class="form-horizontal" method="post" enctype="multipart/form-data">
                                 {{ csrf_field() }}
-                               <div><input type="file" name="import_file" /></div>
+                                <div><input type="file" name="import_file" /></div>
 
                                 <button class="btn btn-primary btn-sm">Import File</button>
 

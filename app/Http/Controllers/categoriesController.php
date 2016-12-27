@@ -68,7 +68,7 @@ class categoriesController extends Controller
         $category = Category::findOrFail($id);
 
         $this->validate($request, [
-            'category_name' => 'required|max:255|min:2|unique:categories,name',
+            'category_name' => 'required|max:255|min:2',
             'route_name' => 'required|integer'
         ]);
 
