@@ -73,10 +73,5 @@
                 </div>
             </div>
         </div>
-        <div class="well">
-            <h4>DROP ALL PARTICIPANTS FROM DATABASE</h4>
-            <p>This operation will remove all data from database... WARNING !!! USE THIS BUTTON ONLY WHEN YOU WANT TO CLEAN THE SOFTWARE</p>
-            <a class="btn btn-default btn-lg btn-block" href="{{ URL::to('/participants/truncate') }}">DROP ALL PARTICIPANTS FROM DATABASE</a>
-        </div>
     </div>
 @endsection
