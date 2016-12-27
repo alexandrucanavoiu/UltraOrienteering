@@ -14,8 +14,6 @@
 @section('body')
     <div class="container-fluid">
         <div class="row">
-
-
             <div class="col-lg-12">
                 <div style="margin-top: 10px; margin-bottom: -10px">
                     @include('partials.form-flash-message')

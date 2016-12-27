@@ -7,23 +7,10 @@
 @section('body')
     <div class="container-fluid">
         <div class="row">
-
-
             <div class="col-lg-12">
-                <br />
-                @if(Session::has('message'))
-
-                    {!!   Session::get('message') !!}
-                @endif
-
-                @if (count($errors) > 0 )
-
-                    @foreach($errors->all() as $error)
-                        <div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> {{ $error }}  </div>
-                    @endforeach
-
-                @endif
-
+                <div style="margin-top: 10px; margin-bottom: -10px">
+                    @include('partials.form-flash-message')
+                </div>
                 <h1 class="page-header">Routes Administration</h1>
             </div>
 
@@ -64,8 +51,8 @@
                                     @foreach($routes as $route)
                                         <tr>
                                             <td class="center">{{ $route->id }}</td>
-                                            <td class="center">{{ $route->route_name }}</td>
-                                            <td class="center">{{ $route->route_length }} km</td>
+                                            <td class="center">{{ $route->name }}</td>
+                                            <td class="center">{{ $route->length_in_km }} km</td>
                                             <td class="center">{{ $route->post_1 }}</td>
                                             <td class="center">{{ $route->post_2 }}</td>
                                             <td class="center">{{ $route->post_3 }}</td>
@@ -97,32 +84,6 @@
                 </div>
                 <!-- /.panel -->
             </div>
-
-
-
-
-
-            <div class="col-xs-6 col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        Drop all routes from database
-                    </div>
-                    <!-- /.panel-heading -->
-                    <div class="panel-body">
-                        <div class="table-responsive">
-                            <form method="post" action="/routes/truncate">
-                                {{ csrf_field() }}
-                                <button type="submit" class="btn btn-block btn-danger">REMOVE ALL ROUTES</button>
-                            </form>
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
-
-
-
         </div>
         <!-- /.row -->
     </div>
@@ -153,8 +114,5 @@
             }
 
         });
-
-
-
     </script>
 @endsection

@@ -1,7 +1,7 @@
 @extends('layouts/template')
 
 @section('title')
-Add a new route - Ultra Orienteering Software - Open Source Software
+Edit route {{ $route->name }} - Ultra Orienteering Software - Open Source Software
 @endsection
 
 @section('body')
@@ -10,25 +10,12 @@ Add a new route - Ultra Orienteering Software - Open Source Software
 
 
         <div class="col-lg-12">
-            <br />
-            @if(Session::has('message'))
+            <div style="margin-top: 10px; margin-bottom: -10px">
+                @include('partials.form-flash-message')
+            </div>
 
-            {!!   Session::get('message') !!}
-            @endif
-
-            @if (count($errors) > 0 )
-
-            @foreach($errors->all() as $error)
-            <div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> {{ $error }}  </div>
-            @endforeach
-
-            @endif
-
-            <h1 class="page-header">Edit Route {{ $route->route_name }}  - ID #{{ $route->id }}</h1>
+            <h1 class="page-header">Edit Route {{ $route->name }}  - ID #{{ $route->id }}</h1>
         </div>
-
-
-
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -39,27 +26,22 @@ Add a new route - Ultra Orienteering Software - Open Source Software
                     <div class="table-responsive">
                         <form method="post" action="/routes/update/{{ $route->id }}">
                             {{ method_field("put") }}
-
-
                             <div class="form-group route_name_edit">
                                 <label>Name of Route</label>
-                                <input value="{{ $route->route_name }}" name="route_name" id="route_name" class="form-control">
+                                <input value="{{ $route->name }}" name="name" id="route_name" class="form-control">
                                 <p class="help-block">Example: LONG</p>
                             </div>
-
-
                             <div class="form-group route_length_edit">
                                 <label>Length in KM</label>
-                                <input value="{{ $route->route_length }}" name="route_length" id="route_length" class="form-control">
+                                <input value="{{ $route->length_in_km }}" name="length_in_km" id="route_length" class="form-control">
                                 <p class="help-block">3 or 0,800</p>
                             </div>
 
                             <div class="form-group posts_nr_edit">
                                 <label>Number of Posts</label>
-                                <input value="{{ $route->post_nr }}" name="post_nr" id="post_nr" class="form-control">
+                                <input value="{{ $route->post_amount }}" name="post_amount" id="post_nr" class="form-control">
                                 <p class="help-block">Example: 5</p>
                             </div>
-
 
                             <div class="clear"></div>
 
@@ -104,7 +86,6 @@ Add a new route - Ultra Orienteering Software - Open Source Software
                                     </div>
 
                                     <div class="clear">
-
 
                                         <div class="form-group route_length_edit">
                                             <label>Cod Post #7</label>
@@ -152,36 +133,35 @@ Add a new route - Ultra Orienteering Software - Open Source Software
                         </form>
 
                         <a href="/routes"> <button type="button" class="btn btn-success">BACK</button></a>
-
                     </div>
-
                 </div>
-
             </div>
         </div>
-
-
-
     </div>
     <!-- /.row -->
 </div>
 <script>
-
 
     $('#submitbutton').on('click', function (e) {
         var error = false;
         var msg = "Please fill the form properly:  \n";
 
 
-        if ($("#name").val() < 3) {
+        if ($("#route_name").val() < 3) {
             msg += "- Route Name must be between 2 and 255 characters! \n";
             error = true;
         }
 
-        if ($("#length").val() < 1) {
-            msg += "- Length must be between 1 and 255 characters! \n";
+        if ($("#length_in_km").val() < 1) {
+            msg += "- Length in Km! \n";
             error = true;
         }
+
+        if ($("#post_nr").val() < 1) {
+            msg += "- Numbers of posts! \n";
+            error = true;
+        }
+
 
 
         if (error) {
@@ -192,8 +172,6 @@ Add a new route - Ultra Orienteering Software - Open Source Software
         }
 
     });
-
-
 
 </script>
 @endsection

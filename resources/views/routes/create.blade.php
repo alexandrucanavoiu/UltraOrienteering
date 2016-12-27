@@ -10,24 +10,11 @@
 
 
             <div class="col-lg-12">
-                <br />
-                @if(Session::has('message'))
-
-                    {!!   Session::get('message') !!}
-                @endif
-
-                @if (count($errors) > 0 )
-
-                    @foreach($errors->all() as $error)
-                        <div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> {{ $error }}  </div>
-                    @endforeach
-
-                @endif
-
+                <div style="margin-top: 10px; margin-bottom: -10px">
+                    @include('partials.form-flash-message')
+                </div>
                 <h1 class="page-header">Add a new Route</h1>
             </div>
-
-
 
             <div class="col-lg-12">
                 <div class="panel panel-default">
@@ -43,20 +30,20 @@
 
                                 <div class="form-group route_name_edit">
                                     <label>Name of Route</label>
-                                    <input name="route_name" id="route_name" class="form-control">
+                                    <input name="name" id="route_name" class="form-control">
                                     <p class="help-block">Example: LONG</p>
                                 </div>
 
 
                                 <div class="form-group route_length_edit">
                                     <label>Length in KM</label>
-                                    <input name="route_length" id="route_length" class="form-control">
+                                    <input name="length_in_km" id="route_length" class="form-control">
                                     <p class="help-block">3 or 0,800</p>
                                 </div>
 
                                 <div class="form-group posts_nr_edit">
                                     <label>Number of Posts</label>
-                                    <input name="post_nr" id="post_nr" class="form-control">
+                                    <input name="post_amount" id="post_nr" class="form-control">
                                     <p class="help-block">Example: 6</p>
                                 </div>
 
@@ -173,15 +160,21 @@
             var msg = "Please fill the form properly:  \n";
 
 
-            if ($("#name").val() < 3) {
+            if ($("#route_name").val() < 3) {
                 msg += "- Route Name must be between 2 and 255 characters! \n";
                 error = true;
             }
 
-            if ($("#length").val() < 1) {
-                msg += "- Length must be between 1 and 255 characters! \n";
+            if ($("#length_in_km").val() < 1) {
+                msg += "- Length in Km! \n";
                 error = true;
             }
+
+            if ($("#post_nr").val() < 1) {
+                msg += "- Numbers of posts! \n";
+                error = true;
+            }
+
 
 
             if (error) {
@@ -192,8 +185,5 @@
             }
 
         });
-
-
-
     </script>
 @endsection

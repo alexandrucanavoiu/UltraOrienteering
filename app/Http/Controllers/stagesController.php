@@ -40,7 +40,7 @@ class stagesController extends Controller
             $stage = Stage::create([
                 'name' => $stagename,
                 'start_time' => $stagedate,
-                'duration' => $stagetime,
+                'duration' => $stagetime
             ]);
 
 
