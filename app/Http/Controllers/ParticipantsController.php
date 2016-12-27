@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Club;
 use App\Models\Participant;
+use App\Models\ParticipantManager;
 use App\Models\UuidCard;
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Validation\Rule;
 
 class ParticipantsController extends Controller
 {
@@ -86,134 +88,53 @@ class ParticipantsController extends Controller
 
     public function updateManage(Request $request, $id)
     {
-        $participant_id = $request->input('participant_id');
-        $uuidcards_id = $request->input('uuidcards_id');
-        $stage_name = $request->input('stage_name');
-        $participant_category = $request->input('participant_category');
-        $post_s = $request->input('post_s');
-        $post_1 = $request->input('post_1');
-        $post_2 = $request->input('post_2');
-        $post_3 = $request->input('post_3');
-        $post_4 = $request->input('post_4');
-        $post_5 = $request->input('post_5');
-        $post_6 = $request->input('post_6');
-        $post_7 = $request->input('post_7');
-        $post_8 = $request->input('post_8');
-        $post_9 = $request->input('post_9');
-        $post_10 = $request->input('post_10');
-        $post_11 = $request->input('post_11');
-        $post_12 = $request->input('post_12');
-        $post_f = $request->input('post_f');
+        $this->validate($request, [
+            'manage.*' => [
+                'required',
+//                Rule::exists('participant_managers', 'id')->where('participant_id', $id), // broken
+            ],
+            'manage.*.category_id' => 'required|exists:categories,id',
+            'manage.*.post_start' => 'required|date_format:H:i:s',
+            'manage.*.post_1' => 'required|date_format:H:i:s',
+            'manage.*.post_2' => 'required|date_format:H:i:s',
+            'manage.*.post_3' => 'required|date_format:H:i:s',
+            'manage.*.post_4' => 'required|date_format:H:i:s',
+            'manage.*.post_5' => 'required|date_format:H:i:s',
+            'manage.*.post_6' => 'required|date_format:H:i:s',
+            'manage.*.post_7' => 'required|date_format:H:i:s',
+            'manage.*.post_8' => 'required|date_format:H:i:s',
+            'manage.*.post_9' => 'required|date_format:H:i:s',
+            'manage.*.post_10' => 'required|date_format:H:i:s',
+            'manage.*.post_11' => 'required|date_format:H:i:s',
+            'manage.*.post_12' => 'required|date_format:H:i:s',
+            'manage.*.post_finish' => 'required|date_format:H:i:s',
+        ]);
 
-        $check_id = $participant_id[0];
+        $participant = Participant::findOrFail($id);
 
-        $check = DB::table('participants_manage')
-            ->where('participants_id', '=', $check_id)
-            ->where('stages_name', '=', $stage_name)
-            ->first();
+        foreach ($request->input('manage') as $manageId => $manage) {
+            $manager = $participant->participantManagers()->findOrFail($manageId);
 
-
-        if($check !== null)
-        {
-            foreach ($participant_id as $value => $value2)
-            {
-                $pu = $participant_id[$value];
-                $xu = $uuidcards_id[$value];
-                $xs = $stage_name[$value];
-                $xc = $participant_category[$value];
-//                $ps = $post_s[$value];
-//                $p1 = $post_1[$value];
-//                $p2 = $post_2[$value];
-//                $p3 = $post_3[$value];
-//                $p4 = $post_4[$value];
-//                $p5 = $post_5[$value];
-//                $p6 = $post_6[$value];
-//                $p7 = $post_7[$value];
-//                $p8 = $post_8[$value];
-//                $p9 = $post_9[$value];
-//                $p10 = $post_10[$value];
-//                $p11 = $post_11[$value];
-//                $p12 = $post_12[$value];
-//                $pf = $post_f[$value];
-
-
-
-                DB::table('participants_manage')
-                    ->where('participants_id', '=', $check_id)
-                    ->where('stages_name', '=', $xs)->update(
-                        [
-                             'categories_id' => $xc
-//                            'post_s' => $ps,
-//                            'post_1' => $p1,
-//                            'post_2' => $p2,
-//                            'post_3' => $p3,
-//                            'post_4' => $p4,
-//                            'post_5' => $p5,
-//                            'post_6' => $p6,
-//                            'post_7' => $p7,
-//                            'post_8' => $p8,
-//                            'post_9' => $p9,
-//                            'post_10' => $p10,
-//                            'post_11' => $p11,
-//                            'post_12' => $p12,
-//                            'post_f' => $pf
-
-                        ]
-                    );
-            }
-
-
-        } else {
-
-            foreach ($participant_id as $value => $value2) {
-                $pu = $participant_id[$value];
-                $xu = $uuidcards_id[$value];
-                $xs = $stage_name[$value];
-                $xc = $participant_category[$value];
-//                $ps = $post_s[$value];
-//                $p1 = $post_1[$value];
-//                $p2 = $post_2[$value];
-//                $p3 = $post_3[$value];
-//                $p4 = $post_4[$value];
-//                $p5 = $post_5[$value];
-//                $p6 = $post_6[$value];
-//                $p7 = $post_7[$value];
-//                $p8 = $post_8[$value];
-//                $p9 = $post_9[$value];
-//                $p10 = $post_10[$value];
-//                $p11 = $post_11[$value];
-//                $p12 = $post_12[$value];
-//                $pf = $post_f[$value];
-
-
-                DB::table('participants_manage')->insertGetId(
-                    [
-                        'participants_id' => $pu,
-                        'uuidcards_id' => $xu,
-                        'stages_name' => $xs,
-                        'categories_id' => $xc
-//                            'post_s' => $ps,
-//                            'post_1' => $p1,
-//                            'post_2' => $p2,
-//                            'post_3' => $p3,
-//                            'post_4' => $p4,
-//                            'post_5' => $p5,
-//                            'post_6' => $p6,
-//                            'post_7' => $p7,
-//                            'post_8' => $p8,
-//                            'post_9' => $p9,
-//                            'post_10' => $p10,
-//                            'post_11' => $p11,
-//                            'post_12' => $p12,
-//                            'post_f' => $pf
-                    ]
-                );
-            }
-
+            $manager->update([
+                'category_id' => $manage['category_id'],
+                'post_start' => $manage['post_start'],
+                'post_1' => $manage['post_1'],
+                'post_2' => $manage['post_2'],
+                'post_3' => $manage['post_3'],
+                'post_4' => $manage['post_4'],
+                'post_5' => $manage['post_5'],
+                'post_6' => $manage['post_6'],
+                'post_7' => $manage['post_7'],
+                'post_8' => $manage['post_8'],
+                'post_9' => $manage['post_9'],
+                'post_10' => $manage['post_10'],
+                'post_11' => $manage['post_11'],
+                'post_12' => $manage['post_12'],
+                'post_finish' => $manage['post_finish'],
+            ]);
         }
 
-        return redirect(route('post.manageupdate', array('id' => $check_id)))->with('message', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>All records has been added in the database.</div>');
-
+        return redirect(route('participants.index'))->with('success', 'Successfully stored the achievements for ' . $participant->name . '!');
     }
 
 

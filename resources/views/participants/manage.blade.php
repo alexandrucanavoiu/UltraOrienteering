@@ -28,9 +28,9 @@
 
                             <div class="panel-body">
                                 <div class="form-group">
-                                    <label for="manager[{{ $manager->id }}][category_id]">Category</label>
-                                    <select class="form-control" id="manager[{{ $manager->id }}][category_id]"
-                                            name="manager[{{ $manager->id }}][category_id]">
+                                    <label for="manage[{{ $manager->id }}][category_id]">Category</label>
+                                    <select class="form-control" id="manage[{{ $manager->id }}][category_id]"
+                                            name="manage[{{ $manager->id }}][category_id]">
                                         @foreach($categories as $category)
                                             <option value="{{ $category->id }}" {{ $category->id === $manager->category_id ? 'selected' : '' }}>{{ $category->name }}</option>
                                         @endforeach
@@ -43,86 +43,86 @@
                                 </div>
 
                                 <div class="posts clearfix">
-                                    <label class="pull-left" for="manager[{{ $manager->id }}][post_start]">Start</label>
-                                    <input class="form-control posts_time_input" name="manager[{{ $manager->id }}][post_start]"
-                                           id="manager[{{ $manager->id }}][post_start]"  type="text" value="{{ $manager->post_start }}">
+                                    <label class="pull-left" for="manage[{{ $manager->id }}][post_start]">Start</label>
+                                    <input class="form-control posts_time_input" name="manage[{{ $manager->id }}][post_start]"
+                                           id="manage[{{ $manager->id }}][post_start]"  type="text" value="{{ $manager->post_start }}">
                                 </div>
 
                                 <div class="posts clearfix">
-                                    <label class="pull-left" for="manager[{{ $manager->id }}][post_1]">Post #1</label>
+                                    <label class="pull-left" for="manage[{{ $manager->id }}][post_1]">Post #1</label>
                                     <input class="form-control posts_time_input posts_time_input_1"
-                                           name="manager[{{ $manager->id }}][post_1]" id="manager[{{ $manager->id }}][post_1]"
+                                           name="manage[{{ $manager->id }}][post_1]" id="manage[{{ $manager->id }}][post_1]"
                                            type="text" value="{{ $manager->post_1 }}">
                                 </div>
 
                                 <div class="posts clearfix">
-                                    <label class="pull-left" for="manager[{{ $manager->id }}][post_2]">Post #2</label>
+                                    <label class="pull-left" for="manage[{{ $manager->id }}][post_2]">Post #2</label>
                                     <input class="form-control posts_time_input posts_time_input_1"
-                                           name="manager[{{ $manager->id }}][post_2]" id="manager[{{ $manager->id }}][post_2]"
+                                           name="manage[{{ $manager->id }}][post_2]" id="manage[{{ $manager->id }}][post_2]"
                                            type="text" value="{{ $manager->post_2 }}">
                                 </div>
 
                                 <div class="posts clearfix">
-                                    <label class="pull-left" for="manager[{{ $manager->id }}][post_3]">Post #3</label>
+                                    <label class="pull-left" for="manage[{{ $manager->id }}][post_3]">Post #3</label>
                                     <input class="form-control posts_time_input posts_time_input_1"
-                                           name="manager[{{ $manager->id }}][post_3]" id="manager[{{ $manager->id }}][post_3]"
+                                           name="manage[{{ $manager->id }}][post_3]" id="manage[{{ $manager->id }}][post_3]"
                                            type="text" value="{{ $manager->post_3 }}">
                                 </div>
 
                                 <div class="posts clearfix">
-                                    <label class="pull-left" for="manager[{{ $manager->id }}][post_4]">Post #4</label>
+                                    <label class="pull-left" for="manage[{{ $manager->id }}][post_4]">Post #4</label>
                                     <input class="form-control posts_time_input posts_time_input_1"
-                                           name="manager[{{ $manager->id }}][post_4]" id="manager[{{ $manager->id }}][post_4]"
+                                           name="manage[{{ $manager->id }}][post_4]" id="manage[{{ $manager->id }}][post_4]"
                                            type="text" value="{{ $manager->post_4 }}">
                                 </div>
 
                                 <div class="posts clearfix">
-                                    <label class="pull-left" for="manager[{{ $manager->id }}][post_5]">Post #5</label>
+                                    <label class="pull-left" for="manage[{{ $manager->id }}][post_5]">Post #5</label>
                                     <input class="form-control posts_time_input posts_time_input_1"
-                                           name="manager[{{ $manager->id }}][post_5]" id="manager[{{ $manager->id }}][post_5]"
+                                           name="manage[{{ $manager->id }}][post_5]" id="manage[{{ $manager->id }}][post_5]"
                                            type="text" value="{{ $manager->post_5 }}">
                                 </div>
 
                                 <div class="posts clearfix">
-                                    <label class="pull-left" for="manager[{{ $manager->id }}][post_6]">Post #6</label>
+                                    <label class="pull-left" for="manage[{{ $manager->id }}][post_6]">Post #6</label>
                                     <input class="form-control posts_time_input posts_time_input_1"
-                                           name="manager[{{ $manager->id }}][post_6]" id="manager[{{ $manager->id }}][post_6]"
+                                           name="manage[{{ $manager->id }}][post_6]" id="manage[{{ $manager->id }}][post_6]"
                                            type="text" value="{{ $manager->post_6 }}">
                                 </div>
 
                                 <div class="posts clearfix">
-                                    <label class="pull-left" for="manager[{{ $manager->id }}][post_7]">Post #7</label>
-                                    <input class="form-control posts_time_input posts_time_input_1" name="manager[{{ $manager->id }}][post_7]" id="manager[{{ $manager->id }}][post_7]"  type="text" value="{{ $manager->post_7 }}">
+                                    <label class="pull-left" for="manage[{{ $manager->id }}][post_7]">Post #7</label>
+                                    <input class="form-control posts_time_input posts_time_input_1" name="manage[{{ $manager->id }}][post_7]" id="manage[{{ $manager->id }}][post_7]"  type="text" value="{{ $manager->post_7 }}">
                                 </div>
 
                                 <div class="posts clearfix">
-                                    <label class="pull-left" for="manager[{{ $manager->id }}][post_8]">Post #8</label>
-                                    <input class="form-control posts_time_input posts_time_input_1" name="manager[{{ $manager->id }}][post_8]" id="manager[{{ $manager->id }}][post_8]"  type="text" value="{{ $manager->post_8 }}">
+                                    <label class="pull-left" for="manage[{{ $manager->id }}][post_8]">Post #8</label>
+                                    <input class="form-control posts_time_input posts_time_input_1" name="manage[{{ $manager->id }}][post_8]" id="manage[{{ $manager->id }}][post_8]"  type="text" value="{{ $manager->post_8 }}">
                                 </div>
 
                                 <div class="posts clearfix">
-                                    <label class="pull-left" for="manager[{{ $manager->id }}][post_9]">Post #9</label>
-                                    <input class="form-control posts_time_input posts_time_input_1" name="manager[{{ $manager->id }}][post_9]" id="manager[{{ $manager->id }}][post_9]"  type="text" value="{{ $manager->post_9 }}">
+                                    <label class="pull-left" for="manage[{{ $manager->id }}][post_9]">Post #9</label>
+                                    <input class="form-control posts_time_input posts_time_input_1" name="manage[{{ $manager->id }}][post_9]" id="manage[{{ $manager->id }}][post_9]"  type="text" value="{{ $manager->post_9 }}">
                                 </div>
 
                                 <div class="posts clearfix">
-                                    <label class="pull-left" for="manager[{{ $manager->id }}][post_10]">Post #10</label>
-                                    <input class="form-control posts_time_input " name="manager[{{ $manager->id }}][post_10]" id="manager[{{ $manager->id }}][post_10]"  type="text" value="{{ $manager->post_10 }}">
+                                    <label class="pull-left" for="manage[{{ $manager->id }}][post_10]">Post #10</label>
+                                    <input class="form-control posts_time_input " name="manage[{{ $manager->id }}][post_10]" id="manage[{{ $manager->id }}][post_10]"  type="text" value="{{ $manager->post_10 }}">
                                 </div>
 
                                 <div class="posts clearfix">
-                                    <label class="pull-left" for="manager[{{ $manager->id }}][post_11]">Post #11</label>
-                                    <input class="form-control posts_time_input" name="manager[{{ $manager->id }}][post_11]" id="manager[{{ $manager->id }}][post_11]"  type="text" value="{{ $manager->post_11 }}">
+                                    <label class="pull-left" for="manage[{{ $manager->id }}][post_11]">Post #11</label>
+                                    <input class="form-control posts_time_input" name="manage[{{ $manager->id }}][post_11]" id="manage[{{ $manager->id }}][post_11]"  type="text" value="{{ $manager->post_11 }}">
                                 </div>
 
                                 <div class="posts clearfix">
-                                    <label class="pull-left" for="manager[{{ $manager->id }}][post_12]">Post #12</label>
-                                    <input class="form-control posts_time_input" name="manager[{{ $manager->id }}][post_12]" id="manager[{{ $manager->id }}][post_12]"  type="text" value="{{ $manager->post_12 }}">
+                                    <label class="pull-left" for="manage[{{ $manager->id }}][post_12]">Post #12</label>
+                                    <input class="form-control posts_time_input" name="manage[{{ $manager->id }}][post_12]" id="manage[{{ $manager->id }}][post_12]"  type="text" value="{{ $manager->post_12 }}">
                                 </div>
 
                                 <div class="posts clearfix">
-                                    <label class="pull-left" for="manager[{{ $manager->id }}][post_finish]">Finish</label>
-                                    <input class="form-control posts_time_input" name="manager[{{ $manager->id }}][post_finish]" id="manager[{{ $manager->id }}][post_finish]"  type="text" value="{{ $manager->post_finish }}">
+                                    <label class="pull-left" for="manage[{{ $manager->id }}][post_finish]">Finish</label>
+                                    <input class="form-control posts_time_input" name="manage[{{ $manager->id }}][post_finish]" id="manage[{{ $manager->id }}][post_finish]"  type="text" value="{{ $manager->post_finish }}">
                                 </div>
                             </div>
 
