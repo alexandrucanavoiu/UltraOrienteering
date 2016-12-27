@@ -7,12 +7,13 @@ use Illuminate\Contracts\Validation\Validator;
 use DB;
 use Session;
 use Input;
+use App\Models\Stage;
 
 class stagesController extends Controller
 {
     public function index(){
 
-        $stageslist = DB::table('stages')->paginate(15);
+        $stageslist = Stage::paginate(15);
 
 
         return view('stages', ['stageslist' => $stageslist]);
@@ -29,7 +30,6 @@ class stagesController extends Controller
             $stage_date = $_POST['stage_date'];
             $stage_time = $_POST['stage_time'];
 
-        $this->validate($request, ['stage_name' => 'required|filled|min:1|max:255|unique:stages,stage_name']);
 
         foreach($stage_name as $key => $value) {
 
@@ -38,13 +38,13 @@ class stagesController extends Controller
             $stagetime = $stage_time[$key];
 
 
+            $stage = Stage::create([
+                'name' => $stagename,
+                'start_time' => $stagedate,
+                'duration' => $stagetime,
+            ]);
 
-            DB::table('stages')->insertGetId(
-                [
-                    'stage_name' => $stagename, 'stage_date' => $stagedate, 'stage_time' => $stagetime
-                ]
-            );
-
+            
         }
 
         $count =  count($stage_name);
@@ -60,7 +60,7 @@ class stagesController extends Controller
 
     public function remove($id) {
 
-        DB::table('stages')->where('id', $id)->delete();
+        Stage::where('id', $id)->delete();
 
         $data = '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> Stage with <strong>ID ' . $id . '</strong> has been removed from database.</div>';
         return redirect('/stages')->with('message', $data);
@@ -77,11 +77,7 @@ class stagesController extends Controller
 
     public function edit($id){
 
-        $stage = DB::table('stages')
-            ->select('id', 'stage_name', 'stage_date', 'stage_time')
-            ->where('id', '=', $id)
-            ->first();
-
+        $stage =  Stage::findOrFail($id);
 
         return view('stages.edit', ['stage' => $stage]);
 
@@ -90,15 +86,16 @@ class stagesController extends Controller
 
     public function update(Request $request, $id){
 
+        $this->validate($request, [
+            'stage_name' => 'required',
+        ]);
 
-        $stage_name = $request->input('stage_name');
-        $stage_date = $request->input('stage_date');
-        $stage_time = $request->input('stage_time');
-
-
-        DB::table('stages')
-            ->where('id', '=', $id)
-            ->update(['stage_name' => $stage_name, 'stage_date' => $stage_date, 'stage_time' => $stage_time]);
+        $stage = Stage::findOrFail($id);
+        $stage->update([
+            'name' => $request->input('stage_name'),
+            'start_time' => $request->input('stage_date'),
+            'duration' => $request->input('stage_time')
+        ]);
 
         $result = "<div class=\"alert alert-success alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>The Stage with #ID " . $id .  " have been added updated.</div>";
         return redirect('/stages')->with('message', $result);

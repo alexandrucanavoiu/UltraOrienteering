@@ -91,30 +91,21 @@
                                 });
                             </script>
 
-
                             <form method="post" action="/stages/create">
-
                             <div id="stage" class="js--stage stage-1">
                                 <div class="y">
-
                                     <div class="stage_name div-left-input">
                                         <div><strong>Stage Name</strong></div>
                                         <input name="stage_name[]" id="stage_name" type="text" class="form-control">
-
                                     </div>
-
                                     <div class="stage_date div-left-input">
                                         <div><strong>Date</strong></div>
                                         <input type="text" class="js--stage-data form-control" id="stage_date" name="stage_date[]">
-
                                     </div>
-
                                     <div class="stage_time div-left-input">
                                         <div><strong>Start Time</strong></div>
                                         <input id="stage_time" class="js--stage-time time ui-timepicker-input form-control" autocomplete="off" name="stage_time[]" type="text">
-
                                     </div>
-
                                     <div class="stage_add div-left-input">
                                     <a href="javascript:void(0);" class="add_button" title="Add field">
                                         <img src="/images/add-icon.png"/></a> <span class="error"> *</span>
@@ -124,8 +115,6 @@
                                 {{ csrf_field() }}
                                 <button type="submit" class="btn btn-primary btn-sm btn-block" id="submitbutton">Submit</button>
                             </form>
-
-
                         </div>
                         <!-- /.table-responsive -->
                     </div>
@@ -133,8 +122,6 @@
                 </div>
                 <!-- /.panel -->
             </div>
-
-
                 <div class="col-xs-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -150,31 +137,28 @@
                                             <th class="center">ID</th>
                                             <th class="stage_name center">Stage Name</th>
                                             <th class="stage_datet center">Date</th>
-                                            <th class="stage_datet center">Time</th>
+                                            <th class="stage_datet center">Start</th>
                                             <th class="center"></th>
                                             <th class="center"></th>
                                         </tr>
                                         </thead>
                                         <tbody>
-
                                         @foreach($stageslist as $stage)
                                             <tr>
                                                 <td class="center">{{ $stage->id }}</td>
-                                                <td class="center">{{ $stage->stage_name }}</td>
-                                                <td class="center">{{ $stage->stage_date }}</td>
-                                                <td class="center">{{ $stage->stage_time }}</td>
+                                                <td class="center">{{ $stage->name }}</td>
+                                                <td class="center">{{ $stage->start_time }}</td>
+                                                <td class="center">{{ $stage->duration }}</td>
                                                 <td class="center"><a href="{{ URL::to('/stages/edit/') }}/{{ $stage->id }}"><button type="button" class="btn btn-success">Edit</button></a></td>
                                                 <td class="center"><a href="{{ URL::to('/stages/remove/') }}/{{ $stage->id }}"><button type="button" class="btn btn-danger">Remove</button></a></td>
                                             </tr>
                                         @endforeach
                                         </tbody>
-
                                     @else
                                         <div class="center">No Stages in database, please add</div>
                                     @endif
                                 </table>
                                 <div  class="center"> {{ $stageslist->links() }}</div>
-
                             </div>
                             <!-- /.table-responsive -->
                         </div>
@@ -182,7 +166,6 @@
                     </div>
                     <!-- /.panel -->
                 </div>
-
         </div>
         <!-- /.row -->
         <div class="well">
@@ -190,51 +173,34 @@
             <p>This operation will remove all data from database... WARNING !!! USE THIS BUTTON ONLY WHEN YOU WANT TO CLEAN THE SOFTWARE</p>
             <a class="btn btn-default btn-lg btn-block" href="{{ URL::to('/stages/truncate') }}">DROP ALL STAGES FROM DATABASE</a>
         </div>
-
     </div>
-
     <script>
-
         function validateFORM() {
             $('#submitbutton').on('click', function (e) {
                 var error = false;
                 var msg = "Please fill the form properly:  \n";
-
-
                 if ($("#stage_name").val() < 3) {
                     msg += "- Stage Name must be between 3 and 255 characters! \n";
                     error = true;
                 }
-
                 if ($("#stage_date").val() < 1) {
                     msg += "- Please select a date! \n";
                     error = true;
                 }
-
                 if ($("#stage_time").val() < 1) {
                     msg += "- Please select a time! \n";
                     error = true;
                 }
-
-
                 if (error) {
                     alert(msg);
                     e.preventDefault();
                     return false;
-
                 }
-
             });
-
         }
-
-
         function createTimePickers()
         {
             $('.js--stage-time').each(function () {
-
-
-
                 $(this).timepicker({ 'step': 1 });
 
                 $(this).timepicker({ 'step': 1 });
@@ -244,21 +210,15 @@
                         return (i%2) ? 1 : 1;
                     }
                 });
-
-
             });
         }
-
         function createDatePickers()
         {
             $('.js--stage-data').each(function () {
 
-
-
                 $(this).datepicker({
                             dateFormat: "dd-mm-yy",
                         }
-
                 );
                 $.datepicker.setDefaults({minDate: new Date()});
                 $(this).datepicker({onSelect: function(selectedDate) {
@@ -266,21 +226,13 @@
                     if (date) {
                         date.setDate(date.getDate() + 1);
                     }
-
                 }});
-
             });
         }
-
         $(function() {
             createTimePickers();
             createDatePickers();
             validateFORM();
         });
-
-
-
-
     </script>
-
 @endsection

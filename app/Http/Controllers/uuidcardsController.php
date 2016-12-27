@@ -7,14 +7,14 @@ use Illuminate\Contracts\Validation\Validator;
 use DB;
 use Session;
 use Input;
-use App\Uuidcard;
+use App\Models\UuidCard;
 use Excel;
 
 class uuidcardsController extends Controller
 {
     public function index(){
 
-        $uuidcardslist = DB::table('uuidcards')->paginate(15);
+        $uuidcardslist = UuidCard::paginate(15);
 
        return view('uuid-cards', ['uuidcardslist' => $uuidcardslist]);
 
@@ -23,7 +23,7 @@ class uuidcardsController extends Controller
 
     public function remove($id) {
 
-        DB::table('uuidcards')->where('id', $id)->delete();
+        UuidCard::where('id', $id)->delete();
 
         $data = '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> UUID Card with <strong>number ' . $id . '</strong> has removed from database.</div>';
         return redirect('/uuid-cards')->with('message', $data);
@@ -33,9 +33,7 @@ class uuidcardsController extends Controller
     public function trucate() {
 
 
-
-        DB::table('uuidcards')->truncate();
-
+        UuidCard::truncate();
 
         return redirect('/uuid-cards')->with('message', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>All information from database for UUID Cards removed</div>');
     }
@@ -55,7 +53,7 @@ class uuidcardsController extends Controller
 
     public function importExport()
 
-    {
+            {
 
         return view('importExport');
 
@@ -65,9 +63,9 @@ class uuidcardsController extends Controller
 
     {
 
-        $data = Uuidcard::get()->toArray();
+        $data = UuidCard::get()->toArray();
 
-        return Excel::create('itsolutionstuff_example', function($excel) use ($data) {
+        return Excel::create('ultra_orienteering', function($excel) use ($data) {
 
             $excel->sheet('mySheet', function($sheet) use ($data)
 

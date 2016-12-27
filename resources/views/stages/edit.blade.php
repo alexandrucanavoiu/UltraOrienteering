@@ -19,7 +19,7 @@
         <div class="col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Edit Stage {{ $stage->stage_name }}
+                    Edit Stage {{ $stage->name }}
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
@@ -33,19 +33,19 @@
 
                                     <div class="stage_name div-left-input">
                                         <div><strong>Stage Name</strong></div>
-                                        <input class="form-control" name="stage_name" id="stage_name" type="text" value="{{ $stage->stage_name }}">
+                                        <input class="form-control" name="stage_name" id="stage_name" type="text" value="{{ $stage->name }}">
 
                                     </div>
 
                                     <div class="stage_date div-left-input">
                                         <div><strong>Date</strong></div>
-                                        <input type="text" class="form-control js--stage-data" id="stage_date" name="stage_date" value="{{ $stage->stage_date}}">
+                                        <input type="text" class="form-control js--stage-data" id="stage_date" name="stage_date" value="{{ $stage->start_time}}">
 
                                     </div>
 
                                     <div class="stage_time div-left-input resize-time">
                                         <div><strong>Start Time</strong></div>
-                                        <input class="form-control js--stage-time time ui-timepicker-input" autocomplete="off" name="stage_time" type="text" value="{{ $stage->stage_time }}">
+                                        <input class="form-control js--stage-time time ui-timepicker-input" autocomplete="off" name="stage_time" type="text" value="{{ $stage->duration }}">
 
                                     </div>
 
@@ -125,13 +125,9 @@
 
 
             $('.js--stage-data').each(function () {
-
-
-
                 $(this).datepicker({
                             dateFormat: "dd-mm-yy",
                         }
-
                 );
                 $.datepicker.setDefaults({minDate: new Date()});
                 $(this).datepicker({onSelect: function(selectedDate) {
@@ -146,8 +142,6 @@
 
 
         });
-
-
 
 
     </script>
