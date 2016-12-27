@@ -7,27 +7,12 @@
 @section('body')
     <div class="container-fluid">
         <div class="row">
-
-
             <div class="col-lg-12">
-                <br />
-                @if(Session::has('message'))
-
-                    {!!   Session::get('message') !!}
-                @endif
-
-                @if (count($errors) > 0 )
-
-                    @foreach($errors->all() as $error)
-                        <div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> {{ $error }}  </div>
-                    @endforeach
-
-                @endif
-
+                <div style="margin-top: 10px; margin-bottom: -10px">
+                    @include('partials.form-flash-message')
+                </div>
                 <h1 class="page-header">Categories Administration</h1>
             </div>
-
-
             <div class="col-xs-12 col-md-8">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -51,11 +36,11 @@
 
                                     @foreach($categories as $category)
                                         <tr>
-                                            <td class="center">{{ $category->categories_id }}</td>
-                                            <td class="center">{{ $category->category_name }}</td>
-                                            <td class="center">{{ $category->routes_route_name }}</td>
-                                            <td class="center"><a href="{{ URL::to('/categories/edit/') }}/{{ $category->categories_id }}"><button type="button" class="btn btn-success">Edit</button></a></td>
-                                            <td class="center"><a href="{{ URL::to('/categories/remove/') }}/{{ $category->categories_id }}"><button type="button" class="btn btn-danger">Remove</button></a></td>
+                                            <td class="center">{{ $category->id }}</td>
+                                            <td class="center">{{ $category->name }}</td>
+                                            <td class="center">{{ $category->route->name }}</td>
+                                            <td class="center"><a href="{{ URL::to('/categories/edit/') }}/{{ $category->id }}"><button type="button" class="btn btn-success">Edit</button></a></td>
+                                            <td class="center"><a href="{{ URL::to('/categories/remove/') }}/{{ $category->id }}"><button type="button" class="btn btn-danger">Remove</button></a></td>
                                         </tr>
                                     @endforeach
                                     </tbody>
@@ -73,9 +58,6 @@
                 </div>
                 <!-- /.panel -->
             </div>
-
-
-
             <div class="col-xs-6 col-md-4">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -93,9 +75,10 @@
                                 </div>
                                 <div class="route_name">
                                     <label><strong>Route</strong></label>
-                                    <select class="form-control" name="route_name">
+                                    <select class="form-control" id="route_name" name="route_name">
+                                        <option value="0">-- select --</option>
                                         @foreach($routes as $item)
-                                            <option value="{{$item->id}}">{{$item->route_name}}</option>
+                                            <option value="{{$item->id}}">{{$item->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -110,40 +93,22 @@
             </div>
 
 
-            <div class="col-xs-6 col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        Drop all categories from database
-                    </div>
-                    <!-- /.panel-heading -->
-                    <div class="panel-body">
-                        <div class="table-responsive">
-                            <form method="post" action="/categories/truncate">
-                                {{ csrf_field() }}
-                                <button type="submit" class="btn btn-block btn-danger">REMOVE ALL CATEGORIES</button>
-                            </form>
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
-
-
-
         </div>
         <!-- /.row -->
     </div>
     <script>
-
-
             $('#submitbutton').on('click', function (e) {
                 var error = false;
                 var msg = "Please fill the form properly:  \n";
 
 
+                if ($("#route_name").val() == 0  || !validator.isNumeric($("#route_name").val())) {
+                    msg += "- Please select a route! \n";
+                    error = true;
+                }
+
                 if ($("#category").val() < 3) {
-                    msg += "- Stage Name must be between 2 and 255 characters! \n";
+                    msg += "- Please select a category! \n";
                     error = true;
                 }
 
@@ -155,8 +120,5 @@
                 }
 
             });
-
-
-
         </script>
 @endsection

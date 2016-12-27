@@ -7,6 +7,8 @@ use Illuminate\Contracts\Validation\Validator;
 use DB;
 use Session;
 use Input;
+use App\Models\Category;
+use App\Models\Route;
 
 
 class categoriesController extends Controller
@@ -14,82 +16,44 @@ class categoriesController extends Controller
 
     public function index(){
 
-        $categories = DB::table('categories')
-            ->select(
-                'categories.id as categories_id',
-                'categories.category_name',
-                'categories.route_name as categories_route_name',
-                'routes.route_name as routes_route_name'
-            )
-            ->leftJoin('routes', 'routes.id', '=', 'categories.route_name')
-            ->paginate(15);
-
-        $routes = DB::table('routes')->get();
-
+        $categories = Category::with('route')->paginate(15);
+        $routes = Route::All();
 
         return view('categories', ['categories' => $categories, 'routes' => $routes]);
 
-
     }
-
 
 
 
     public function remove($id) {
 
-        DB::table('categories')->where('id', $id)->delete();
+        $category = Category::findOrFail($id);
+        $category->delete();
 
-        $data = '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> Category with <strong>ID ' . $id . '</strong> has been removed from database.</div>';
-        return redirect('/categories')->with('message', $data);
-    }
-
-
-
-
-
-    public function truncate() {
-
-        DB::table('categories')->truncate();
-
-        return redirect('/categories')->with('message', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>All Categories has been removed from the database.</div>');
+        return redirect('/categories')->with('success', $category->name . ' has been removed from database.');
     }
 
 
     public function create(Request $request)
     {
 
-        $category = $request->input('category');
-        $route_name = $request->input('route_name');
-
         $this->validate($request, [
-            'category' => 'required|max:255|min:2|unique:categories,category_name',
+            'category' => 'required|max:255|min:2|unique:categories,name',
+            'route_name' => 'required|integer',
         ]);
 
-
-        DB::table('categories')->insertGetId(
-            [
-                'category_name' => $category,
-                'route_name' => $route_name
-            ]
-        );
-
-        return redirect('/categories')->with('message', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>A new category has been added in the database.</div>');
+        $category = Category::create([
+            'name' => $request->input('category'),
+            'route_id' => $request->input('route_name')
+        ]);
+        return redirect('/categories')->with('success', $category->name . ' category has been added in the database.');
 
     }
 
     public function edit($id){
 
-        $category = DB::table('categories')
-            ->select(
-                'categories.id as categories_id',
-                'categories.category_name',
-                'categories.route_name as categories_route_name'
-            )
-            ->leftJoin('routes', 'routes.id', '=', 'categories.route_name')
-            ->where('categories.id', '=', $id)
-            ->first();
-
-        $routes = DB::table('routes')->get();
+        $category = Category::with('route')->findOrFail($id);
+        $routes = Route::All();
 
 
         return view('categories.edit', ['category' => $category, 'routes' => $routes]);
@@ -101,16 +65,20 @@ class categoriesController extends Controller
     public function update(Request $request, $id){
 
 
-        $category_name = $request->input('category_name');
-        $route_name = $request->input('route_name');
+        $category = Category::findOrFail($id);
+
+        $this->validate($request, [
+            'category_name' => 'required|max:255|min:2|unique:categories,name',
+            'route_name' => 'required|integer'
+        ]);
+
+        $category->update([
+            'name' => $request->input('category_name'),
+            'route_id' => $request->input('route_name')
+        ]);
 
 
-        DB::table('categories')
-            ->where('id', '=', $id)
-            ->update(['category_name' => $category_name, 'route_name' => $route_name]);
-
-        $result = "<div class=\"alert alert-success alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>Category with #ID " . $id .  " have been added updated.</div>";
-        return redirect('/categories')->with('message', $result);
+        return redirect('/categories')->with('success', $category->name . ' have been added updated.');
 
     }
 

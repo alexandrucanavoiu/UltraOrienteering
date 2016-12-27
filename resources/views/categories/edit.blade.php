@@ -5,23 +5,25 @@
 @endsection
 
 @section('body')
-
-    <form method="post" action="/categories/update/{{ $category->categories_id}}">
+    <div style="margin-top: 10px; margin-bottom: -10px">
+        @include('partials.form-flash-message')
+    </div>
+    <form method="post" action="/categories/update/{{ $category->id }}">
         {{ method_field("put") }}
 
         <div id="stage" class="js--stage stage-1">
             <div class="y">
-                <h1>Edit Category {{ $category->category_name }}</h1>
+                <h1>Edit Category {{ $category->name }}</h1>
                 <div class="stage_name div-left-input">
                     <div><strong>Category Name</strong></div>
-                    <input class="form-control" name="category_name" id="category_name" type="text" value="{{ $category->category_name }}">
+                    <input class="form-control" name="category_name" id="category_name" type="text" value="{{ $category->name }}">
                 </div>
 
                 <div class="stage_time div-left-input">
                     <div><strong>Route</strong></div>
                     <select class="form-control" name="route_name">
                         @foreach($routes as $item)
-                            <option @if($item->id == $category->categories_route_name) selected  @endif value="{{$item->id}}">{{$item->route_name}}</option>
+                            <option value="{{ $item->id }}" {{ $item->id === $category->route_id ? 'selected' : '' }}>{{ $item->name }}</option>
                         @endforeach
                     </select>
 
@@ -30,8 +32,30 @@
             </div>
         </div>
         {{ csrf_field() }}
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button id="submitbutton"  type="submit" class="btn btn-primary">Submit</button>
 
     </form>
     <div class="center" ><a href="/categories"><button type="submit" class="btn btn-success">Back</button></a></div>
+
+    <script>
+        $('#submitbutton').on('click', function (e) {
+            var error = false;
+            var msg = "Please fill the form properly:  \n";
+
+
+            if ($("#category_name").val() < 3) {
+                msg += "- Category Name must be between 2 and 255 characters! \n";
+                error = true;
+            }
+
+
+            if (error) {
+                alert(msg);
+                e.preventDefault();
+                return false;
+
+            }
+
+        });
+    </script>
 @endsection
