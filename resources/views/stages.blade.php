@@ -17,19 +17,9 @@
 
 
             <div class="col-lg-12">
-                <br />
-                @if(Session::has('message'))
-
-                    {!!   Session::get('message') !!}
-                @endif
-
-                @if (count($errors) > 0 )
-
-                    @foreach($errors->all() as $error)
-                        <div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> {{ $error }}  </div>
-                    @endforeach
-
-                @endif
+                <div style="margin-top: 10px; margin-bottom: -10px">
+                    @include('partials.form-flash-message')
+                </div>
 
                 <h1 class="page-header">Stages Administration</h1>
             </div>
@@ -168,11 +158,7 @@
                 </div>
         </div>
         <!-- /.row -->
-        <div class="well">
-            <h4>DROP ALL STAGES FROM DATABASE</h4>
-            <p>This operation will remove all data from database... WARNING !!! USE THIS BUTTON ONLY WHEN YOU WANT TO CLEAN THE SOFTWARE</p>
-            <a class="btn btn-default btn-lg btn-block" href="{{ URL::to('/stages/truncate') }}">DROP ALL STAGES FROM DATABASE</a>
-        </div>
+
     </div>
     <script>
         function validateFORM() {

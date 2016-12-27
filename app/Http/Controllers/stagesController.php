@@ -15,7 +15,6 @@ class stagesController extends Controller
 
         $stageslist = Stage::paginate(15);
 
-
         return view('stages', ['stageslist' => $stageslist]);
 
 
@@ -44,15 +43,15 @@ class stagesController extends Controller
                 'duration' => $stagetime,
             ]);
 
-            
+
         }
 
         $count =  count($stage_name);
 
         if ($count > 1 ) {
-            return redirect('/stages')->with('message', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>All stages have been added to the database.</div>');
+            return redirect('/stages')->with('success', 'All stages have been added to the database.');
         } else {
-            return redirect('/stages')->with('message', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>One stage has been added to the database.</div>');
+            return redirect('/stages')->with('success', $stage->name . ' has been added to the database.');
         }
 
     }
@@ -60,19 +59,12 @@ class stagesController extends Controller
 
     public function remove($id) {
 
-        Stage::where('id', $id)->delete();
+        $stage =  Stage::findOrFail($id);
+        $stage->delete();
 
-        $data = '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> Stage with <strong>ID ' . $id . '</strong> has been removed from database.</div>';
-        return redirect('/stages')->with('message', $data);
+        return redirect('/stages')->with('success', $stage->name . ' has been removed!');
     }
 
-
-    public function truncate() {
-
-        DB::table('stages')->truncate();
-
-        return redirect('/stages')->with('message', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>All Stages has been removed from database.</div>');
-    }
 
 
     public function edit($id){
@@ -97,8 +89,7 @@ class stagesController extends Controller
             'duration' => $request->input('stage_time')
         ]);
 
-        $result = "<div class=\"alert alert-success alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>The Stage with #ID " . $id .  " have been added updated.</div>";
-        return redirect('/stages')->with('message', $result);
+        return redirect('/stages')->with('success', $stage->name . ' have been updated');
 
     }
 
