@@ -53,12 +53,5 @@ Route::get('/clubs/edit/{id}', 'clubsController@edit');
 Route::put('/clubs/update/{id}', 'clubsController@update');
 
 Route::resource('participants', 'ParticipantsController', ['except' => 'show']);
-//Route::get('/participants', 'ParticipantsController@index');
-//Route::get('/participants/add', 'ParticipantsController@create');
-//Route::post('/participants/create', 'ParticipantsController@store');
-//Route::get('/participants/edit/{id}', 'ParticipantsController@edit');
-//Route::put('/participants/update/{id}', 'ParticipantsController@update');
-//Route::get('/participants/remove/{id}', 'ParticipantsController@destroy');
-Route::get('/participants/truncate', 'ParticipantsController@truncate');
 Route::get('/participants/{id}/manage', 'ParticipantsController@manage')->name('participants.manage');
 Route::put('/participants/{id}/manage', 'ParticipantsController@updateManage');

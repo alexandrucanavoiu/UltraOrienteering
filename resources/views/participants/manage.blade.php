@@ -14,6 +14,7 @@
             </div>
             <form action="{{ route('participants.manage', ['participant' => $participant->id]) }}" method="POST">
                 {{ method_field('PUT') }}
+
                 @forelse($participant->participantManagers as $manager )
                     <div class="col-lg-4">
                         <div class="panel panel-primary">

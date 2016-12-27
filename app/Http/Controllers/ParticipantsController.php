@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Club;
 use App\Models\Participant;
-use App\Models\ParticipantManager;
 use App\Models\UuidCard;
 use Illuminate\Http\Request;
 use DB;
@@ -42,7 +41,7 @@ class ParticipantsController extends Controller
             'name' => $request->input('name'),
         ]);
 
-        return redirect('/participants')->with('success', $participant->name . ' has been stored!');
+        return redirect()->route('participants.index')->with('success', $participant->name . ' has been stored!');
     }
 
     public function edit($id)
@@ -71,8 +70,7 @@ class ParticipantsController extends Controller
             'name' => $request->input('name'),
         ]);
 
-        return redirect('/participants')->with('success', $participant->name . ' has been updated!');
-
+        return redirect()->route('participants.index')->with('success', $participant->name . ' has been updated!');
     }
 
     public function manage($id)
@@ -134,31 +132,15 @@ class ParticipantsController extends Controller
             ]);
         }
 
-        return redirect(route('participants.index'))->with('success', 'Successfully stored the achievements for ' . $participant->name . '!');
+        return redirect()->route('participants.index')->with('success', 'Successfully stored the achievements for ' . $participant->name . '!');
     }
-
 
     public function destroy($id)
     {
         $participant = Participant::findOrFail($id);
         $participant->delete();
 
-        return redirect('/participants')->with('message', $participant->name . ' has been deleted!');
+        return redirect()->route('participants.index')->with('success', $participant->name . ' has been deleted!');
     }
-
-
-    public function truncate() {
-
-        DB::table('participants')->truncate();
-
-        return redirect('/participants')->with('message', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>All participants has been removed from the database.</div>');
-    }
-
-
-
-
-
-
-
 }
 
