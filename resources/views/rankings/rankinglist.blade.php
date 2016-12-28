@@ -20,6 +20,38 @@
                         Ranking category {{ $category->name }} - Stage {{ $stage->name }}
                     </div>
                     <div class="panel-body">
+
+                        <?php
+                        $rankings = array();
+
+                        $x = 1;
+                        $unique_id = 0;
+                        foreach($participant as $key => $single_participant)
+                        {
+                            $decrease_rank = 0;
+
+                            $rankings[$unique_id]['rank'] = $x;
+
+                            if(isset($participant[$key-1]))
+                            {
+                               if($single_participant->total_time == $participant[$key-1]->total_time)
+                               {
+                                   $decrease_rank = 1;
+                                   $rankings[$unique_id]['rank'] = $x-1;
+                               }
+                            }
+                            $rankings[$unique_id]['participant_name'] = $single_participant->participant->name;
+                            $rankings[$unique_id]['participant_club_name'] = $single_participant->participant->club->name;
+                            $rankings[$unique_id]['total_time'] = $single_participant->total_time;
+                            $rankings[$unique_id]['uuidcard'] = $single_participant->uuidcard->uuidcard;
+                            if($decrease_rank == 0)
+                            {
+                                $x++;
+                            }
+
+                            $unique_id++;
+                        }
+                        ?>
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead>
@@ -29,12 +61,12 @@
                                     <th>UUID Card</th>
                                     <th>Total Time</th>
                                 </tr>
-                                @foreach($participant as $item)
+                                @foreach($rankings as $participant)
                                 <tr>
-                                    <td>@if($item->total_time === 'ERROR !!' || $item->total_time === '00:00:00') - @else {{ $number++ }} @endif</td>
-                                    <td><strong>{{ $item->participant->name }}</strong> ({{ $item->participant->club->name }})</td>
-                                    <td>{{ $item->uuidcard->uuidcard }}</td>
-                                    <td>@if($item->total_time === 'ERROR !!' || $item->total_time === '00:00:00') Disqualified @else {{ $item->total_time }} @endif </td>
+                                    <td>@if($participant['total_time'] === 'ERROR !!' || $participant['total_time'] === '00:00:00') - @else {{ $participant['rank'] }} @endif</td>
+                                    <td><strong>{{ $participant['participant_name'] }}</strong> ({{ $participant['participant_club_name'] }})</td>
+                                    <td>{{ $participant['uuidcard'] }}</td>
+                                    <td>@if($participant['total_time'] === 'ERROR !!' || $participant['total_time'] === '00:00:00') Disqualified @else {{ $participant['total_time'] }} @endif </td>
                                 </tr>
                                 @endforeach
                                 </thead>
