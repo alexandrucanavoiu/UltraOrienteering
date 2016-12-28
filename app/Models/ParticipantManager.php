@@ -23,6 +23,7 @@ class ParticipantManager extends \Eloquent
         'category_id',
         'uuid_card_id',
         'stage_id',
+        'total_time',
         'post_start',
         'post_1',
         'post_2',

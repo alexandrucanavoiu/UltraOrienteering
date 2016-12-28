@@ -59,3 +59,5 @@ Route::put('/participants/{id}/manage', 'ParticipantsController@updateManage');
 Route::resource('participants.stages', 'ParticipantStagesController', ['only' => ['index', 'store', 'destroy']]);
 
 Route::resource('rankings', 'rankingsController', ['except' => 'show']);
+Route::get('/rankings/{id}', 'rankingsController@category');
+Route::get('/rankings/{id_stage}/{id_category}', 'rankingsController@rankinglist');
