@@ -76,7 +76,7 @@ class ParticipantStagesController extends Controller
             'post_finish' => "00:00:00",
         ]);
 
-        return redirect(route('participants.stages', ['participant' => $participant->id]))
+        return redirect(route('participants.stages.index', ['participant' => $participant->id]))
             ->with('success', 'The Stage ' . $manage->stage->name . ' has been added to ' . $participant->name);
     }
 
