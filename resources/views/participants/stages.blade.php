@@ -94,6 +94,11 @@
 
                 </div>
             </div>
+
+
+            <div class="center"><a href="/participants/"><button type="submit" class="btn btn-success">Back</button></a>
+                <a href="{{ route('participants.manage', ['participant' => $participant->id]) }}"><button type="submit" class="btn btn-warning">Manage</button></a></div>
+
         </div>
     </div>
 @endsection

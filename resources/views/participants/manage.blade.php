@@ -131,7 +131,7 @@
                         </div>
                     </div>
                 @empty
-                    <div class="col-md-12 center">Currently there are no stages!</div>
+                    <div class="col-md-12 center"><div class="margin-bottom">Currently there are no stages! </div><div>Please add a Stage for this participant  <a href="{{ route('participants.stages', ['participant' => $participant->id]) }}" class="btn btn-success">Add Stage</a></div></div>
                 @endforelse
 
                 @if($participant->participantManagers->count())
@@ -140,6 +140,7 @@
                     {{ csrf_field() }}
                     <button type="submit" class="btn btn-primary ">Submit</button>
                     <a href="{{ route('participants.index') }}" class="btn btn-danger">Cancel</a>
+                    <a href="{{ route('participants.stages', ['participant' => $participant->id]) }}" class="btn btn-warning">Stages</a>
                 @endif
             </form>
         </div>

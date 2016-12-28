@@ -146,7 +146,11 @@ class ParticipantsController extends Controller
     public function managestages($id)
     {
 
-        $stageslist = Stage::All();
+        $stageslist = Stage::whereNotIn('id', function($q) use ($id) {
+            $q->select('stage_id')->from('participant_managers')->where('participant_id', $id);
+        })->get();
+
+
 
         $category = Category::All();
 
