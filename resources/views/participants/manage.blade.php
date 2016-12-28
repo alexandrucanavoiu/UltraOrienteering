@@ -93,37 +93,51 @@
 
                                 <div class="posts clearfix">
                                     <label class="pull-left" for="manage[{{ $manager->id }}][post_7]">Post #7</label>
-                                    <input class="form-control posts_time_input posts_time_input_1" name="manage[{{ $manager->id }}][post_7]" id="manage[{{ $manager->id }}][post_7]"  type="text" value="{{ $manager->post_7 }}">
+                                    <input class="form-control posts_time_input posts_time_input_1"
+                                           name="manage[{{ $manager->id }}][post_7]" id="manage[{{ $manager->id }}][post_7]"
+                                           type="text" value="{{ $manager->post_7 }}">
                                 </div>
 
                                 <div class="posts clearfix">
                                     <label class="pull-left" for="manage[{{ $manager->id }}][post_8]">Post #8</label>
-                                    <input class="form-control posts_time_input posts_time_input_1" name="manage[{{ $manager->id }}][post_8]" id="manage[{{ $manager->id }}][post_8]"  type="text" value="{{ $manager->post_8 }}">
+                                    <input class="form-control posts_time_input posts_time_input_1"
+                                           name="manage[{{ $manager->id }}][post_8]" id="manage[{{ $manager->id }}][post_8]"
+                                           type="text" value="{{ $manager->post_8 }}">
                                 </div>
 
                                 <div class="posts clearfix">
                                     <label class="pull-left" for="manage[{{ $manager->id }}][post_9]">Post #9</label>
-                                    <input class="form-control posts_time_input posts_time_input_1" name="manage[{{ $manager->id }}][post_9]" id="manage[{{ $manager->id }}][post_9]"  type="text" value="{{ $manager->post_9 }}">
+                                    <input class="form-control posts_time_input posts_time_input_1"
+                                           name="manage[{{ $manager->id }}][post_9]" id="manage[{{ $manager->id }}][post_9]"
+                                           type="text" value="{{ $manager->post_9 }}">
                                 </div>
 
                                 <div class="posts clearfix">
                                     <label class="pull-left" for="manage[{{ $manager->id }}][post_10]">Post #10</label>
-                                    <input class="form-control posts_time_input " name="manage[{{ $manager->id }}][post_10]" id="manage[{{ $manager->id }}][post_10]"  type="text" value="{{ $manager->post_10 }}">
+                                    <input class="form-control posts_time_input "
+                                           name="manage[{{ $manager->id }}][post_10]" id="manage[{{ $manager->id }}][post_10]"
+                                           type="text" value="{{ $manager->post_10 }}">
                                 </div>
 
                                 <div class="posts clearfix">
                                     <label class="pull-left" for="manage[{{ $manager->id }}][post_11]">Post #11</label>
-                                    <input class="form-control posts_time_input" name="manage[{{ $manager->id }}][post_11]" id="manage[{{ $manager->id }}][post_11]"  type="text" value="{{ $manager->post_11 }}">
+                                    <input class="form-control posts_time_input"
+                                           name="manage[{{ $manager->id }}][post_11]" id="manage[{{ $manager->id }}][post_11]"
+                                           type="text" value="{{ $manager->post_11 }}">
                                 </div>
 
                                 <div class="posts clearfix">
                                     <label class="pull-left" for="manage[{{ $manager->id }}][post_12]">Post #12</label>
-                                    <input class="form-control posts_time_input" name="manage[{{ $manager->id }}][post_12]" id="manage[{{ $manager->id }}][post_12]"  type="text" value="{{ $manager->post_12 }}">
+                                    <input class="form-control posts_time_input"
+                                           name="manage[{{ $manager->id }}][post_12]" id="manage[{{ $manager->id }}][post_12]"
+                                           type="text" value="{{ $manager->post_12 }}">
                                 </div>
 
                                 <div class="posts clearfix">
                                     <label class="pull-left" for="manage[{{ $manager->id }}][post_finish]">Finish</label>
-                                    <input class="form-control posts_time_input" name="manage[{{ $manager->id }}][post_finish]" id="manage[{{ $manager->id }}][post_finish]"  type="text" value="{{ $manager->post_finish }}">
+                                    <input class="form-control posts_time_input"
+                                           name="manage[{{ $manager->id }}][post_finish]" id="manage[{{ $manager->id }}][post_finish]"
+                                           type="text" value="{{ $manager->post_finish }}">
                                 </div>
                             </div>
 
@@ -131,7 +145,13 @@
                         </div>
                     </div>
                 @empty
-                    <div class="col-md-12 center"><div class="margin-bottom">Currently there are no stages! </div><div>Please add a Stage for this participant  <a href="{{ route('participants.stages', ['participant' => $participant->id]) }}" class="btn btn-success">Add Stage</a></div></div>
+                    <div class="col-md-12 center">
+                        <p>Currently there are no stages!</p>
+                        <p>
+                            Please <a href="{{ route('participants.stages', ['participant' => $participant->id]) }}"
+                                      class="btn btn-success">add a Stage</a> for {{ $participant->name }}
+                        </p>
+                    </div>
                 @endforelse
 
                 @if($participant->participantManagers->count())

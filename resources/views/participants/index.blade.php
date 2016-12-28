@@ -35,6 +35,7 @@
                                         <th class="center"></th>
                                         <th class="center"></th>
                                         <th class="center"></th>
+                                        <th class="center"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -45,7 +46,7 @@
                                             <td class="center">{{ $participant->name }}</td>
                                             <td class="center">NR #{{ $participant->uuid_card_id }} - {{ $participant->uuidCard->uuidcard }}</td>
                                             <td class="center">
-                                                <a href="{{ route('participants.stages', ['participant' => $participant->id]) }}" class="btn btn-success">Stages</a>
+                                                <a href="{{ route('participants.stages.index', ['participant' => $participant->id]) }}" class="btn btn-success">Stages</a>
                                             </td>
                                             <td class="center">
                                                 <a href="{{ route('participants.manage', ['participant' => $participant->id]) }}" class="btn btn-success">Manage</a>
@@ -65,7 +66,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="7"><div class="center">No participants in database, please add</div></td>
+                                            <td colspan="8"><div class="center">No participants in database, please add</div></td>
                                         </tr>
                                     @endforelse
                                 </tbody>

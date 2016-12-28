@@ -14,6 +14,11 @@ use Illuminate\Validation\Rule;
 
 class ParticipantsController extends Controller
 {
+    /**
+     * Serve page to see all the Participants in the system
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         $participants = Participant::with('uuidCard', 'club')->paginate(100);
@@ -21,6 +26,11 @@ class ParticipantsController extends Controller
         return view('participants.index', compact('participants'));
     }
 
+    /**
+     * Serve page to create a Participant
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create()
     {
         $uuidList = UuidCard::all();
@@ -29,6 +39,12 @@ class ParticipantsController extends Controller
         return view('participants.create', compact('uuidList', 'clubs'));
     }
 
+    /**
+     * Store the participant in the database
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -46,15 +62,29 @@ class ParticipantsController extends Controller
         return redirect()->route('participants.index')->with('success', $participant->name . ' has been stored!');
     }
 
+    /**
+     * Serve page to edit a Participant
+     *
+     * @param int $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function edit($id)
     {
         $participant = Participant::with('uuidCard', 'club')->findOrFail($id);
+
         $clubs = Club::all();
         $uuidList = UuidCard::all();
 
         return view('participants.edit', compact('participant', 'clubs', 'uuidList'));
     }
 
+    /**
+     * Update a participant with new data
+     *
+     * @param Request $request
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(Request $request, $id)
     {
         $this->validate($request, [
@@ -64,6 +94,7 @@ class ParticipantsController extends Controller
         ]);
 
         $participant = Participant::findOrFail($id);
+
         $participant->update([
             'club_id' => $request->input('club_id'),
             'uuid_card_id' => $request->input('uuid_card_id'),
@@ -73,23 +104,35 @@ class ParticipantsController extends Controller
         return redirect()->route('participants.index')->with('success', $participant->name . ' has been updated!');
     }
 
+    /**
+     * Serve page to manage a Participant
+     *
+     * @param int $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function manage($id)
     {
         $participant = Participant::with(['participantManagers' => function ($query) {
             $query->with('stage', 'uuidCard');
         }])->findOrFail($id);
+
         $categories = Category::all();
 
         return view('participants.manage', compact('participant', 'categories'));
     }
 
+    /**
+     * Update the Participant manage
+     *
+     * @param Request $request
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function updateManage(Request $request, $id)
     {
         $this->validate($request, [
-            'manage.*' => [
-                'required',
-//                Rule::exists('participant_managers', 'id')->where('participant_id', $id), // broken
-            ],
+            'manage' => 'required|array',
+            'manage.*' => 'required|array',
             'manage.*.category_id' => 'required|exists:categories,id',
             'manage.*.post_start' => 'required|date_format:H:i:s',
             'manage.*.post_1' => 'required|date_format:H:i:s',
@@ -134,6 +177,12 @@ class ParticipantsController extends Controller
         return redirect()->route('participants.index')->with('success', 'Successfully stored the achievements for ' . $participant->name . '!');
     }
 
+    /**
+     * Delete the Participant
+     *
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy($id)
     {
         $participant = Participant::findOrFail($id);
@@ -141,68 +190,5 @@ class ParticipantsController extends Controller
 
         return redirect()->route('participants.index')->with('success', $participant->name . ' has been deleted!');
     }
-
-
-    public function managestages($id)
-    {
-
-        $stageslist = Stage::whereNotIn('id', function($q) use ($id) {
-            $q->select('stage_id')->from('participant_managers')->where('participant_id', $id);
-        })->get();
-
-
-
-        $category = Category::All();
-
-        $participant = Participant::with(['participantManagers' => function ($query) {
-            $query->with('stage', 'uuidCard');
-        }])->findOrFail($id);
-
-        return view('participants.stages', compact('participant', 'stageslist', 'category'));
-    }
-
-    public function managestagesremove($id, $id_stage)
-    {
-
-        $participant = ParticipantManager::findOrFail($id_stage);
-
-        $participant->delete();
-
-        return redirect(route('participants.stages', array('id' => $participant->participant_id )))->with('success', 'Stage ' . $participant->stage->name . ' has been deleted from database for '. $participant->participant->name .  '!');
-    }
-
-    public function managestagesadd(Request $request, $id)
-    {
-
-        $participant = Participant::find($id);
-
-
-        $stage = ParticipantManager::create([
-            'participant_id' => $id,
-            'category_id' => $request->input('category'),
-            'uuid_card_id' => $participant->uuid_card_id,
-            'stage_id' => $request->input('name'),
-            'post_start' => "00:00:00",
-            'post_1'  => "00:00:00",
-            'post_2'  => "00:00:00",
-            'post_3'  => "00:00:00",
-            'post_4'  => "00:00:00",
-            'post_5'  => "00:00:00",
-            'post_6'  => "00:00:00",
-            'post_7'  => "00:00:00",
-            'post_8'  => "00:00:00",
-            'post_9'  => "00:00:00",
-            'post_10'  => "00:00:00",
-            'post_11'  => "00:00:00",
-            'post_12'  => "00:00:00",
-            'post_finish' => "00:00:00",
-        ]);
-
-
-        return redirect(route('participants.stages', array('id' => $id)))->with('success', 'The Stage has been added in the database.' );
-
-    }
-
-
 }
 
