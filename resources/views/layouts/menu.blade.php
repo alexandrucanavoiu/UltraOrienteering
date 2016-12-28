@@ -233,6 +233,7 @@
                     <a href="/categories"><i class="fa fa-sitemap fa-fw"></i> Categories</a>
                     <a href="/clubs"><i class="fa fa-group fa-fw"></i> Clubs</a>
                     <a href="/participants"><i class="fa fa-user  fa-fw"></i> Participants</a>
+                    <a href="/rankings"><i class="fa fa-user  fa-fw"></i> Rankings</a>
                 </li>
             </ul>
         </div>

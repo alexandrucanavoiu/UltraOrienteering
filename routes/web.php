@@ -58,3 +58,5 @@ Route::put('/participants/{id}/manage', 'ParticipantsController@updateManage');
 Route::get('/participants/{id}/stages', 'ParticipantsController@managestages')->name('participants.stages');
 Route::get('/participants/{id}/stages/{id_stage}/remove', 'ParticipantsController@managestagesremove');
 Route::post('/participants/{id}/stages/add', 'ParticipantsController@managestagesadd');
+
+Route::resource('rankings', 'rankingsController', ['except' => 'show']);
