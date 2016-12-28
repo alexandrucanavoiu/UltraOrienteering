@@ -31,7 +31,7 @@
                                 </tr>
                                 @foreach($participant as $item)
                                 <tr>
-                                    <td>{{ $number++ }}</td>
+                                    <td>@if($item->total_time === 'ERROR !!' || $item->total_time === '00:00:00') - @else {{ $number++ }} @endif</td>
                                     <td><strong>{{ $item->participant->name }}</strong> ({{ $item->participant->club->name }})</td>
                                     <td>{{ $item->uuidcard->uuidcard }}</td>
                                     <td>@if($item->total_time === 'ERROR !!' || $item->total_time === '00:00:00') Disqualified @else {{ $item->total_time }} @endif </td>
