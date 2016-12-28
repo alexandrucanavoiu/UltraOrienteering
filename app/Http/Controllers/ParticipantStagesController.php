@@ -118,17 +118,15 @@ class ParticipantStagesController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $participantId
-     * @param int $stageId
+     * @param int $participantManageId
      * @return \Illuminate\Http\Response
      */
-    public function destroy($participantId, $stageId)
+    public function destroy($participantId, $participantManageId)
     {
-        $stage = Stage::whereHas('participantManagers', function ($query) use ($participantId){
-            $query->where('participant_id', $participantId);
-        })->findOrFail($stageId);
+        $manage = Stage::where('participant_id', $participantId)->findOrFail($participantManageId);
 
-        $stage->delete();
+        $manage->delete();
 
-        return redirect()->route('participants.stages.index')->with('success', $stage->name . ' has been deleted!');
+        return redirect()->route('participants.stages.index')->with('success', $manage->name . ' has been deleted!');
     }
 }
