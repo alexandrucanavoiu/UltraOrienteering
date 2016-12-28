@@ -148,8 +148,8 @@
                     <div class="col-md-12 center">
                         <p>Currently there are no stages!</p>
                         <p>
-                            Please <a href="{{ route('participants.stages', ['participant' => $participant->id]) }}"
-                                      class="btn btn-success">add a Stage</a> for {{ $participant->name }}
+                            Please <a href="{{ route('participants.stages.index', ['participant' => $participant->id]) }}"
+                                    >add a Stage</a> for {{ $participant->name }}.
                         </p>
                     </div>
                 @endforelse
