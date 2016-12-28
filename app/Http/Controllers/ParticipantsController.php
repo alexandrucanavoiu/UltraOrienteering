@@ -186,9 +186,10 @@ class ParticipantsController extends Controller
     public function destroy($id)
     {
         $participant = Participant::findOrFail($id);
+        $name = $participant->name;
         $participant->delete();
 
-        return redirect()->route('participants.index')->with('success', $participant->name . ' has been deleted!');
+        return redirect()->route('participants.index')->with('success', $name . ' has been deleted!');
     }
 }
 

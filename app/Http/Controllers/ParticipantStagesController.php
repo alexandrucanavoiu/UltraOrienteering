@@ -125,10 +125,10 @@ class ParticipantStagesController extends Controller
     public function destroy($participantId, $participantManageId)
     {
         $manage = ParticipantManager::where('participant_id', $participantId)->findOrFail($participantManageId);
-
+        $name = $manage->name;
         $manage->delete();
 
         return redirect()->route('participants.stages.index', ['participant' => $participantId])
-            ->with('success', $manage->name . ' has been deleted!');
+            ->with('success', $name . ' has been deleted!');
     }
 }
