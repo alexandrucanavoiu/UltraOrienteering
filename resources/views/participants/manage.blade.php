@@ -160,7 +160,7 @@
                     {{ csrf_field() }}
                     <button type="submit" class="btn btn-primary ">Submit</button>
                     <a href="{{ route('participants.index') }}" class="btn btn-danger">Cancel</a>
-                    <a href="{{ route('participants.stages', ['participant' => $participant->id]) }}" class="btn btn-warning">Stages</a>
+                    <a href="{{ route('participants.stages.index', ['participant' => $participant->id]) }}" class="btn btn-warning">Add stages</a>
                 @endif
             </form>
         </div>
