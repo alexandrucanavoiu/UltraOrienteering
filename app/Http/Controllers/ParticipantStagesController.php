@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Participant;
+use App\Models\ParticipantManager;
 use App\Models\Stage;
 use Illuminate\Http\Request;
 
@@ -123,7 +124,7 @@ class ParticipantStagesController extends Controller
      */
     public function destroy($participantId, $participantManageId)
     {
-        $manage = Stage::where('participant_id', $participantId)->findOrFail($participantManageId);
+        $manage = ParticipantManager::where('participant_id', $participantId)->findOrFail($participantManageId);
 
         $manage->delete();
 
