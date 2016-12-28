@@ -47,8 +47,6 @@ class ParticipantsController extends Controller
     public function edit($id)
     {
         $participant = Participant::with('uuidCard', 'club')->findOrFail($id);
-
-
         $clubs = Club::all();
         $uuidList = UuidCard::all();
 
@@ -64,8 +62,6 @@ class ParticipantsController extends Controller
         ]);
 
         $participant = Participant::findOrFail($id);
-
-
         $participant->update([
             'club_id' => $request->input('club_id'),
             'uuid_card_id' => $request->input('uuid_card_id'),
@@ -80,8 +76,6 @@ class ParticipantsController extends Controller
         $participant = Participant::with(['participantManagers' => function ($query) {
             $query->with('stage', 'uuidCard');
         }])->findOrFail($id);
-
-
         $categories = Category::all();
 
         return view('participants.manage', compact('participant', 'categories'));
@@ -141,7 +135,6 @@ class ParticipantsController extends Controller
     public function destroy($id)
     {
         $participant = Participant::findOrFail($id);
-
         $participant->delete();
 
         return redirect()->route('participants.index')->with('success', $participant->name . ' has been deleted!');
