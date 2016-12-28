@@ -56,9 +56,6 @@ Route::resource('participants', 'ParticipantsController', ['except' => 'show']);
 Route::get('/participants/{id}/manage', 'ParticipantsController@manage')->name('participants.manage');
 Route::put('/participants/{id}/manage', 'ParticipantsController@updateManage');
 
-Route::resource('participants.stages', 'ParticipantStagesController', ['except' => 'show']);
-//Route::get('/participants/{id}/stages', 'ParticipantsController@managestages')->name('participants.stages');
-//Route::get('/participants/{id}/stages/{id_stage}/remove', 'ParticipantsController@managestagesremove');
-//Route::post('/participants/{id}/stages/add', 'ParticipantsController@managestagesadd');
+Route::resource('participants.stages', 'ParticipantStagesController', ['only' => ['index', 'store', 'destroy']]);
 
 Route::resource('rankings', 'rankingsController', ['except' => 'show']);
