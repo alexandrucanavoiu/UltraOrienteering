@@ -128,7 +128,7 @@ class ParticipantStagesController extends Controller
 
         $manage->delete();
 
-        return redirect()->route('participants.stages.index', ['participant', $participantId])
+        return redirect()->route('participants.stages.index', ['participant' => $participantId])
             ->with('success', $manage->name . ' has been deleted!');
     }
 }

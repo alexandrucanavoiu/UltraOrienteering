@@ -93,8 +93,7 @@
             </div>
 
             <div class="center">
-                <a href="/participants/" class="btn btn-success">Back</a>
-                <a href="{{ route('participants.index') }}" class="btn btn-danger">Cancel</a>
+                <a href="{{ route('participants.index') }}" class="btn btn-danger">Back</a>
             </div>
 
         </div>
