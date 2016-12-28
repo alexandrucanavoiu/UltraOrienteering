@@ -46,9 +46,8 @@ class ParticipantsController extends Controller
 
     public function edit($id)
     {
-        $participant = Participant::with('uuidCard', 'club')->find($id);
+        $participant = Participant::with('uuidCard', 'club')->findOrFail($id);
 
-        if (!$participant) {  return redirect()->route('participants.index')->with('error', 'You cannot edit the participant with id ' . $id . ' becouse not exist! '); }
 
         $clubs = Club::all();
         $uuidList = UuidCard::all();
@@ -64,9 +63,8 @@ class ParticipantsController extends Controller
             'name' => 'required',
         ]);
 
-        $participant = Participant::find($id);
+        $participant = Participant::findOrFail($id);
 
-        if (!$participant) {  return redirect()->route('participants.index')->with('error', 'You cannot update the participant with id ' . $id . ' becouse not exist! '); }
 
         $participant->update([
             'club_id' => $request->input('club_id'),
@@ -81,9 +79,8 @@ class ParticipantsController extends Controller
     {
         $participant = Participant::with(['participantManagers' => function ($query) {
             $query->with('stage', 'uuidCard');
-        }])->find($id);
+        }])->findOrFail($id);
 
-        if (!$participant) {  return redirect()->route('participants.index')->with('error', 'You cannot manage the participant with id ' . $id . ' becouse not exist! '); }
 
         $categories = Category::all();
 
@@ -114,9 +111,7 @@ class ParticipantsController extends Controller
             'manage.*.post_finish' => 'required|date_format:H:i:s',
         ]);
 
-        $participant = Participant::find($id);
-
-        if (!$participant) {  return redirect()->route('participants.index')->with('error', 'You cannot update the participant manage with id ' . $id . ' becouse not exist! '); }
+        $participant = Participant::findOrFail($id);
 
         foreach ($request->input('manage') as $manageId => $manage) {
             $manager = $participant->participantManagers()->findOrFail($manageId);
@@ -145,9 +140,7 @@ class ParticipantsController extends Controller
 
     public function destroy($id)
     {
-        $participant = Participant::find($id);
-
-        if (!$participant) {  return redirect()->route('participants.index')->with('error', 'You cannot remove the participant with id ' . $id . ' becouse not exist! '); }
+        $participant = Participant::findOrFail($id);
 
         $participant->delete();
 
