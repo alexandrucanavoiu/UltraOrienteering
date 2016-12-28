@@ -45,6 +45,9 @@
                                             <td class="center">{{ $participant->name }}</td>
                                             <td class="center">NR #{{ $participant->uuid_card_id }} - {{ $participant->uuidCard->uuidcard }}</td>
                                             <td class="center">
+                                                <a href="{{ route('participants.stages', ['participant' => $participant->id]) }}" class="btn btn-success">Stages</a>
+                                            </td>
+                                            <td class="center">
                                                 <a href="{{ route('participants.manage', ['participant' => $participant->id]) }}" class="btn btn-success">Manage</a>
                                             </td>
                                             <td class="center">

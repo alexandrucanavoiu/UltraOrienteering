@@ -6,6 +6,8 @@ use App\Models\Category;
 use App\Models\Club;
 use App\Models\Participant;
 use App\Models\UuidCard;
+use App\Models\Stage;
+use App\Models\ParticipantManager;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Validation\Rule;
@@ -139,5 +141,64 @@ class ParticipantsController extends Controller
 
         return redirect()->route('participants.index')->with('success', $participant->name . ' has been deleted!');
     }
+
+
+    public function managestages($id)
+    {
+
+        $stageslist = Stage::All();
+
+        $category = Category::All();
+
+        $participant = Participant::with(['participantManagers' => function ($query) {
+            $query->with('stage', 'uuidCard');
+        }])->findOrFail($id);
+
+        return view('participants.stages', compact('participant', 'stageslist', 'category'));
+    }
+
+    public function managestagesremove($id, $id_stage)
+    {
+
+        $participant = ParticipantManager::findOrFail($id_stage);
+
+        $participant->delete();
+
+        return redirect(route('participants.stages', array('id' => $participant->participant_id )))->with('success', 'Stage ' . $participant->stage->name . ' has been deleted from database for '. $participant->participant->name .  '!');
+    }
+
+    public function managestagesadd(Request $request, $id)
+    {
+
+        $participant = Participant::find($id);
+
+
+        $stage = ParticipantManager::create([
+            'participant_id' => $id,
+            'category_id' => $request->input('category'),
+            'uuid_card_id' => $participant->uuid_card_id,
+            'stage_id' => $request->input('name'),
+            'post_start' => "00:00:00",
+            'post_1'  => "00:00:00",
+            'post_2'  => "00:00:00",
+            'post_3'  => "00:00:00",
+            'post_4'  => "00:00:00",
+            'post_5'  => "00:00:00",
+            'post_6'  => "00:00:00",
+            'post_7'  => "00:00:00",
+            'post_8'  => "00:00:00",
+            'post_9'  => "00:00:00",
+            'post_10'  => "00:00:00",
+            'post_11'  => "00:00:00",
+            'post_12'  => "00:00:00",
+            'post_finish' => "00:00:00",
+        ]);
+
+
+        return redirect(route('participants.stages', array('id' => $id)))->with('success', 'The Stage has been added in the database.' );
+
+    }
+
+
 }
 
