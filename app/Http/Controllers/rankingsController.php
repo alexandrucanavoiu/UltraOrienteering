@@ -25,11 +25,11 @@ class rankingsController extends Controller
 
     public function category($id)
     {
-
+        $number = 1;
         $stage = Stage::findOrFail($id);
         $category = Category::All();
 
-        return view('rankings.category', compact('category', 'stage'));
+        return view('rankings.category', compact('category', 'stage','number'));
     }
 
     public function rankinglist($id_stage, $id_category)
@@ -119,6 +119,7 @@ class rankingsController extends Controller
                 $concurents[]=array(
                   "time"=>  $total_time,
                    "name"=>$singleRow->name,
+                    "club"=>$singleRow->club->name,
                 );
                 $times[]=$total_time;
 

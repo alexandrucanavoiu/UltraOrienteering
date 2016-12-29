@@ -13,14 +13,14 @@
                     @include('partials.form-flash-message')
                 </div>
 
-                <h1 class="page-header">Rankings</h1>
+                <h1 class="page-header">General Ladderboard ( By Stages )</h1>
             </div>
 
 
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Rankings for Stages
+                        List Stages
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
@@ -28,9 +28,9 @@
                             <table class="table">
                                 <thead>
                                 <tr>
-                                    <th>Nr #</th>
-                                    <th>Stage Name</th>
-                                    <th>Number of Participants</th>
+                                    <th class="center">Nr #</th>
+                                    <th class="center">Stage Name</th>
+                                    <th class="center">Number of Participants</th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -38,9 +38,9 @@
                                     <tbody>
                                     @foreach($stages as $key => $stage)
                                     <tr>
-                                        <td>{{ $number++ }}</td>
-                                        <td>{{ $stage->name }}</td>
-                                        <td>
+                                        <td class="center">{{ $number++ }}</td>
+                                        <td class="center">{{ $stage->name }}</td>
+                                        <td class="center">
                                             <?php
 
                                             $participants = DB::table('participant_managers')->where('stage_id', '=', $stage->id )->count();
@@ -48,7 +48,7 @@
                                         ?>
                                         </td>
                                         <td>
-                                            <a href="{{ URL::to('/rankings/') }}/{{ $stage->id }}" class="btn btn-success">Rankings for Categories</a>
+                                            <a href="{{ URL::to('/ladderboard/') }}/{{ $stage->id }}" class="btn btn-success">Category Rankings</a>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -56,7 +56,7 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td><a href="{{ URL::to('/total') }}" class="btn btn-primary">Sum of All Stages - Ranking<a/></td>
+                                        <td><a href="{{ URL::to('/total') }}" class="btn btn-primary">General Ladderboard<a/></td>
                                     </tr>
                                     </tbody>
 

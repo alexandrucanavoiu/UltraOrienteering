@@ -12,12 +12,13 @@
                 <div style="margin-top: 10px; margin-bottom: -10px">
                     @include('partials.form-flash-message')
                 </div>
-                <h1 class="page-header">Ranking Stage </h1>
+                <h1 class="page-header">General Ladderboar <a href="/ladderboard" class="btn btn-primary float-right">Back to LADDERBOARD Index</a></h1>
+
             </div>
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Total Ranking for all Stages
+
                     </div>
                     <div class="panel-body">
 
@@ -28,16 +29,18 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Participant Name</th>
-                                    <th>UUID Card</th>
+                                    <th>Club Name</th>
                                     <th>Total Time</th>
                                 </tr>
                                     @foreach($concurents as $row)
-                                    <tr>
-                                        <td>{{ $number++ }}</td>
-                                        <td>{{$row['name']}}</td>
-                                        <td></td>
-                                        <td>{{$row['time']}}</td>
-                                    </tr>
+                                        @if($row['time'] !== "00:00:00")
+                                            <tr>
+                                                <td>{{ $number++ }}</td>
+                                                <td>{{$row['name']}}</td>
+                                                <td>{{$row['club']}}</td>
+                                                <td>{{$row['time']}}</td>
+                                            </tr>
+                                        @endif
                                     @endforeach
                                 </thead>
                                 <tbody>
