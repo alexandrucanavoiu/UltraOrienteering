@@ -19,7 +19,7 @@ Route::get('/uuid-cards/remove/{id}', 'uuidcardsController@remove');
 Route::get('/uuid-cards/importExport', 'uuidcardsController@importExport');
 Route::get('/uuid-cards/downloadExcel/{type}', 'uuidcardsController@downloadExcel');
 Route::post('/uuid-cards/importExcel', 'uuidcardsController@importExcel');
-Route::post('/uuid-cards/importExcel', 'uuidcardsController@validateImportFile');
+//Route::post('/uuid-cards/importExcel', 'uuidcardsController@validateImportFile');
 
 
 Route::get('/stages', 'stagesController@index');

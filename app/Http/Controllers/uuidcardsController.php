@@ -112,10 +112,10 @@ class uuidcardsController extends Controller
 
 
                     $insert[] = ['id' => $value->id, 'uuidcard' => $value->uuidcard];
-
                 }
 
                 if (!empty($insert)) {
+
 
                     DB::table('uuid_cards')->insert($insert);
 
