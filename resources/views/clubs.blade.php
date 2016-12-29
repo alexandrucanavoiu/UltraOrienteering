@@ -1,7 +1,7 @@
 
 @extends('layouts/template')
 @section('title')
-    Clubs Administration - Ultra Orienteering Software - Open Source Software
+    Administration of Clubs - Ultra Orienteering Software - Open Source Software
 @endsection
 
 @section('body')
@@ -12,7 +12,7 @@
                     @include('partials.form-flash-message')
                 </div>
 
-                <h1 class="page-header">Clubs Administration</h1>
+                <h1 class="page-header">Administration of Clubs</h1>
             </div>
 
             <script type="text/javascript">
@@ -63,7 +63,7 @@
                 <div class="col-xs-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Add Clubs
+                            Add a new Club
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -116,7 +116,7 @@
                 <div class="col-xs-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            List Clubs in database
+                            List of Clubs in database
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">

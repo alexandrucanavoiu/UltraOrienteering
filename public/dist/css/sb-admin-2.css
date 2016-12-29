@@ -558,4 +558,5 @@ table.dataTable thead .sorting:after {
 .float-right {
   float:right;
   margin-bottom: 20px;
+    margin-left: 20px;
 }

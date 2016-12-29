@@ -12,7 +12,7 @@
                 <div style="margin-top: 10px; margin-bottom: -10px">
                     @include('partials.form-flash-message')
                 </div>
-                <h1 class="page-header">General Ladderboar <a href="/ladderboard" class="btn btn-primary float-right">Back to LADDERBOARD Index</a></h1>
+                <h1 class="page-header">General Rangkins of All Stages <a target="_blank" href="/total/exportPDF" class="btn btn-warning float-right">Export to PDF</a><a href="/rankings" class="btn btn-primary float-right">Back to RANKING Index</a></h1>
 
             </div>
             <div class="col-lg-12">

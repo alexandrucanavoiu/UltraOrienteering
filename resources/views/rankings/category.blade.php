@@ -12,7 +12,7 @@
                 <div style="margin-top: 10px; margin-bottom: -10px">
                     @include('partials.form-flash-message')
                 </div>
-                <h1 class="page-header">Rankings for Stage {{ $stage->name }} <a href="/ladderboard" class="btn btn-primary float-right">Back to LADDERBOARD Index</a></h1>
+                <h1 class="page-header">Rankings for Stage {{ $stage->name }} <a href="/rankings" class="btn btn-primary float-right">Back to RANKING Index</a></h1>
             </div>
             <div class="col-lg-12">
                 <div class="panel panel-default">
@@ -26,7 +26,7 @@
                                 <tr>
                                     <th class="center">#</th>
                                     <th class="center">Category Name</th>
-                                    <th class="center">Numbers of Participants</th>
+                                    <th class="center">No. Participants</th>
                                     <th class="center"></th>
                                 </tr>
                                 </thead>
@@ -41,7 +41,7 @@
                                         echo $participants;
                                         ?>
                                     </td class="center">
-                                    <td class="center"><a href="{{ URL::to('/ladderboard/') }}/{{ $stage->id }}/{{ $item->id }}" class="btn btn-success">View</a></td>
+                                    <td class="center"><a href="{{ URL::to('/rankings/') }}/{{ $stage->id }}/{{ $item->id }}" class="btn btn-success">View Ranking</a></td>
                                 </tr>
                                 @endforeach
                                 </tbody>

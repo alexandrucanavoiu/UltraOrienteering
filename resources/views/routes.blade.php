@@ -11,14 +11,14 @@
                 <div style="margin-top: 10px; margin-bottom: -10px">
                     @include('partials.form-flash-message')
                 </div>
-                <h1 class="page-header">Routes Administration</h1>
+                <h1 class="page-header">Administration of Routes </h1>
             </div>
 
-            <div class="button-right"><a href="/routes/add"><button type="button" class="btn btn-primary">Add new route</button></a></div>
+            <div class="button-right"><a href="/routes/add"><button type="button" class="btn btn-primary">Add a new route</button></a></div>
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        List Routes
+                        List of Routes
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">

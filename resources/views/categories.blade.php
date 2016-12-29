@@ -1,7 +1,7 @@
 @extends('layouts/template')
 
 @section('title')
-    Categories Administration - Ultra Orienteering Software - Open Source Software
+    Administration of Categories - Ultra Orienteering Software - Open Source Software
 @endsection
 
 @section('body')
@@ -11,12 +11,12 @@
                 <div style="margin-top: 10px; margin-bottom: -10px">
                     @include('partials.form-flash-message')
                 </div>
-                <h1 class="page-header">Categories Administration</h1>
+                <h1 class="page-header">Administration of Categories</h1>
             </div>
             <div class="col-xs-12 col-md-8">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                         List Categories
+                         List of Categories
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">

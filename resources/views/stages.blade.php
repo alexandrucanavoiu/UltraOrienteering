@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="/vendor/jquery/bootstrap-datepicker.css" />
 @endsection
 @section('title')
-    Stages Administration - Ultra Orienteering Software - Open Source Software
+    Administration of Stages - Ultra Orienteering Software - Open Source Software
 @endsection
 
 @section('body')
@@ -19,7 +19,7 @@
                     @include('partials.form-flash-message')
                 </div>
 
-                <h1 class="page-header">Stages Administration</h1>
+                <h1 class="page-header">Administration of Stages</h1>
             </div>
 
             <form method="post" action="/stages/create">
@@ -27,7 +27,7 @@
             <div class="col-xs-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Add Stages
+                        Add a new Stage
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
@@ -113,7 +113,7 @@
                 <div class="col-xs-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            List Stages in database
+                            List of Stages in database
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">

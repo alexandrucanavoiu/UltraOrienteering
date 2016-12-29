@@ -12,12 +12,12 @@
                 <div style="margin-top: 10px; margin-bottom: -10px">
                     @include('partials.form-flash-message')
                 </div>
-                <h1 class="page-header">Ranking Stage {{ $stage->name }} - category {{ $category->name }} <a href="/ladderboard" class="btn btn-primary float-right">Back to LADDERBOARD Index</a></h1>
+                <h1 class="page-header">Stage {{ $stage->name }} - category {{ $category->name }} <a target="_blank" href="/rankings/{{ $stage->id }}/{{$category->id}}/exportPDF" class="btn btn-warning float-right">Export to PDF</a> <a href="/rankings" class="btn btn-primary float-right">Back to RANKING Index</a></h1>
             </div>
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Ranking category {{ $category->name }} - Stage {{ $stage->name }}
+                        Ranking for the {{ $category->name }} category in {{ $stage->name }} stage
                     </div>
                     <div class="panel-body">
 

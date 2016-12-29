@@ -2,7 +2,7 @@
 @extends('layouts/template')
 
 @section('title')
-    Ranking - Ultra Orienteering Software - Open Source Software
+    General Ranking for All Stages - Ultra Orienteering Software - Open Source Software
 @endsection
 
 @section('body')
@@ -13,14 +13,14 @@
                     @include('partials.form-flash-message')
                 </div>
 
-                <h1 class="page-header">General Ladderboard ( By Stages )</h1>
+                <h1 class="page-header">General Ranking for All Stages</h1>
             </div>
 
 
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        List Stages
+                        List of Stages
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
@@ -30,7 +30,7 @@
                                 <tr>
                                     <th class="center">Nr #</th>
                                     <th class="center">Stage Name</th>
-                                    <th class="center">Number of Participants</th>
+                                    <th class="center">No. Participants</th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -48,7 +48,7 @@
                                         ?>
                                         </td>
                                         <td>
-                                            <a href="{{ URL::to('/ladderboard/') }}/{{ $stage->id }}" class="btn btn-success">Category Rankings</a>
+                                            <a href="{{ URL::to('/rankings/') }}/{{ $stage->id }}" class="btn btn-success">Ranking by categories</a>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -56,7 +56,7 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td><a href="{{ URL::to('/total') }}" class="btn btn-primary">General Ladderboard<a/></td>
+                                        <td><a href="{{ URL::to('/total') }}" class="btn btn-primary">General Rankings<a/></td>
                                     </tr>
                                     </tbody>
 

@@ -58,7 +58,9 @@ Route::put('/participants/{id}/manage', 'ParticipantsController@updateManage');
 
 Route::resource('participants.stages', 'ParticipantStagesController', ['only' => ['index', 'store', 'destroy']]);
 
-Route::resource('ladderboard', 'rankingsController', ['except' => 'show']);
-Route::get('/ladderboard/{id}', 'rankingsController@category');
-Route::get('/ladderboard/{id_stage}/{id_category}', 'rankingsController@rankinglist');
+Route::resource('rankings', 'rankingsController', ['except' => 'show']);
+Route::get('/rankings/{id}', 'rankingsController@category');
+Route::get('/rankings/{id_stage}/{id_category}', 'rankingsController@rankinglist');
+Route::get('/rankings/{id_stage}/{id_category}/exportPDF', 'rankingsController@pdfgeneratecategory');
 Route::get('/total', 'rankingsController@totalranking');
+Route::get('/total/exportPDF', 'rankingsController@totalrankingexportpdf');

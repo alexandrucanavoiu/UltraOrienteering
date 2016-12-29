@@ -7,7 +7,7 @@ use Illuminate\Contracts\Validation\Validator;
 use DB;
 use Session;
 use Input;
-use App\Uuidcard;
+use App\Models\UuidCard;
 use Excel;
 
 class uuidcardsController extends Controller
