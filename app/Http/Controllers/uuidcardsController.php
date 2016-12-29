@@ -83,13 +83,9 @@ class uuidcardsController extends Controller
             })->get();
 
             if (!empty($data) && $data->count()) {
-
                 foreach ($data as $key => $value) {
-
                     if (is_null($value->uuidcard) || is_null($value->id)) {
-
                         return redirect('/uuid-cards')->with('warning', 'Error Import File, please read the documentation about import uuid cards in database');
-
                     }
 
                     if (Uuidcard::where('id', $value->id)->exists()) {
@@ -106,17 +102,9 @@ class uuidcardsController extends Controller
                 if (!empty($insert)) {
                     UuidCard::insert($insert);
                     return redirect('/uuid-cards')->with('success', 'UUID Cards from file has imported successed.');
-
                 }
-
             }
-
         }
-
-
         return back();
-
     }
-
-
 }
