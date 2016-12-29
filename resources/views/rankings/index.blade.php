@@ -34,8 +34,9 @@
                                     <th></th>
                                 </tr>
                                 </thead>
-                                @foreach($stages as $key => $stage)
+
                                     <tbody>
+                                    @foreach($stages as $key => $stage)
                                     <tr>
                                         <td>{{ $number++ }}</td>
                                         <td>{{ $stage->name }}</td>
@@ -50,13 +51,23 @@
                                             <a href="{{ URL::to('/rankings/') }}/{{ $stage->id }}" class="btn btn-success">Rankings for Categories</a>
                                         </td>
                                     </tr>
+                                    @endforeach
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td><a href="{{ URL::to('/total') }}" class="btn btn-primary">Sum of All Stages - Ranking<a/></td>
+                                    </tr>
                                     </tbody>
-                                @endforeach
+
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
+
+
+
 
 
 

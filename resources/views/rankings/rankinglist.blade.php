@@ -12,7 +12,7 @@
                 <div style="margin-top: 10px; margin-bottom: -10px">
                     @include('partials.form-flash-message')
                 </div>
-                <h1 class="page-header">Ranking for category {{ $category->name }} - Stage {{ $stage->name }}</h1>
+                <h1 class="page-header">Ranking Stage {{ $stage->name }} - category {{ $category->name }}</h1>
             </div>
             <div class="col-lg-12">
                 <div class="panel panel-default">
@@ -63,10 +63,10 @@
                                 </tr>
                                 @foreach($rankings as $participant)
                                 <tr>
-                                    <td>@if($participant['total_time'] === 'ERROR !!' || $participant['total_time'] === '00:00:00') - @else {{ $participant['rank'] }} @endif</td>
+                                    <td>@if($participant['total_time'] === 'ERROR !!' || $participant['total_time'] === '00:00:00' || $participant['total_time'] === '23:59:59') - @else {{ $participant['rank'] }} @endif</td>
                                     <td><strong>{{ $participant['participant_name'] }}</strong> ({{ $participant['participant_club_name'] }})</td>
                                     <td>{{ $participant['uuidcard'] }}</td>
-                                    <td>@if($participant['total_time'] === 'ERROR !!' || $participant['total_time'] === '00:00:00') Disqualified @else {{ $participant['total_time'] }} @endif </td>
+                                    <td>@if($participant['total_time'] === 'ERROR !!' || $participant['total_time'] === '00:00:00' || $participant['total_time'] === '23:59:59') Disqualified @else {{ $participant['total_time'] }} @endif </td>
                                 </tr>
                                 @endforeach
                                 </thead>

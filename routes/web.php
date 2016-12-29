@@ -61,3 +61,4 @@ Route::resource('participants.stages', 'ParticipantStagesController', ['only' =>
 Route::resource('rankings', 'rankingsController', ['except' => 'show']);
 Route::get('/rankings/{id}', 'rankingsController@category');
 Route::get('/rankings/{id_stage}/{id_category}', 'rankingsController@rankinglist');
+Route::get('/total', 'rankingsController@totalranking');
