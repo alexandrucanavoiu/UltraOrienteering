@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Dompdf\Exception;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Validation\Validator;
 use DB;
@@ -14,32 +15,26 @@ class uuidcardsController extends Controller
 {
     public function index(){
 
-        $uuidcardslist = DB::table('uuid_cards')->paginate(15);
+        $uuidcardslist = UuidCard::paginate(15);
 
         return view('uuid-cards', ['uuidcardslist' => $uuidcardslist]);
 
-
     }
 
-    public function remove($id) {
+    public function remove($id, Exception $e) {
 
-        DB::table('uuid_cards')->where('id', $id)->delete();
+        $uuid = UuidCard::findOrFail($id);
 
-        $data = '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> UUID Card with <strong>number ' . $id . '</strong> has removed from database.</div>';
-        return redirect('/uuid-cards')->with('message', $data);
+                    try {
+                        $uuid->delete();
+                    } catch(\Exception $e) {
+                        if (stristr($e->getMessage(), 'Cannot delete or update a parent row: a foreign key constraint fails')) {
+                            return redirect('/uuid-cards')->with('warning', 'UUID Card with ID '. $uuid->uuidcard . '  cannot be deleted because it has related entities. Please first remove all the other dates that uses this record...');
+                        }
+                    }
+
+        return redirect('/uuid-cards')->with('success', 'UUID Card with ID' . $uuid->uuidcard . ' has removed from database.');
     }
-
-
-    public function trucate() {
-
-
-
-        DB::table('uuid_cards')->truncate();
-
-
-        return redirect('/uuid-cards')->with('message', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>All information from database for UUID Cards removed</div>');
-    }
-
 
     public function importExport()
 
@@ -93,28 +88,24 @@ class uuidcardsController extends Controller
 
                     if (is_null($value->uuidcard) || is_null($value->id)) {
 
-                        return redirect('/uuid-cards')->with('message', '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>Error Import File, please read the documentation about import uuid cards in database</div>');
+                        return redirect('/uuid-cards')->with('warning', 'Error Import File, please read the documentation about import uuid cards in database');
 
                     }
 
                     if (Uuidcard::where('id', $value->id)->exists()) {
-                        return redirect('/uuid-cards')->with('message', '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>Please verify the ID from UUID Cards List with the File Imported, same to be duplicate.</div>');
+                        return redirect('/uuid-cards')->with('warning', 'Please verify the ID from UUID Cards List with the File Imported, same to be duplicate.');
                     }
 
                     if (Uuidcard::where('uuidcard', $value->uuidcard)->exists()) {
-                        return redirect('/uuid-cards')->with('message', '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>Please verify the UUIDCARD from UUID Cards List with the File Imported, same to be duplicate.</div>');
+                        return redirect('/uuid-cards')->with('warning', 'Please verify the UUIDCARD from UUID Cards List with the File Imported, same to be duplicate.');
                     }
-
 
                     $insert[] = ['id' => $value->id, 'uuidcard' => $value->uuidcard];
                 }
 
                 if (!empty($insert)) {
-
-
-                    DB::table('uuid_cards')->insert($insert);
-
-                    return redirect('/uuid-cards')->with('message', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>UUID Cards from file has imported successed.</div>');
+                    UuidCard::insert($insert);
+                    return redirect('/uuid-cards')->with('success', 'UUID Cards from file has imported successed.');
 
                 }
 

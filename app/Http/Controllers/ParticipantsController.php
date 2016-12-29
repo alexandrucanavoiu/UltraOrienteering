@@ -191,6 +191,8 @@ class ParticipantsController extends Controller
         $name = $participant->name;
         $participant->delete();
 
+
+
         return redirect()->route('participants.index')->with('success', $name . ' has been deleted!');
     }
 }

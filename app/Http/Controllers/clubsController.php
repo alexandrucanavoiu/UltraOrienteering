@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Dompdf\Exception;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Validation\Validator;
 use DB;
@@ -55,10 +56,17 @@ class clubsController extends Controller
     }
 
 
-    public function remove($id) {
+    public function remove($id, Exception $e) {
 
         $club = Club::findOrFail($id);
-        $club->delete();
+
+        try {
+            $club->delete();
+        } catch(\Exception $e) {
+            if (stristr($e->getMessage(), 'Cannot delete or update a parent row')) {
+                return redirect('/clubs')->with('warning', $club->name . '  cannot be deleted because it has related entities. Please first remove all the other dates that uses this record...');
+        }
+        }
 
         return redirect('/clubs')->with('success', $club->name . ' has been removed from the database');
     }

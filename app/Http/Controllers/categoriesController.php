@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Dompdf\Exception;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Validation\Validator;
 use DB;
@@ -23,16 +24,19 @@ class categoriesController extends Controller
 
     }
 
-
-
-    public function remove($id) {
+    public function remove($id, Exception $e) {
 
         $category = Category::findOrFail($id);
-        $category->delete();
+        try {
+            $category->delete();
+        } catch(\Exception $e) {
+            if (stristr($e->getMessage(), 'Cannot delete or update a parent row: a foreign key constraint fails')) {
+                return redirect('/categories')->with('warning', $category->name . '  cannot be deleted because it has related entities. Please first remove all the other dates that uses this record...');
+            }
+        }
 
         return redirect('/categories')->with('success', $category->name . ' has been removed from database.');
     }
-
 
     public function create(Request $request)
     {
@@ -54,19 +58,13 @@ class categoriesController extends Controller
 
         $category = Category::with('route')->findOrFail($id);
         $routes = Route::All();
-
-
         return view('categories.edit', ['category' => $category, 'routes' => $routes]);
-
-
     }
-
 
     public function update(Request $request, $id){
 
 
         $category = Category::findOrFail($id);
-
         $this->validate($request, [
             'category_name' => 'required|max:255|min:2',
             'route_name' => 'required|integer'
@@ -77,11 +75,8 @@ class categoriesController extends Controller
             'route_id' => $request->input('route_name')
         ]);
 
-
         return redirect('/categories')->with('success', $category->name . ' have been added updated.');
 
     }
-
-
 
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Dompdf\Exception;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Validation\Validator;
 use DB;
@@ -63,10 +64,16 @@ class routesController extends Controller
     }
 
 
-    public function remove($id) {
+    public function remove($id, Exception $e) {
         $route = Route::findOrFail($id);
 
-        $route->delete();
+        try {
+            $route->delete();
+        } catch(\Exception $e) {
+            if (stristr($e->getMessage(), 'Cannot delete or update a parent row')) {
+                return redirect('/routes')->with('warning', $route->name . '  cannot be deleted because it has related entities. Please first remove all the other dates that uses this record...');
+            }
+        }
 
         return redirect('/routes')->with('success', $route->name . ' has been removed from database.');
     }
