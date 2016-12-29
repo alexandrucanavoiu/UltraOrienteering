@@ -38,10 +38,10 @@ class clubsController extends Controller
             $clubdistrict = $cdistrict[$key];
 
 
-            $clubs = Club::create([
+            $club = Club::create([
                 'name' => $clubname,
                 'city' => $clubcity,
-                'route_id' => $clubdistrict
+                'club_district_id' => $clubdistrict
             ]);
         }
 
@@ -74,6 +74,8 @@ class clubsController extends Controller
 
     }
 
+
+
     public function update(Request $request, $id){
 
         $club = Club::findOrFail($id);
@@ -94,4 +96,7 @@ class clubsController extends Controller
             return redirect('/clubs')->with('success', $club->name . ' have been added updated.');
 
     }
+
+
+
 }
