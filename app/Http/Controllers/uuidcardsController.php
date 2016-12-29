@@ -41,18 +41,6 @@ class uuidcardsController extends Controller
     }
 
 
-
-    public function validateImportFile(Request $request) {
-
-        $this->validate($request, [
-
-            'import_file' => 'required'
-
-        ]);
-
-    }
-
-
     public function importExport()
 
     {
@@ -81,9 +69,16 @@ class uuidcardsController extends Controller
 
     }
 
-    public function importExcel()
+    public function importExcel(Request $request)
 
     {
+
+        $this->validate($request, [
+
+            'import_file' => 'required'
+
+        ]);
+
         if (Input::hasFile('import_file')) {
 
             $path = Input::file('import_file')->getRealPath();
