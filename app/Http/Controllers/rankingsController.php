@@ -66,6 +66,8 @@ class rankingsController extends Controller
     public function totalranking()
 {
 
+    $times = array();
+    $concurents = array();
     $number = 1;
     $stages = Stage::All();
     $participant = Participant::All();
@@ -146,7 +148,13 @@ class rankingsController extends Controller
 
     }
 
-    array_multisort($times, SORT_ASC, $concurents);//sortare dupa timp
+    if(is_array($times)) {
+        array_multisort($times, SORT_ASC, $concurents);//sortare dupa timp
+
+    } else {
+        $times[] = "00:00:00";
+        $concurents[] = "";
+    }
 
     return view('rankings.total', compact('number', 'stages','concurents'));
     }
@@ -233,8 +241,8 @@ class rankingsController extends Controller
 
 
         }
+            array_multisort($times, SORT_ASC, $concurents);
 
-        array_multisort($times, SORT_ASC, $concurents);//sortare dupa timp
 
         $pdf=PDF::loadView('rankings.pdf.total', ['stages'=>$stages,'concurents'=>$concurents, 'number'=>$number ]);
         return $pdf->stream('rankingtotal.pdf');

@@ -10,9 +10,9 @@
     <meta name="author" content="">
     <!-- jQuery -->
     <script src="/vendor/jquery/jquery.min.js"></script>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="/vendor/jquery/jquery-ui.css">
+    <script src="/vendor/jquery/jquery-1.12.4.js"></script>
+    <script src="/vendor/jquery/jquery-ui.js"></script>
     <script src="/js/validator.min.js"></script>
     @yield('scripts-header')
 
