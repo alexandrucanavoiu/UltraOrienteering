@@ -11,7 +11,7 @@ body {
 }
 #page-wrapper {
   padding: 0 15px;
-  min-height: 568px;
+  min-height: 700px;
   background-color: white;
 }
 @media (min-width: 768px) {
@@ -559,4 +559,12 @@ table.dataTable thead .sorting:after {
   float:right;
   margin-bottom: 20px;
     margin-left: 20px;
+}
+
+.hugeuuid {
+  font-size: 60px;
+}
+
+.space {
+  margin-top: 30px;
 }
