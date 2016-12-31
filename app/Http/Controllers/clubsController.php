@@ -14,14 +14,10 @@ use App\Models\ClubDistrict;
 class clubsController extends Controller
 {
     public function index(){
-
-        $clubs = Club::with('ClubDistrict')->paginate(15);
+        $clubs = Club::with('ClubDistrict')->Orderby('name', 'ASC')->paginate(100);
 
         $districtlist = ClubDistrict::All();
-
         return view('clubs', ['clubs' => $clubs, 'districtlist' => $districtlist]);
-
-
     }
 
 

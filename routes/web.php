@@ -19,6 +19,7 @@ Route::get('/uuid-cards/remove/{id}', 'uuidcardsController@remove');
 Route::get('/uuid-cards/importExport', 'uuidcardsController@importExport');
 Route::get('/uuid-cards/downloadExcel/{type}', 'uuidcardsController@downloadExcel');
 Route::post('/uuid-cards/importExcel', 'uuidcardsController@importExcel');
+Route::get('/uuid-cards/drop', 'uuidcardsController@drop');
 //Route::post('/uuid-cards/importExcel', 'uuidcardsController@validateImportFile');
 
 
@@ -55,6 +56,8 @@ Route::put('/clubs/update/{id}', 'clubsController@update');
 Route::resource('participants', 'ParticipantsController', ['except' => 'show']);
 Route::get('/participants/{id}/manage', 'ParticipantsController@manage')->name('participants.manage');
 Route::put('/participants/{id}/manage', 'ParticipantsController@updateManage');
+Route::post('/participants/filter', 'ParticipantsController@filter');
+Route::get('/participants/filter/{id_stage}/{id_category}/export/pdf', 'ParticipantsController@filterexportxls');
 
 Route::resource('participants.stages', 'ParticipantStagesController', ['only' => ['index', 'store', 'destroy']]);
 

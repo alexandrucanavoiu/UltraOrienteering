@@ -568,3 +568,25 @@ table.dataTable thead .sorting:after {
 .space {
   margin-top: 30px;
 }
+
+.filter {
+  float: right;
+}
+
+.stage_name_filter, .category_name_filter, .category_name_filter, .submit-filter { float: left; margin: 5px; }
+
+.btn-filter {
+  -moz-user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.42857;
+  margin-bottom: 0;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+}

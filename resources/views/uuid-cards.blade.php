@@ -86,6 +86,22 @@
                     </div>
                 </div>
             </div>
+            <div class="col-xs-6 col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Remove all data from software (reset)
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <form action="{{ URL::to('/uuid-cards/drop') }}" class="form-horizontal" method="post">
+                                {{ csrf_field() }}
+                                <button class="btn btn-primary btn-lg btn-block">DROP DATA</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- /.row -->
     </div>

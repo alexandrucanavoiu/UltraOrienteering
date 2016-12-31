@@ -11,6 +11,8 @@ use App\Models\ParticipantManager;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Validation\Rule;
+use Excel;
+use PDF;
 
 class ParticipantsController extends Controller
 {
@@ -21,9 +23,16 @@ class ParticipantsController extends Controller
      */
     public function index()
     {
-        $participants = Participant::with('uuidCard', 'club')->paginate(100);
+        $participants = Participant::with('uuidCard', 'club')
+            ->select('clubs.name as club_name', 'participants.*')
+            ->join('clubs', 'participants.club_id', '=', 'clubs.id')
+            ->orderBy('clubs.name', 'ASC')
+            ->paginate(100);
 
-        return view('participants.index', compact('participants'));
+        $stages = Stage::All();
+        $categories = Category::All();
+
+        return view('participants.index', compact('participants', 'stages', 'categories'));
     }
 
     /**
@@ -189,8 +198,55 @@ class ParticipantsController extends Controller
     {
         $participant = Participant::findOrFail($id);
         $name = $participant->name;
-        $participant->delete();
+        try {
+            $participant->delete();
+        } catch(\Exception $e) {
+            if (stristr($e->getMessage(), 'Cannot delete or update a parent row')) {
+                return redirect('/participants')->with('warning', $name . '  cannot be deleted because it has related entities. Please first remove all the other dates that uses this record...');
+            }
+        }
+
+
         return redirect()->route('participants.index')->with('success', $name . ' has been deleted!');
     }
+
+
+    public function filter(Request $request)
+    {
+        $this->validate($request, [
+            'stage_name_filter' => 'required|integer|exists:stages,id',
+            'category_name_filter' => 'required|integer|exists:categories,id',
+        ]);
+
+        $stages = Stage::All();
+        $categories = Category::All();
+
+        $id_stage = $request->input('stage_name_filter');
+        $id_category = $request->input('category_name_filter');
+
+        $stage = Stage::findOrFail($id_stage);
+        $category = Category::findOrFail($id_category);
+        $number = 1;
+
+        $participants = ParticipantManager::where('category_id', '=', $id_category)->where('stage_id', '=', $id_stage)->get();
+
+        return view('participants.filter', compact('participants', 'stage', 'category', 'number', 'stages', 'categories', 'id_category', 'id_stage'));
+
+    }
+
+    public function filterexportxls($id_stage, $id_category)
+    {
+        $stage = Stage::findOrFail($id_stage);
+        $category = Category::findOrFail($id_category);
+
+        $participants = ParticipantManager::where('category_id', '=', $id_category)->where('stage_id', '=', $id_stage)->get();
+
+        $number = 1;
+
+        $pdf=PDF::loadView('participants.pdf.participants', ['participants'=>$participants,'stage'=>$stage, 'category'=>$category, 'number'=>$number ]);
+        return $pdf->stream('participants'. $id_stage .'_category'.$id_category.'.pdf');
+        
+    }
+
 }
 

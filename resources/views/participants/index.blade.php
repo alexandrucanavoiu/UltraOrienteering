@@ -17,6 +17,33 @@
                 </h1>
             </div>
 
+            <div class="filter">
+                <div class="left-filtre">Filtre by:</div>
+                <form method="post" action="/participants/filter">
+                    {{ csrf_field() }}
+                    <div class="stage_name_filter">
+                        <label><strong>Stage</strong></label>
+                        <select id="stage_name_filter" name="stage_name_filter">
+                            <option value="">-- select --</option>
+                            @foreach($stages as $stage)
+                                <option value="{{$stage->id}}">{{$stage->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="category_name_filter">
+                        <label><strong>Category</strong></label>
+                        <select id="category_name_filter" name="category_name_filter">
+                            <option value="">-- select --</option>
+                            @foreach($categories as $category)
+                                <option value="{{$category->id}}">{{$category->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="submit-filter"><button type="submit" class="btn btn-primary btn-xs">Filter</button></div>
+                </form>
+            </div>
+
             <div class="col-xs-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">

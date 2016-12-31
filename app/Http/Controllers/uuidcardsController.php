@@ -2,6 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Club;
+use App\Models\Participant;
+use App\Models\ParticipantManager;
+use App\Models\Stage;
+use App\Models\Route;
 use Dompdf\Exception;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Validation\Validator;
@@ -19,6 +25,21 @@ class uuidcardsController extends Controller
 
         return view('uuid-cards', ['uuidcardslist' => $uuidcardslist]);
 
+    }
+
+    public function drop(){
+
+        DB::statement("SET foreign_key_checks=0");
+        ParticipantManager::truncate();
+        Participant::truncate();
+        Club::truncate();
+        Category::truncate();
+        Route::truncate();
+        Stage::truncate();
+        UuidCard::truncate();
+        DB::statement("SET foreign_key_checks=1");
+
+        return redirect('/')->with('error', 'ALL DATA FROM DATABASE REMOVED');
     }
 
     public function remove($id, Exception $e) {
