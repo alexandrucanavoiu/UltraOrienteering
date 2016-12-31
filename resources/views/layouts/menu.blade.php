@@ -11,7 +11,7 @@
     <!-- /.navbar-header -->
 
     <ul class="nav navbar-top-links navbar-right">
-<h1>Ultra Orienteering is a open-source software</h1>
+<h1>Ultra Orienteering is a open-source software<br>by <a target="_blank" href="http://asociatia.drumetiimontane.ro">Mountain Hiking Association</a></h1>
     </ul>
     <!-- /.navbar-top-links -->
 
@@ -31,6 +31,15 @@
                     <a href="/rankings"><i class="fa fa-user  fa-fw"></i> Rankings</a>
                 </li>
             </ul>
+        </div>
+
+        <div class="changelog">
+        <div class="center">Version 1.0</div>
+        <div class="center"><a target="_blank" href="http://www.ultraorienteering.drumetiimontane.ro"> Visit Official Website</a></div>
+        </div>
+
+        <div class="changelog center">
+            <a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
         </div>
         <!-- /.sidebar-collapse -->
     </div>
