@@ -17,7 +17,7 @@ Documentation for the Ultra Orienteering software can be found on the [Ultra Ori
 7. Import orienteering.sql
 
 
-## Contributing on this project
+## Contributing
 
 Thank you for considering contributing to the Ultra Orienteering Software! The contribution guide can be found in the [Ultra Orienteering documentation](http://www.ultraorienteering.drumetiimontane.ro/documentation).
 
