@@ -4,7 +4,7 @@ Ultra Orienteering is your comfortable and reliable free tool to organise a sing
 
 ## Official Documentation
 
-Documentation for the software can be found on the [Ultra Orienteering Official Webiste](http://www.ultraorienteering.drumetiimontane.ro).
+Documentation for the Ultra Orienteering software can be found on the [Ultra Orienteering Official Webiste](http://www.ultraorienteering.drumetiimontane.ro).
 
 ## SETUP
 
@@ -17,14 +17,16 @@ Documentation for the software can be found on the [Ultra Orienteering Official 
 7. Import orienteering.sql
 
 
-## Contributing
+## Contributing on this project
 
 Thank you for considering contributing to the Ultra Orienteering Software! The contribution guide can be found in the [Ultra Orienteering documentation](http://www.ultraorienteering.drumetiimontane.ro/documentation).
 
-## Security Vulnerabilities
+## About Security
 
 If you discover a security vulnerability, please send an e-mail to Mountain Hiking Association at contact@drumetiimontane.ro. All security vulnerabilities will be promptly addressed.
 
 ## License
 
 The Laravel framework is open-sourced software licensed under the [ Creative Commons Attribution-NonCommercial 4.0 International License.](https://creativecommons.org/licenses/by-nc/4.0/).
+
+React documentation is [Creative Commons licensed.](https://creativecommons.org/)
