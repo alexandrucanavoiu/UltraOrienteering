@@ -56,6 +56,8 @@ Route::put('/clubs/update/{id}', 'clubsController@update');
 Route::resource('participants', 'ParticipantsController', ['except' => 'show']);
 Route::get('/participants/{id}/manage', 'ParticipantsController@manage')->name('participants.manage');
 Route::put('/participants/{id}/manage', 'ParticipantsController@updateManage');
+Route::get('/participants/import', 'ParticipantsController@importuuidcards');
+Route::post('/participants/import/xls', 'ParticipantsController@importuuidcardsxls');
 Route::post('/participants/filter', 'ParticipantsController@filter');
 Route::get('/participants/filter/{id_stage}/{id_category}/export/pdf', 'ParticipantsController@filterexportxls');
 

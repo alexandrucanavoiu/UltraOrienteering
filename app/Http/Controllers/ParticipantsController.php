@@ -13,6 +13,7 @@ use DB;
 use Illuminate\Validation\Rule;
 use Excel;
 use PDF;
+use Input;
 
 class ParticipantsController extends Controller
 {
@@ -210,7 +211,9 @@ class ParticipantsController extends Controller
         return redirect()->route('participants.index')->with('success', $name . ' has been deleted!');
     }
 
-
+    /**
+     * Filter the Participant by Stage and Category
+     */
     public function filter(Request $request)
     {
         $this->validate($request, [
@@ -234,6 +237,9 @@ class ParticipantsController extends Controller
 
     }
 
+    /**
+     * After Filter the Participant by Stage and Category export to PDF
+     */
     public function filterexportxls($id_stage, $id_category)
     {
         $stage = Stage::findOrFail($id_stage);
@@ -245,7 +251,77 @@ class ParticipantsController extends Controller
 
         $pdf=PDF::loadView('participants.pdf.participants', ['participants'=>$participants,'stage'=>$stage, 'category'=>$category, 'number'=>$number ]);
         return $pdf->stream('participants'. $id_stage .'_category'.$id_category.'.pdf');
-        
+
+    }
+
+    /**
+     * Import time for Participant using UUID CARDS system
+     */
+    public function importuuidcards()
+    {
+        $stages = Stage::all();
+
+        return view('participants.importuuidcards', compact('stages'));
+    }
+
+    /**
+     * Import time for Participant using UUID CARDS system
+     */
+    public function importuuidcardsxls(Request $request)
+    {
+
+        $stages = $request->input('stages');
+
+        $this->validate($request, [
+
+            'import_file' => 'required'
+
+        ]);
+
+        $uuidlist = UuidCard::All();
+
+        if (Input::hasFile('import_file')) {
+
+            $path = Input::file('import_file')->getRealPath();
+
+            $data = Excel::load($path, function ($reader) {
+
+            })->get();
+
+            if (!empty($data) && $data->count()) {
+                foreach ($data as $key => $value) {
+
+                    if($value->total_time == "ERROR !!") {
+                        $value->total_time = "2016-12-31 23:59:59.000000";
+                    }
+                    $insert[] = ['uuid_card_id' => $value->uuid_card_id, 'total_time' => $value->total_time];
+                }
+
+                if (!empty($insert)) {
+
+
+                    foreach ($insert as $data) {
+
+                        foreach ($uuidlist as $uuid) {
+
+                            if($data['uuid_card_id'] === $uuid->uuidcard) {
+
+                                DB::table('participant_managers')
+                                    ->where('uuid_card_id', $uuid->id)
+                                    ->where('stage_id', $stages)
+                                    ->update(['total_time' => $data['total_time']]);
+
+                            }
+
+                        }
+                    }
+
+                    return redirect('/participants/import')->with('success', 'UUID Cards from file has imported successed.');
+
+                }
+            }
+        }
+        return back();
     }
 
 }

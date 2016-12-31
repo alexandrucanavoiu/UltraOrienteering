@@ -48,6 +48,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         List of Participants in database
+                        <a target="_blank" href="/participants/import" class="btn btn-warning btn-xs float-right">Import Data</a>
                     </div>
 
                     <div class="panel-body">
