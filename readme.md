@@ -6,7 +6,7 @@ Ultra Orienteering is your comfortable and reliable free tool to organise a sing
 
 Documentation for the Ultra Orienteering Ranking Software can be found on the [Ultra Orienteering Official Webiste](http://www.ultra-orienteering.drumetiimontane.ro).
 
-Remeber this software is running in offline mode.
+Remember this software is running in offline mode.
 
 ## SETUP
 
