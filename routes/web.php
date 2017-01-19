@@ -22,7 +22,6 @@ Route::post('/uuid-cards/importExcel', 'uuidcardsController@importExcel');
 Route::get('/uuid-cards/drop', 'uuidcardsController@drop');
 //Route::post('/uuid-cards/importExcel', 'uuidcardsController@validateImportFile');
 
-
 Route::get('/stages', 'stagesController@index');
 Route::post('/stages/create', 'stagesController@create');
 Route::get('/stages/remove/{id}', 'stagesController@remove');
