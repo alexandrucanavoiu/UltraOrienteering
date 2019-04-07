@@ -23,9 +23,9 @@
                 <div class="uuid_participants div-left-input">
                     <label for="uuid_card_id">UUID Card</label>
                     <select class="form-control" id="uuid_card_id" name="uuid_card_id">
-                        <option value selected>Please select</option>
-                        @foreach($uuidList as $uuidCard)
-                            <option value="{{ $uuidCard->id }}">NR #{{ $uuidCard->id }} - {{ $uuidCard->uuidcard }}</option>
+                        <option value="" selected>Please select</option>
+                        @foreach($uuidList as $key => $uuidCard)
+                            <option value="{{ $key }}">NR #{{ $key }} - {{ $uuidCard }}</option>
                         @endforeach
                     </select>
                 </div>

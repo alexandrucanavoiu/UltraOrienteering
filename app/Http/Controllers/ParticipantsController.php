@@ -43,7 +43,7 @@ class ParticipantsController extends Controller
      */
     public function create()
     {
-        $uuidList = UuidCard::all();
+        $uuidList = UuidCard::doesntHave('participant')->orderBy('id')->pluck('uuidcard', 'id');
         $clubs = Club::all();
 
         return view('participants.create', compact('uuidList', 'clubs'));
@@ -285,16 +285,28 @@ class ParticipantsController extends Controller
             $path = Input::file('import_file')->getRealPath();
 
             $data = Excel::load($path, function ($reader) {
-
+                $reader->noHeading();
             })->get();
 
             if (!empty($data) && $data->count()) {
                 foreach ($data as $key => $value) {
+                    $cell_items = $value->toArray();
+                    /*
+                     * Must use the following file structure
+                     * - uuid_card_id -> index 0
+                     * - total_time -> index 1
+                     * Values will be used by index key and must be in proper order
+                     */
 
-                    if($value->total_time == "ERROR !!") {
-                        $value->total_time = "2016-12-31 23:59:59.000000";
+//                    if($value->total_time == "ERROR !!") {
+//                        $value->total_time = "2016-12-31 23:59:59.000000";
+//                    }
+//                    $insert[] = ['uuid_card_id' => $value->uuid_card_id, 'total_time' => $value->total_time];
+
+                    if($cell_items[1] == "ERROR !!") {
+                        $cell_items[1] = "2016-12-31 23:59:59.000000";
                     }
-                    $insert[] = ['uuid_card_id' => $value->uuid_card_id, 'total_time' => $value->total_time];
+                    $insert[] = ['uuid_card_id' => $cell_items[0], 'total_time' => $cell_items[1]];
                 }
 
                 if (!empty($insert)) {

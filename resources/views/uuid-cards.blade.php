@@ -57,7 +57,7 @@
             <div class="col-xs-6 col-md-4">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Upload UUID Cards from xls, xlsx, cvs
+                        Upload UUID Cards from xls, xlsx, csv
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">

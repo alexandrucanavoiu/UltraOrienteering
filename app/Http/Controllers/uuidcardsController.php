@@ -100,30 +100,46 @@ class uuidcardsController extends Controller
             $path = Input::file('import_file')->getRealPath();
 
             $data = Excel::load($path, function ($reader) {
-
+                $reader->noHeading();
             })->get();
+
 
             if (!empty($data) && $data->count()) {
                 foreach ($data as $key => $value) {
-                    if (is_null($value->uuidcard) || is_null($value->id)) {
-                        return redirect('/uuid-cards')->with('warning', 'Error Import File, please read the documentation about import uuid cards in database');
-                    }
+                    $cell_items = $value->toArray();
+                    $first_item = reset($cell_items);
 
-                    if (Uuidcard::where('id', $value->id)->exists()) {
-                        return redirect('/uuid-cards')->with('warning', 'Please verify the ID from UUID Cards List with the File Imported, same to be duplicate.');
-                    }
+//                    if (is_null($value->uuidcard) || is_null($value->id)) {
+//                        return redirect('/uuid-cards')->with('warning', 'Error Import File, please read the documentation about import uuid cards in database');
+//                    }
+//
+//                    if (Uuidcard::where('id', $value->id)->exists()) {
+//                        return redirect('/uuid-cards')->with('warning', 'Please verify the ID from UUID Cards List with the File Imported, same to be duplicate.');
+//                    }
+//
+//                    if (Uuidcard::where('uuidcard', $value->uuidcard)->exists()) {
+//                        return redirect('/uuid-cards')->with('warning', 'Please verify the UUIDCARD from UUID Cards List with the File Imported, same to be duplicate.');
+//                    }
 
-                    if (Uuidcard::where('uuidcard', $value->uuidcard)->exists()) {
+                    if (Uuidcard::where('uuidcard', $first_item)->exists()) {
                         return redirect('/uuid-cards')->with('warning', 'Please verify the UUIDCARD from UUID Cards List with the File Imported, same to be duplicate.');
                     }
 
-                    $insert[] = ['id' => $value->id, 'uuidcard' => $value->uuidcard];
+//                    $insert = ['id' => $value->id, 'uuidcard' => $value->uuidcard];
+
+                    $insert = ['uuidcard' => $first_item];
+
+                    if (!empty($insert)) {
+                        UuidCard::insert($insert);
+                    }
                 }
 
-                if (!empty($insert)) {
-                    UuidCard::insert($insert);
-                    return redirect('/uuid-cards')->with('success', 'UUID Cards from file has imported successed.');
-                }
+                return redirect('/uuid-cards')->with('success', 'UUID Cards from file has imported successed.');
+
+//                if (!empty($insert)) {
+//                    UuidCard::insert($insert);
+//                    return redirect('/uuid-cards')->with('success', 'UUID Cards from file has imported successed.');
+//                }
             }
         }
         return back();
