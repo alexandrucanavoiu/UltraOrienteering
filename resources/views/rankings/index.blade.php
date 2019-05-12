@@ -1,78 +1,52 @@
-
 @extends('layouts/template')
-
-@section('title')
-    General Ranking for All Stages - Ultra Orienteering Software - Open Source Software
-@endsection
-
+@section('title') Rankings Administration - Ultra Orienteering Software - Open Source Software @endsection
 @section('body')
-    <div class="container-fluid">
+    <section class="content-header">
+        <h1>
+            Rankings
+            <small>list</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+            <li><a href="#" class="active">Rankings</a></li>
+        </ol>
+    </section>
+
+    <section class="content">
+        <br />
         <div class="row">
-            <div class="col-lg-12">
-                <div style="margin-top: 10px; margin-bottom: -10px">
-                    @include('partials.form-flash-message')
-                </div>
-
-                <h1 class="page-header">General Ranking for All Stages</h1>
-            </div>
-
-
-            <div class="col-lg-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        List of Stages
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"></h3>
                     </div>
-                    <!-- /.panel-heading -->
-                    <div class="panel-body">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th class="center">Nr #</th>
-                                    <th class="center">Stage Name</th>
-                                    <th class="center">No. Participants</th>
-                                    <th></th>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        @if($stages->count() > 0)
+                        <table class="stages table table-bordered">
+                            <tbody>
+                            <tr>
+                                <th>Stage Name</th>
+                                <th class="center" style="width: 20%">Actions</th>
+                            </tr>
+                            @foreach($stages as $stage)
+                                <tr class="stages-list-{{ $stage->id }}">
+                                    <td class="stage-name-{{ $stage->id }}">{{ $stage->stage_name }}</td>
+                                    <td class="center">
+                                        <a class="btn btn-success btn-flat margin" data-id="{{ $stage->id }}" href="/rankings/{{ $stage->id }}/view">View Categories Rankings</a>
+                                    </td>
                                 </tr>
-                                </thead>
-
-                                    <tbody>
-                                    @foreach($stages as $key => $stage)
-                                    <tr>
-                                        <td class="center">{{ $number++ }}</td>
-                                        <td class="center">{{ $stage->name }}</td>
-                                        <td class="center">
-                                            <?php
-
-                                            $participants = DB::table('participant_managers')->where('stage_id', '=', $stage->id )->count();
-                                                echo $participants;
-                                        ?>
-                                        </td>
-                                        <td>
-                                            <a href="{{ URL::to('/rankings/') }}/{{ $stage->id }}" class="btn btn-success">Ranking by categories</a>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td><a href="{{ URL::to('/total') }}" class="btn btn-primary">General Rankings<a/></td>
-                                    </tr>
-                                    </tbody>
-
-                            </table>
-                        </div>
+                            @endforeach
+                            </tbody>
+                        </table>
+                            @else
+                            <div class="center">No rankings yet.</div>
+                        @endif
                     </div>
+                    <!-- /.box-body -->
                 </div>
+                <!-- /.box -->
             </div>
-
-
-
-
-
-
         </div>
-        <!-- /.row -->
-
-    </div>
+    </section>
 @endsection

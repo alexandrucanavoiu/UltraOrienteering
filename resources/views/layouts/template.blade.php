@@ -1,76 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <!-- jQuery -->
-    <script src="/vendor/jquery/jquery.min.js"></script>
-    <link rel="stylesheet" href="/vendor/jquery/jquery-ui.css">
-    <script src="/vendor/jquery/jquery-1.12.4.js"></script>
-    <script src="/vendor/jquery/jquery-ui.js"></script>
-    <script src="/js/validator.min.js"></script>
-    @yield('scripts-header')
-
     <title>@yield('title')</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- MetisMenu CSS -->
-    <link href="/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="/dist/css/sb-admin-2.css" rel="stylesheet">
-
-    <!-- Morris Charts CSS -->
-    <link href="/vendor/morrisjs/morris.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="/layout/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/layout/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/layout/Ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="/layout/jvectormap/jquery-jvectormap.css">
+    <link rel="stylesheet" href="/layout/datatables.net-bs/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="/layout//plugins/toastr/toastr.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/AdminLTE.css">
+    <link rel="stylesheet" href="/css/skin-black.css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-    <script src="/vendor/html5shiv.js"></script>
-    <script src="/vendor/respond.min.js"></script>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    @yield('scripts-header')
     <![endif]-->
-
 </head>
+<body class="hold-transition skin-black sidebar-mini">
+<div class="wrapper">
 
-<body>
-
-<div id="wrapper">
-
-    <!-- Navigation -->
+    <header class="main-header">
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar-static-top">
+            <p>&nbsp;</p>
+        </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
     @include('layouts.menu')
 
-    <div id="page-wrapper">
-                @yield('body')
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        @yield('body')
     </div>
-    <!-- /#page-wrapper -->
-
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+        <div class="pull-right hidden-xs"><b>Version</b> 2.0 <a target="_blank" href="http://www.ultraorienteering.drumetiimontane.ro"> Visit Official Website</a></div>
+        <div>Ultra Orienteering is a open-source software by <a target="_blank" href="http://asociatia.drumetiimontane.ro">Mountain Hiking Association</a></div>
+    </footer>
 </div>
-<!-- /#wrapper -->
+<!-- ./wrapper -->
 
-<!-- Bootstrap Core JavaScript -->
-<script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
-
-<!-- Metis Menu Plugin JavaScript -->
-<script src="/vendor/metisMenu/metisMenu.min.js"></script>
-
-<!-- Morris Charts JavaScript -->
-<script src="/vendor/raphael/raphael.min.js"></script>
-<script src="/vendor/morrisjs/morris.min.js"></script>
-<script src="/data/morris-data.js"></script>
-
-<!-- Custom Theme JavaScript -->
-<script src="/dist/js/sb-admin-2.js"></script>
-
+<!-- jQuery 3 -->
+<script src="/layout/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="/layout/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- FastClick -->
+<script src="/layout/fastclick/lib/fastclick.js"></script>
+<script src="/layout/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="/layout/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/js/adminlte.min.js"></script>
+<!-- Sparkline -->
+<script src="/layout/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
+<!-- jvectormap  -->
+<script src="/layout/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="/layout/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<!-- SlimScroll -->
+<script src="/layout/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<script src="/layout/plugins/toastr/toastr.min.js"></script>
+<script src="/js/jquery.inputmask.bundle.min.js"></script>
+<script src="/js/custom.js"></script>
+@yield('scripts-footer')
+@include('layouts.messages')
 </body>
-
 </html>

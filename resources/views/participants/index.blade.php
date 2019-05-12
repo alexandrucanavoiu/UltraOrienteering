@@ -1,109 +1,119 @@
 @extends('layouts/template')
-
 @section('title') Clubs Administration - Ultra Orienteering Software - Open Source Software @endsection
-
 @section('body')
-    <div class="container-fluid">
+    <section class="content-header">
+        <h1>
+            Participants
+            <small>list</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+            <li class="active"><a href="#">Participants</a></li>
+        </ol>
+    </section>
+
+    <section class="content">
         <div class="row">
             <div class="col-lg-12">
-                <div style="margin-top: 10px; margin-bottom: -10px">
-                    @include('partials.form-flash-message')
-                </div>
                 <h1 class="page-header">
-                    Participants
                     <span class="pull-right">
-                        <a href="{{ route('participants.create') }}" class="btn btn-primary pull-left">Add a new Participant</a>
+                        <a href="#" class="btn btn-primary pull-left js--create-participants" data-toggle="modal" data-target="#myModal-Participants-create">Add a new Participant</a>
                     </span>
                 </h1>
             </div>
-
-            <div class="filter">
-                <div class="left-filtre">Filtre by:</div>
-                <form method="post" action="/participants/filter">
-                    {{ csrf_field() }}
-                    <div class="stage_name_filter">
-                        <label><strong>Stage</strong></label>
-                        <select id="stage_name_filter" name="stage_name_filter">
-                            <option value="">-- select --</option>
-                            @foreach($stages as $stage)
-                                <option value="{{$stage->id}}">{{$stage->name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="category_name_filter">
-                        <label><strong>Category</strong></label>
-                        <select id="category_name_filter" name="category_name_filter">
-                            <option value="">-- select --</option>
-                            @foreach($categories as $category)
-                                <option value="{{$category->id}}">{{$category->name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="submit-filter"><button type="submit" class="btn btn-primary btn-xs">Filter</button></div>
-                </form>
-            </div>
-
-            <div class="col-xs-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        List of Participants in database
-                        <a target="_blank" href="/participants/import" class="btn btn-warning btn-xs float-right">Import Data</a>
-                    </div>
-
-                    <div class="panel-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover">
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="box">
+                    <div class="box-body">
+                            <table id="participants-list" class="table table-bordered table-striped">
                                 <thead>
-                                    <tr>
-                                        <th class="center">ID</th>
-                                        <th class="club_name center">Club Name</th>
-                                        <th class="stage_datet center">Participant Name</th>
-                                        <th class="stage_datet center">UUID Card</th>
-                                        <th class="center"></th>
-                                        <th class="center"></th>
-                                        <th class="center"></th>
-                                        <th class="center"></th>
-                                    </tr>
+                                <tr>
+                                    <th>Participant Name</th>
+                                    <th>UUID Card</th>
+                                    <th>Club</th>
+                                    <th></th>
+                                    <th class="center">Actions</th>
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse($participants as $participant)
-                                        <tr>
-                                            <td class="center">{{ $participant->id }}</td>
-                                            <td class="center">{{ $participant->club->name }}</td>
-                                            <td class="center">{{ $participant->name }}</td>
-                                            <td class="center">NR #{{ $participant->uuid_card_id }} - {{ $participant->uuidCard->uuidcard }}</td>
-                                            <td class="center">
-                                                <a href="{{ route('participants.stages.index', ['participant' => $participant->id]) }}" class="btn btn-success">Stages</a>
-                                            </td>
-                                            <td class="center">
-                                                <a href="{{ route('participants.manage', ['participant' => $participant->id]) }}" class="btn btn-success">Manage</a>
-                                            </td>
-                                            <td class="center">
-                                                <a href="{{ route('participants.edit', ['participant' => $participant->id]) }}" class="btn btn-link">
-                                                    <span class="fa fa-edit fa-fw"></span>
-                                                </a>
-                                            </td>
-                                            <td class="center">
-                                                <form action="{{ route('participants.destroy', ['participant' => $participant->id]) }}" method="POST">
-                                                    {{ method_field('DELETE') }}
-                                                    {{ csrf_field() }}
-                                                    <button type="submit" class="btn btn-link"><i class="fa fa-trash fa-fw"></i></button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="8"><div class="center">No participants in database, please add</div></td>
-                                        </tr>
-                                    @endforelse
                                 </tbody>
                             </table>
-                            <div  class="center"> {{ $participants->links() }}</div>
-                        </div>
+                        <div class="no-participants @if($participants->count() > 0) hide @else show @endif"><h4 class="box-title">No participant added yet! It is a good idea to add a participant.</h4></div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </div>
+        </div>
+
+        <div class="modal inmodal" id="myModal-Participants-delete" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content animated flipInY">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title"><i class="fa fa-exclamation-triangle text-danger"></i> Confirm Deletion </h4>
+                        <small class="font-bold"></small>
+                    </div>
+                    <div class="modal-body">
+                        <p>Please confirm this action.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                        <a href="#" class="btn btn-danger" id="confirm-delete">Confirm</a>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
+@endsection
+
+@section('scripts-footer')
+    <script>
+        $(function() {
+            $('#participants-list').DataTable({
+                'columnDefs': [
+                    {className: "center", targets: [1,3,4]},
+                    { "width": "25%", "targets": 0 },
+                    { "width": "10%", "targets": 1 },
+                    { "width": "25%", "targets": 3 },
+                    { "width": "20%", "targets": 3 },
+                    { "width": "15%", "targets": 4 },
+                    { "orderable": false, "targets": [2, 3, 4]}
+                ],
+                'pageLength': 25,
+                'processing': true,
+                'serverSide': true,
+                'searching'   : true,
+                ajax: '{!! route('participants.all') !!}',
+                columns: [
+                    { data: 'participant_name', name: "participant_name",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="participant-name-'+ row.id +'">'+data+'</div>';
+                        }
+                    },
+                    { data: 'uuidcard.uuid_name', name: "uuidcard.uuid_name", className: 'center',
+                        "render": function (data, type, row, meta) {
+                            return '<div class="participant-uuid-'+ row.id +'">#'+ row.uuidcard.id +' ('+row.uuidcard.uuid_name+')</div>';
+                        }
+                    },
+                    { data: 'club.name', name: "club.name", className: 'center',
+                        "render": function (data, type, row, meta) {
+                            return '<div class="participant-club-'+ row.id +'">'+row.club.club_name+'</div>';
+                        }
+                    },
+                    { data: 'id', name: "id", className: 'center',
+                        "render": function (data, type, row, meta) {
+                            return '<a href="/participants/'+data+'/stages" class="btn bg-olive btn-flat margin">Manage Stages</a>';
+                        }
+                    },
+                    { data: 'id', name: 'id',
+                        "render": function (data, full) {
+                            return '<a class="btn bg-primary btn-flat margin js--edit-participants" data-id="'+ data +'" data-toggle="modal" data-target="edit-participants" href="#">Edit</a> <a  href="" data-id="'+data+'" class="delete btn btn-danger btn-flat margin js--add-value-id" data-toggle="modal" data-target="#myModal-Participants-delete">Delete</a>';
+                        }
+                    }
+                ],
+            });
+        });
+    </script>
 @endsection

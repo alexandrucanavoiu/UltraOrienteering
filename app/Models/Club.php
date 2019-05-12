@@ -29,15 +29,12 @@ class Club extends \Eloquent
      * @var array
      */
     protected $fillable = [
-        'club_district_id',
-        'name',
+        'id',
+        'club_name',
         'city',
+        'created_at',
+        'updated_at'
     ];
-
-    public function clubDistrict()
-    {
-        return $this->belongsTo(ClubDistrict::class);
-    }
 
     public function participants()
     {

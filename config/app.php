@@ -162,6 +162,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Yajra\Datatables\DatatablesServiceProvider::class,
 
 
         /*
@@ -233,6 +234,7 @@ return [
         'Excel' => 'Maatwebsite\Excel\Facades\Excel',
         'Input' => Illuminate\Support\Facades\Input::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'Datatables' => Yajra\Datatables\Facades\Datatables::class,
 
     ],
 

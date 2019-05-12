@@ -4,103 +4,122 @@ namespace App\Http\Controllers;
 
 use Dompdf\Exception;
 use Illuminate\Http\Request;
-use Illuminate\Contracts\Validation\Validator;
+use Validator;
 use DB;
 use Session;
 use Input;
 use App\Models\Club;
-use App\Models\ClubDistrict;
+use Yajra\Datatables\Datatables;
+use App\Models\Participant;
 
 class clubsController extends Controller
 {
     public function index(){
-        $clubs = Club::with('ClubDistrict')->Orderby('name', 'ASC')->paginate(100);
-
-        $districtlist = ClubDistrict::All();
-        return view('clubs', ['clubs' => $clubs, 'districtlist' => $districtlist]);
+        $clubs = Club::Orderby('club_name', 'ASC')->paginate(100);
+        return view('clubs.index', ['clubs' => $clubs]);
     }
 
+    public function index_anyData_all()
+    {
+        $clubs = Club::get();
+        return Datatables::of($clubs)
+            ->setRowClass(function ($clubs) {
+                return 'clubs-list-' . $clubs->id;
+            })
+            ->make(true);
+    }
+
+    public function create(){
+        return view('clubs.create');
+    }
+
+    public function store(Request $request)
+    {
+        if( $request->ajax() )
+        {
+            $request->merge(['created_at' => date('Y-m-d H:i:s')]);
+            $request->merge(['updated_at' => date('Y-m-d H:i:s')]);
+            $rules = [
+                'club_name' => 'required|max:255|min:3',
+                'city' => 'required|max:255|min:3',
+            ];
+
+            $data = $request->only(['club_name', 'city', 'created_at', 'updated_at']);
+            $validator = Validator::make($data, $rules);
+
+            if($validator->passes())
+
+            {
+                $save = Club::create($data);
+                $check_count = Club::get()->count();
+                return response()->json(['id' => $save->id, 'club_name' => $save->club_name, 'city' => $save->city, 'check_count' => $check_count, 'success' => 'The new club has been added.']);
 
 
-    public function create(Request $request){
-
-        $cname = $request->input('name');
-        $ccity = $request->input('city');
-        $cdistrict = $request->input('district');
-
-        foreach($cname as $key => $value) {
-
-            $clubname = $cname[$key];
-            $clubcity = $ccity[$key];
-            $clubdistrict = $cdistrict[$key];
-
-
-            $club = Club::create([
-                'name' => $clubname,
-                'city' => $clubcity,
-                'club_district_id' => $clubdistrict
-            ]);
+            } else {
+                return response()->json(['error' => $validator->errors()->all()]);
+            }
+        }  else {
+            return redirect('/clubs')->with(['alert-type' => 'error', 'message' => 'Ilegal operation']);
         }
+    }
 
-        $count =  count($cname);
+    public function edit(Request $request, $id)
+    {
+        if( $request->ajax() )
+        {
+            $club = Club::findOrFail($id);
+            return view('clubs.edit', compact('club'));
+        }  else {
+            return redirect('/clubs')->with(['alert-type' => 'error', 'message' => 'Ilegal operation']);
+        }
+    }
 
-        if ($count > 1 ) {
-            return redirect('/clubs')->with('success', 'All clubs have been added to the database.');
+    public function update(Request $request, $id)
+    {
+        if( $request->ajax() )
+        {
+            $club = Club::findOrFail($id);
+            $request->merge(['updated_at' => date('Y-m-d H:i:s')]);
+            $rules = [
+                'club_name' => 'required|max:255|min:2',
+                'city' => 'required|max:255|min:2',
+            ];
+            $data = $request->only(['club_name', 'city', 'updated_at']);
+
+            $validator = Validator::make($data, $rules);
+
+            if ($validator->passes()) {
+                $club->update($data);
+                $club_name = $club->club_name;
+                $city = $club->city;
+                return response()->json(['success' => 'Great! The Club has been updated.', 'id' => $club->id, 'club_name' => $club_name,  'city' => $city]);
+
+            } else {
+                return response()->json(['error' => $validator->errors()->all()]);
+            }
+        }  else {
+            return redirect('/clubs')->with(['alert-type' => 'error', 'message' => 'Ilegal operation']);
+        }
+    }
+
+    public function delete($id, Request $request)
+    {
+        if ( $request->ajax() ) {
+            Club::findOrFail($id);
+            $participant_use_club = Participant::where('clubs_id', $id)->count();
+            $check_count = Club::get()->count();
+
+            if($participant_use_club === 0){
+                Club::where('id', $id)->delete();
+                return response()->json(['check_count' => $check_count, 'success' => 'Great! The Club has been removed!']);
+            } else {
+                return response()->json(['check_count' => $check_count, 'warning' => 'Error! This Club is associated!'], 405);
+
+            }
+
         } else {
-            return redirect('/clubs')->with('success', 'Club ' . $club->name . ' has been added to the database.');
+            return redirect('/clubs')->with(['alert-type' => 'error', 'message' => 'Ilegal operation']);
         }
     }
-
-
-    public function remove($id, Exception $e) {
-
-        $club = Club::findOrFail($id);
-
-        try {
-            $club->delete();
-        } catch(\Exception $e) {
-            if (stristr($e->getMessage(), 'Cannot delete or update a parent row')) {
-                return redirect('/clubs')->with('warning', $club->name . '  cannot be deleted because it has related entities. Please first remove all the other dates that uses this record...');
-        }
-        }
-
-        return redirect('/clubs')->with('success', $club->name . ' has been removed from the database');
-    }
-
-
-    public function edit($id){
-
-        $club = Club::with('ClubDistrict')->findOrFail($id);
-        $districtlist = ClubDistrict::All();
-
-        return view('clubs.edit', ['club' => $club, 'districtlist' => $districtlist]);
-
-
-    }
-
-
-
-    public function update(Request $request, $id){
-
-        $club = Club::findOrFail($id);
-
-        $this->validate($request, [
-            'name' => 'required|max:255|min:2',
-            'city' => 'required|min:2',
-            'district' => 'required|integer',
-        ]);
-
-        $club->update([
-            'name' => $request->input('name'),
-            'club_district_id' => $request->input('district'),
-            'city' => $request->input('city')
-
-        ]);
-
-            return redirect('/clubs')->with('success', $club->name . ' have been added updated.');
-
-    }
-
-
 
 }

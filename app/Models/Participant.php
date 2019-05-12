@@ -18,23 +18,22 @@ class Participant extends \Eloquent
      * @var array
      */
     protected $fillable = [
-        'club_id',
-        'uuid_card_id',
-        'name',
+        'id',
+        'uuidcards_id',
+        'clubs_id',
+        'participant_name',
+        'created_at',
+        'updated_at',
     ];
 
     public function club()
     {
-        return $this->belongsTo(Club::class);
+        return $this->belongsTo(Club::class, 'clubs_id');
     }
 
-    public function uuidCard()
+    public function uuidcard()
     {
-        return $this->belongsTo(UuidCard::class, 'uuid_card_id');
+        return $this->belongsTo(UuidCard::class, 'uuidcards_id');
     }
 
-    public function participantManagers()
-    {
-        return $this->hasMany(ParticipantManager::class);
-    }
 }

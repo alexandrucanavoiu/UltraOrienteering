@@ -16,9 +16,10 @@ class Stage extends \Eloquent
      * @var array
      */
     protected $fillable = [
-        'name',
-        'start_time',
-        'duration',
+        'id',
+        'stage_name',
+        'created_at',
+        'updated_at',
     ];
 
     public function participantManagers()

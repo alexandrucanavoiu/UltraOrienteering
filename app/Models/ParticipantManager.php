@@ -18,26 +18,21 @@ class ParticipantManager extends \Eloquent
      *
      * @var array
      */
+
     protected $fillable = [
-        'participant_id',
-        'category_id',
-        'uuid_card_id',
-        'stage_id',
+        'id',
+        'participants_id',
+        'stages_id',
+        'categories_id',
+        'uuidcards_id',
+        'start_time',
+        'finish_time',
         'total_time',
-        'post_start',
-        'post_1',
-        'post_2',
-        'post_3',
-        'post_4',
-        'post_5',
-        'post_6',
-        'post_7',
-        'post_8',
-        'post_9',
-        'post_10',
-        'post_11',
-        'post_12',
-        'post_finish',
+        'abandon',
+        'missed_posts',
+        'order_posts',
+        'created_at',
+        'updated_at',
     ];
 
     public function participant()
@@ -50,7 +45,7 @@ class ParticipantManager extends \Eloquent
         return $this->belongsTo(Category::class);
     }
 
-    public function uuidCard()
+    public function uuidcard()
     {
         return $this->belongsTo(UuidCard::class, 'uuid_card_id');
     }

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ParticipantStages;
 use Illuminate\Http\Request;
-use Illuminate\Contracts\Validation\Validator;
+use Validator;
 use DB;
 use Session;
 use Input;
@@ -15,58 +16,49 @@ class stagesController extends Controller
 
         $stageslist = Stage::paginate(15);
 
-        return view('stages', ['stageslist' => $stageslist]);
-
-
+        return view('stages.index', ['stageslist' => $stageslist]);
     }
 
 
+    public function create(Request $request)
+    {
+        if( $request->ajax() )
+        {
+            return view('stages.create');
 
-    public function create(Request $request){
-
-
-            $stage_name = $request->input('stage_name');
-            $stage_date = $request->input('stage_date');
-            $stage_time = $request->input('stage_time');
-
-
-        foreach($stage_name as $key => $value) {
-
-            $stagename = $stage_name[$key];
-            $stagedate = $stage_date[$key];
-            $stagetime = $stage_time[$key];
-
-
-            $stage = Stage::create([
-                'name' => $stagename,
-                'start_time' => $stagedate,
-                'duration' => $stagetime
-            ]);
-
-
+        }  else {
+            return redirect('/stages')->with(['alert-type' => 'error', 'message' => 'Ilegal operation']);
         }
+    }
 
-        $count =  count($stage_name);
+    public function store(Request $request)
+    {
+        if( $request->ajax() )
+        {
+            $request->merge(['created_at' => date('Y-m-d H:i:s')]);
+            $request->merge(['updated_at' => date('Y-m-d H:i:s')]);
+            $rules = [
+                'stage_name' => 'required|max:255|min:3',
+            ];
 
-        if ($count > 1 ) {
-            return redirect('/stages')->with('success', 'All stages have been added to the database.');
-        } else {
-            return redirect('/stages')->with('success', $stage->name . ' has been added to the database.');
+            $data = $request->only(['stage_name', 'created_at', 'updated_at']);
+            $validator = Validator::make($data, $rules);
+
+            if($validator->passes())
+
+            {
+                $save = Stage::create($data);
+                $check_count = Stage::get()->count();
+                return response()->json(['id' => $save->id, 'stage_name' => $save->stage_name, 'check_count' => $check_count, 'success' => 'The new stage has been added.']);
+
+
+            } else {
+                return response()->json(['error' => $validator->errors()->all()]);
+            }
+        }  else {
+            return redirect('/stages')->with(['alert-type' => 'error', 'message' => 'Ilegal operation']);
         }
-
     }
-
-
-    public function remove($id) {
-
-        $stage =  Stage::findOrFail($id);
-
-        $stage->delete();
-
-        return redirect('/stages')->with('success', $stage->name . ' has been removed!');
-    }
-
-
 
     public function edit($id){
 
@@ -77,26 +69,49 @@ class stagesController extends Controller
 
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
+        if( $request->ajax() )
+        {
+            $stage = Stage::findOrFail($id);
+            $request->merge(['updated_at' => date('Y-m-d H:i:s')]);
+            $rules = [
+                'stage_name' => 'required|max:255|min:2',
+            ];
+            $data = $request->only(['stage_name', 'updated_at']);
 
-        $this->validate($request, [
-            'stage_name' => 'required',
-        ]);
+            $validator = Validator::make($data, $rules);
 
-        $stage = Stage::findOrFail($id);
+            if ($validator->passes()) {
+                $stage->update($data);
+                $stage_name = $stage->stage_name;
+                return response()->json(['success' => 'Great! The Stage has been updated.', 'id' => $stage->id, 'stage_name' => $stage_name]);
 
-
-        $stage->update([
-            'name' => $request->input('stage_name'),
-            'start_time' => $request->input('stage_date'),
-            'duration' => $request->input('stage_time')
-        ]);
-
-        return redirect('/stages')->with('success', $stage->name . ' have been updated');
-
+            } else {
+                return response()->json(['error' => $validator->errors()->all()]);
+            }
+        }  else {
+            return redirect('/clubs')->with(['alert-type' => 'error', 'message' => 'Ilegal operation']);
+        }
     }
 
+    public function delete($id, Request $request)
+    {
+        if ( $request->ajax() ) {
+            Stage::findOrFail($id);
 
+            $count_used_categories = ParticipantStages::where('stages_id', $id)->get()->count();
+            $check_count = Stage::get()->count();
+            if($count_used_categories === 0) {
+                Stage::where('id', $id)->delete();
+                return response()->json(['check_count' => $check_count, 'success' => 'Great! The Stage has been removed!']);
+            } else {
+                return response()->json(['check_count' => $check_count, 'warning' => 'Error! This Stage is associated!'], 405);
+            }
 
+        } else {
+            return redirect('/participants')->with(['alert-type' => 'error', 'message' => 'Ilegal operation']);
+        }
+    }
 
 }

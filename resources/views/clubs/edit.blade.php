@@ -1,77 +1,37 @@
+<div class="modal fade" id="myModal-Clubs-edit" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Edit {{ $club->clubs_name }}</h4>
+            </div>
+            <div class="alert alert-danger print-error-msg" style="display:none">
 
-@extends('layouts/template')
-@section('title')
-   Edit Club - Ultra Orienteering Software - Open Source Software
-@endsection
-
-@section('body')
-    <div style="margin-top: 10px; margin-bottom: -10px">
-        @include('partials.form-flash-message')
-    </div>
-    <form method="post" action="/clubs/update/{{ $club->id }}">
-        {{ method_field("put") }}
-
-        <div id="stage" class="js--stage stage-1">
-            <div class="y">
-<h1>Edit Club {{ $club->club_name }}</h1>
-                <div class="stage_name div-left-input">
-                    <div><strong>Club Name</strong></div>
-                    <input class="form-control" name="name" id="clubs_name" type="text" value="{{ $club->name }}">
-
-                </div>
-
-                <div class="stage_date div-left-input">
-                    <div><strong>City</strong></div>
-                    <input class="form-control" type="text" class="city" id="city" name="city" value="{{ $club->city }}">
-
-                </div>
-
-                <div class="stage_time div-left-input">
-                    <div><strong>District</strong></div>
-                    <select class="form-control" id="district" name="district">
-                            <option value="0">-- select --</option>
-                        @foreach($districtlist as $item)
-                            <option value="{{ $item->id }}" {{ $item->id === $club->club_district_id ? 'selected' : '' }}>{{ $item->name }}</option>
-                        @endforeach
-                    </select>
-
-                </div>
+                <ul></ul>
 
             </div>
+            <form id="form">
+                {{ csrf_field() }}
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="name">Club Name</label>
+                            <div>
+                                <input class="form-control" name="club_name" id="club_name" type="text" value="{{ $club->club_name }}">
+                            </div>
+                            <br />
+                            <div class="stage_date div-left-input">
+                                <label><strong>City Name</strong></label>
+                                <input class="form-control" type="text" class="city" id="city" name="city" value="{{ $club->city }}">
+                            </div>
+                            <span class="text-error errors_name"></span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="js--ajax-form-edit-clubs-close btn btn-default pull-left" data-dismiss="modal">Close</button>
+                        <button type="submit" id="save" class="btn btn-primary js--ajax-form-edit-clubs-update" data-id="{{ $club->id }}">Save</button>
+                    </div>
+                    </form>
+            </div>
         </div>
-        {{ csrf_field() }}
-        <button  id="submitbutton" type="submit" class="btn btn-primary">Submit</button>
-
-    </form>
-    <div class="center" ><a href="/clubs/"><button type="submit" class="btn btn-success">Back</button></a></div>
-    <script>
-        $('#submitbutton').on('click', function (e) {
-            var error = false;
-            var msg = "Please fill the form properly:  \n";
-
-
-            if ($("#clubs_name").val() < 3) {
-                msg += "- Club name must be between 2 and 255 characters! \n";
-                error = true;
-            }
-
-            if ($("#city").val() < 3) {
-                msg += "- City name must be between 2 and 255 characters! \n";
-                error = true;
-            }
-
-            if ($("#district").val() == 0  || !validator.isNumeric($("#district").val())) {
-                msg += "- Please select a district! \n";
-                error = true;
-            }
-
-            if (error) {
-                alert(msg);
-                e.preventDefault();
-                return false;
-
-            }
-
-        });
-    </script>
-@endsection
+    </div>

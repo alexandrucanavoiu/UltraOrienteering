@@ -1,61 +1,48 @@
+<div class="modal fade" id="myModal-Categories-edit" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Edit Category</h4>
+            </div>
+            <div class="alert alert-danger print-error-msg" style="display:none">
 
-@extends('layouts/template')
-@section('title')
-    Edit Category - Ultra Orienteering Software - Open Source Software
-@endsection
-
-@section('body')
-    <div style="margin-top: 10px; margin-bottom: -10px">
-        @include('partials.form-flash-message')
-    </div>
-    <form method="post" action="/categories/update/{{ $category->id }}">
-        {{ method_field("put") }}
-
-        <div id="stage" class="js--stage stage-1">
-            <div class="y">
-                <h1>Edit Category {{ $category->name }}</h1>
-                <div class="stage_name div-left-input">
-                    <div><strong>Category Name</strong></div>
-                    <input class="form-control" name="category_name" id="category_name" type="text" value="{{ $category->name }}">
-                </div>
-
-                <div class="stage_time div-left-input">
-                    <div><strong>Route</strong></div>
-                    <select class="form-control" name="route_name">
-                        @foreach($routes as $item)
-                            <option value="{{ $item->id }}" {{ $item->id === $category->route_id ? 'selected' : '' }}>{{ $item->name }}</option>
-                        @endforeach
-                    </select>
-
-                </div>
+                <ul></ul>
 
             </div>
+            <form id="form">
+                {{ csrf_field() }}
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="name">Category Name</label>
+                        <div>
+                            <input class="form-control" name="category_name" id="category_name" type="text" value="{{ $category->category_name }}">
+                        </div>
+                        <br />
+                    </div>
+
+                    <div class="form-group">
+                        <div>associate this category with a route:</div>
+                        <br />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name">Route Name</label>
+                        <select id="routes_id" name="routes_id" class="form-control">
+                            <option value="">-- select a route --</option>
+                            @foreach($routes as $route)
+                                <option value="{{ $route->id }}" @if($route->id  == $category->routes_id) selected @endif>{{ $route->route_name }}</option>
+                            @endforeach
+                        </select>
+                        <br />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="js--ajax-form-edit-categories-close btn btn-default pull-left" data-dismiss="modal">Close</button>
+                    <button type="submit" id="save" class="btn btn-primary js--ajax-form-edit-categories-update" data-id="{{ $category->id }}">Save</button>
+                </div>
+            </form>
         </div>
-        {{ csrf_field() }}
-        <button id="submitbutton"  type="submit" class="btn btn-primary">Submit</button>
-
-    </form>
-    <div class="center" ><a href="/categories"><button type="submit" class="btn btn-success">Back</button></a></div>
-
-    <script>
-        $('#submitbutton').on('click', function (e) {
-            var error = false;
-            var msg = "Please fill the form properly:  \n";
-
-
-            if ($("#category_name").val() < 3) {
-                msg += "- Category Name must be between 2 and 255 characters! \n";
-                error = true;
-            }
-
-
-            if (error) {
-                alert(msg);
-                e.preventDefault();
-                return false;
-
-            }
-
-        });
-    </script>
-@endsection
+    </div>
+</div>

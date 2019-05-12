@@ -17,17 +17,18 @@ class Category extends \Eloquent
      * @var array
      */
     protected $fillable = [
-        'route_id',
-        'name',
+        'id',
+        'routes_id',
+        'category_name',
+        'created_at',
+        'updated_at',
     ];
 
     public function route()
     {
-        return $this->belongsTo(Route::class);
+        return $this->belongsTo(Route::class, 'routes_id');
     }
 
-    public function participantManagers()
-    {
-        return $this->hasMany(ParticipantManager::class);
-    }
+
+
 }

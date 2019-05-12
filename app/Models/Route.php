@@ -16,25 +16,10 @@ class Route extends \Eloquent
      * @var array
      */
     protected $fillable = [
-        'name',
-        'length_in_km',
-        'post_amount',
-        'post_1',
-        'post_2',
-        'post_3',
-        'post_4',
-        'post_5',
-        'post_6',
-        'post_7',
-        'post_8',
-        'post_9',
-        'post_10',
-        'post_11',
-        'post_12',
+        'id',
+        'route_name',
+        'created_at',
+        'updated_at',
     ];
 
-    public function categories()
-    {
-        return $this->hasMany(Category::class);
-    }
 }

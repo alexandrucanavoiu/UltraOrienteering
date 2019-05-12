@@ -1,51 +1,51 @@
-@extends('layouts/template')
-
-@section('title') Add a new participants - Ultra Orienteering Software - Open Source Software @endsection
-
-@section('body')
-    <div class="row">
-        <div class="col-lg-12">
-            <div style="margin-top: 10px; margin-bottom: -10px">
-                @include('partials.form-flash-message')
+<div class="modal fade" id="myModal-Participants-create" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Add a new Participant</h4>
             </div>
+            <div class="alert alert-danger print-error-msg" style="display:none">
+
+                <ul></ul>
+
+            </div>
+            <form id="form">
+                {{ csrf_field() }}
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="name">Participant Name</label>
+                        <div>
+                            <input class="form-control" name="participant_name" id="participant_name" type="text" value="">
+                        </div>
+                        <br />
+                        <div class="div-left-input">
+                            <label><strong>Club Name</strong></label>
+                            <select id="clubs_id" name="clubs_id" class="form-control">
+                                <option value="" selected>Please select</option>
+                                @foreach($clubs as $club)
+                                    <option value="{{ $club->id }}">{{ $club->club_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <br />
+                        <div class="div-left-input">
+                            <label><strong>UUID Card</strong></label>
+                            <select id="uuidcards_id" name="uuidcards_id" class="form-control">
+                                @foreach($uuidCards as $uuidcard)
+                                    <option value="{{ $uuidcard->id }}"> No. #{{ $uuidcard->id }} - {{ $uuidcard->uuid_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <span class="text-error errors_name"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="js--ajax-form-create-participants-close btn btn-default pull-left" data-dismiss="modal">Close</button>
+                    <button type="submit" id="save" class="btn btn-primary js--store-participants">Save</button>
+                </div>
+            </form>
         </div>
     </div>
-
-    <form method="post" action="{{ route('participants.store') }}">
-        <div id="stage" class="js--stage stage-1">
-            <div class="y">
-                <h1>Add a new participants</h1>
-                <div class="fullname_part div-left-input">
-                    <label for="participants_name">Full Name</label>
-                    <input class="form-control" name="name" id="participants_name" type="text" value="">
-                </div>
-
-                <div class="uuid_participants div-left-input">
-                    <label for="uuid_card_id">UUID Card</label>
-                    <select class="form-control" id="uuid_card_id" name="uuid_card_id">
-                        <option value="" selected>Please select</option>
-                        @foreach($uuidList as $key => $uuidCard)
-                            <option value="{{ $key }}">NR #{{ $key }} - {{ $uuidCard }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="club_participants div-left-input">
-                    <label for="club_id">Club</label>
-                    <select class="form-control" id="club_id" name="club_id">
-                        <option value selected>Please select</option>
-                        @foreach($clubs as $club)
-                            <option value="{{ $club->id }}">{{ $club->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <div class="center margin-top-30" >
-            {{ csrf_field() }}
-            <button type="submit" class="btn btn-primary">Submit</button>
-            <a href="{{ route('participants.index') }}" class="btn btn-danger">Cancel</a>
-        </div>
-    </form>
-@endsection
+</div>

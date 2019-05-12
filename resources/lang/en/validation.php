@@ -112,6 +112,25 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'stage_name' => 'Stage Name',
+        'route_name' => 'Route Name',
+        'participant_name' => 'Participant Name',
+        'clubs_id' => 'Club Name',
+        'club_name' => 'Club Name',
+        'city' => 'City Name',
+        'uuidcards_id' => 'UUID Card',
+        'post_code.*' => 'Check Point',
+        'category_name' => 'Category Name',
+        'categories_id' => 'Category Name',
+        'routes_id' => 'Route Name',
+        'stages_id' => 'Stage Name',
+        'participant_name.*' => "Participant Name",
+        'routes_id.0' => "Route for participant 1",
+        'routes_id.1' => "Route for participant 2",
+        'routes_id.2' => "Route for participant 3",
+        'routes_id.3' => "Route for participant 4",
+        'routes_id.4' => "Route for participant 5",
+    ],
 
 ];
