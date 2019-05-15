@@ -36,8 +36,8 @@ $ git clone https://github.com/alexandrucanavoiu/UltraOrienteering .
 ```
 
 ###### Step 2
-By default UltraOrienteering comes with a .env.example file. You will need to rename this file as .env
-You will change the default values with your own (like database name, database user, database password, etc)
+By default UltraOrienteering comes with a .env.example file. You need to rename this file as .env
+Change the default values with your own (like database name, database user, database password, etc)
 
 
 ###### Step 3
